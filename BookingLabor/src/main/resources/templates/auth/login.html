@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}" th:with="currentPage='Login'">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+
+    <div layout:fragment="content">
+        <h1>Login</h1>
+        <br><br><br><br><br><br>
+        <h2>Login</h2>
+        <div>
+            <form th:action="@{/login}" method="POST">
+                <label>Email / Username</label>
+                <input name="username" type="text" id="username" />
+                <br />
+
+                <label>Password</label>
+                <input name="password" type="password" id="password" />
+                <br />
+
+                <div class="action_btns">
+                    <div class="one_half last"><button type="submit" class="btn btn_red">Login</button></div>
+                </div>
+            </form>
+            <a href="#" class="forgot_password">Forgot password?</a>
+        </div>
+
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${param.error}">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+            <strong>Invalid username and password!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+
+    </div>
+
+
+</body>
+</html>

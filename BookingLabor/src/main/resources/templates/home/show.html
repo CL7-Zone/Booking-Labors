@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}" th:with="currentPage='Show'">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div layout:fragment="content">
+
+        <section class="popular-categories">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="section-heading">
+                            <h4>
+                                <b>Jobs</b>
+                                <em th:text="${categoryJob.categoryName}"></em>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="main-button">
+                            <a th:href="@{/}">GO TO HOME</a>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-12" >
+                        <div class="owl-features owl-carousel" style="position: relative; z-index: 5;">
+
+                            <div class="popular-item" th:each="job :${categoryJob.jobs}">
+                                <div class="top-content">
+                                    <div class="icon">
+                                        <img th:src="@{/assets/images/icon-01.png}" alt="">
+                                    </div>
+                                    <div class="right">
+                                        <h4 th:text="${job.nameJob}"></h4>
+                                        <span><em th:text="${countJobsByCategoryJob.apply(job.categoryJob.id)}"></em> Job</span>
+                                    </div>
+                                </div>
+                                <div class="thumb">
+                                    <img th:src="${'/assets/images/'+job.imageJob}" alt="">
+                                    <span class="category">Top Work</span>
+                                    <span class="likes">
+                                        <i class="fa fa-heart"></i>
+                                        <b th:text="${job.id}"></b>
+                                    </span>
+                                </div>
+                                <div class="border-button">
+                                    <a >Xem công việc của danh mục này</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="owl-features owl-carousel" style="position: relative; z-index: 5;">
+                            <div th:if="${#lists.isEmpty(categoryJob.jobs)}">
+                                <div class="popular-item" >
+                                    <div class="top-content">
+                                        <div class="icon">
+                                            <img th:src="@{/assets/images/icon-01.png}" alt="">
+                                        </div>
+                                        <div class="right">
+                                            <h4 >Not job</h4>
+                                            <span><em>0 </em> Job</span>
+                                        </div>
+                                    </div>
+                                    <div class="thumb">
+                                        <img th:src="@{/assets/images/pricing-01.jpg}" alt="">
+                                        <span class="category">Top Work</span>
+                                        <span class="likes">
+                                        <i class="fa fa-heart"></i>
+                                        <b>Not Job</b>
+                                    </span>
+                                    </div>
+                                    <div class="border-button">
+                                        <a href="">Xem công việc</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </section>
+
+
+
+    </div>
+
+</body>
+</html>

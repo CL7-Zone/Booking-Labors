@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div>
+        <h1>Admin creates</h1>
+
+        <div>
+            <h2><ul><li>Create category jobs</li></ul></h2>
+            <form role="form" method="POST" enctype="multipart/form-data" th:action="@{/category-jobs/create/save}">
+                <label for="file" class="col-form-label">File:</label>
+                <input type="file" class="form-control"  name="file" id="file">
+                <br>
+                <button type="submit" class="btn btn-primary">POST</button>
+            </form>
+
+        </div>
+
+
+        <div>
+            <h2><ul><li>Create jobs</li></ul></h2>
+            <form role="form" method="POST" enctype="multipart/form-data" th:action="@{/jobs/create/save}">
+                <label for="file" class="col-form-label">File:</label>
+                <input type="file" class="form-control"  name="file" id="file">
+                <br>
+                <button type="submit" class="btn btn-primary">POST</button>
+            </form>
+
+
+        </div>
+
+
+        <div>
+            <h2><ul><li>Create labors</li></ul></h2>
+            <form role="form" method="POST" enctype="multipart/form-data" th:action="@{/labors/create/save}">
+                <label for="file" class="col-form-label">File:</label>
+                <input type="file" class="form-control"  name="file" id="file">
+                <br>
+                <button type="submit" class="btn btn-primary">POST</button>
+            </form>
+
+
+        </div>
+
+
+        <div class="alert-context">
+            <!--/*@thymesVar id="isEmpty" type="text"*/-->
+            <div th:if="${isEmpty}" >
+                <b th:text="${isEmpty}" id="create-isEmpty"></b>
+            </div>
+            <!--/*@thymesVar id="success" type="text"*/-->
+            <div th:if="${success}" >
+                <b th:text="${success}" id="create-success"></b>
+            </div>
+            <!--/*@thymesVar id="failed" type="text"*/-->
+            <div th:if="${failed}" >
+                <b th:text="${failed}" id="create-failed"></b>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+</body>
+<script th:inline="javascript">
+
+    function alertCreate() {
+
+        const nameElement = {i:"isEmpty", s:"success", f:"failed"}
+
+        if(document.querySelector(`#create-${nameElement.i}`)){
+            console.log("isEmpty!")
+            alert("Upload file, please!");
+            document.querySelector(`#create-${nameElement.i}`).style.color = "red";
+        }
+        if(document.querySelector(`#create-${nameElement.s}`)){
+            alert("Create successfully");
+            document.querySelector(`#create-${nameElement.s}`).style.color = "#7ed000";
+        }
+        if(document.querySelector(`#create-${nameElement.f}`)){
+            alert("Create failed!!!");
+            document.querySelector(`#create-${nameElement.f}`).style.color ="red";
+        }
+
+    }
+
+    alertCreate();
+
+</script>
+</html>
