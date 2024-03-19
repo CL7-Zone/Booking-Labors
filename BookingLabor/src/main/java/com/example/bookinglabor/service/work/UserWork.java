@@ -5,32 +5,26 @@ import com.example.bookinglabor.model.Role;
 import com.example.bookinglabor.model.UserAccount;
 import com.example.bookinglabor.repo.RoleRepo;
 import com.example.bookinglabor.repo.UserRepo;
+import com.example.bookinglabor.security.SecurityUtil;
 import com.example.bookinglabor.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 
 @Service
+@AllArgsConstructor
 public class UserWork implements UserService {
 
     private final UserRepo userRepository;
     private final RoleRepo roleRepo;
 
     PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public UserWork(UserRepo userRepository, RoleRepo roleRepo, PasswordEncoder passwordEncoder) {
-
-        this.userRepository = userRepository;
-        this.roleRepo = roleRepo;
-        this.passwordEncoder = passwordEncoder;
-    }
-
 
     @Override
     public void saveUser(UserDto userDto) {
@@ -43,10 +37,56 @@ public class UserWork implements UserService {
         userRepository.save(user);
     }
 
-
     @Override
     public UserAccount findByEmail(String email) {
 
         return userRepository.findByEmail(email);
     }
+
+    @Override
+    public void createUserRoleCustomer(Role role) {
+
+        String sessionEmail = SecurityUtil.getSessionUser();
+        UserAccount user = userRepository.findByEmail(sessionEmail);
+
+        if(user != null){
+
+            user.getRoles().add(role);
+            userRepository.save(user);
+        }
+
+    }
+
+    @Override
+    public void createUserRoleLabor(Role role) {
+
+        String sessionEmail = SecurityUtil.getSessionUser();
+        UserAccount user = userRepository.findByEmail(sessionEmail);
+
+        if(user != null){
+
+            user.getRoles().add(role);
+            userRepository.save(user);
+        }
+    }
+
+
+    @Override
+    public void updateUserRole(Role role) {
+
+        String sessionEmail = SecurityUtil.getSessionUser();
+        UserAccount user = userRepository.findByEmail(sessionEmail);
+
+        if(user != null){
+
+            List<Role> newRoles = new ArrayList<>();
+            newRoles.add(role);
+            user.setRoles(newRoles);
+            userRepository.save(user);
+        }
+
+    }
+
+
+
 }

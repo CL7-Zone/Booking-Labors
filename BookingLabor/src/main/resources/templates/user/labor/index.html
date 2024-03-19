@@ -37,7 +37,7 @@
                     <div class="col-lg-12">
                         <div class="section-heading text-center">
                             <h6>our labor</h6>
-                            <h4>select<em> labor</em> now</h4>
+                            <h4>choose<em> labor</em> now</h4>
                         </div>
                     </div>
 
@@ -50,23 +50,26 @@
                                         <div class="content">
                                             <div class="top-content">
                                                 <span class="award" th:text="${labor.id}"></span>
-                                                <span class="price" th:text="${labor.status}">Status</span>
+                                                <span th:if="${labor.status == 1}">
+                                                    <span class="price">Free now</span>
+                                                </span>
                                             </div>
-                                            <b th:text="${labor.full_name}">Full Name</b>
-                                            <b th:text="${labor.birthday}">Birthday</b>
+                                            <b th:text="${'Full Name: '+labor.full_name}"></b>
                                             <br>
-                                            <span th:text="${labor.address}">Address</span><br>
-                                            <span th:text="${labor.address_work_official}">Official Work Address</span>
+                                            <b th:text="${'Birthday: '+labor.birthday}"></b>
+                                            <br>
+                                            <b th:text="${'Address: '+labor.address}"></b><br>
+                                            <b th:text="${'Official Work Address: '+labor.address_work_official}"></b>
                                             <div class="info">
                                             <span class="participants">
                                                 <img th:src="@{/assets/images/icon-03.png}" alt=""><br>
-                                                <span th:text="${labor.phone_number}">Phone Number</span><br>
-                                                <span th:text="${labor.free_time_from}">Free Time From</span>
+                                                <span th:text="${'Phone number: '+labor.phone_number}"></span><br>
+                                                <span th:text="${'Free time from: '+labor.free_time_from}"></span>
                                             </span>
                                                     <span class="submittions">
                                                 <img th:src="@{/assets/images/icon-01.png}" alt=""><br>
-                                                <span th:text="${labor.number_experience}">Number of Experience</span><br>
-                                                <span th:text="${labor.free_time_to}">Free Time To</span>
+                                                <span th:text="${'Number experience: '+labor.number_experience}"></span><br>
+                                                <span th:text="${'Free time to: '+labor.free_time_to}"></span>
                                             </span>
                                             </div>
                                             <div class="border-button">
@@ -78,41 +81,12 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
+
             </div>
         </section>
 
-
-        <table>
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Full Name</th>
-                <th>Address</th>
-                <th>Birthday</th>
-                <th>Number of Experience</th>
-                <th>Status</th>
-                <th>Official Work Address</th>
-                <th>Free Time From</th>
-                <th>Free Time To</th>
-
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="labor : ${labors}">
-                <td th:text="${labor.id}"></td>
-                <td th:text="${labor.full_name}"></td>
-                <td th:text="${labor.address}"></td>
-                <td th:text="${#dates.format(labor.birthday, 'yyyy-MM-dd')}"></td>
-                <td th:text="${labor.number_experience}"></td>
-                <td th:text="${labor.status}"></td>
-                <td th:text="${labor.address_work_official}"></td>
-                <td th:text="${labor.free_time_from}"></td>
-                <td th:text="${labor.free_time_to}"></td>
-
-            </tr>
-            </tbody>
-        </table>
     </div>
 </body>
 </html>

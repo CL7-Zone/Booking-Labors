@@ -21,6 +21,8 @@ public class LaborMapper {
                 .free_time_to(labor.getFree_time_to())
                 .createdOn(labor.getCreatedOn())
                 .updatedOn(labor.getUpdatedOn())
+                .city(labor.getCity())
+                .userAccount(labor.getUserAccount())
                 .build();
 
         if (laborUser != null) {

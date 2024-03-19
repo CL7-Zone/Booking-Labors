@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org"
+      layout:decorate="~{layout}" th:with="currentPage='Show Job'">
+<head>
+    <meta charset="UTF-8">
+    <title>Show job</title>
+</head>
+<body>
+
+    <div layout:fragment="content">
+
+        <div class="page-heading">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2 header-text">
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contest-details">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="top-content">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <span class="open">USER</span>
+                                    <span class="wish-list">
+                                        <i class="fa fa-user"></i>
+                                       <i th:text="${#authentication.name}"></i>
+                                    </span>
+                                </div>
+                                <div class="col-lg-8">
+                                    <ul>
+                                        <li><i class="fa fa-medal"></i>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="main-content">
+                            <h4>Job detail</h4>
+                            <h6>Name job:
+                                <span th:text="${job.nameJob}"></span>
+                            </h6>
+                            <p>
+                                <b>Job description: </b>
+                                <span th:text="${job.description}"></span>
+                            </p>
+                            <h5>
+                                Price: <span th:text="${job.price}"></span> VNĐ
+                            </h5>
+                            <div class="row">
+
+                            </div>
+                            <div class="main-button" sec:authorize="!isAuthenticated()">
+                                <a th:href="@{/login?please}">CHOOSE JOB</a>
+                            </div>
+                            <div class="main-button" sec:authorize="isAuthenticated()">
+                                <a th:href="@{/your-job-detail}">CHOOSE JOB</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -15,49 +15,63 @@
                 <div class="col-12">
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
-                        <a href="index.html" class="logo">
-                            <img th:src="@{/assets/images/logo.png}" alt="SnapX Photography Template">
+                        <a th:href="@{/}" class="logo">
+                            <img th:src="@{/assets/images/bookingLaborLogo.png}" alt="SnapX Photography Template">
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
                             <li><a th:href="@{/}" class="active">Home</a></li>
 
-                            <li sec:authorize="!isAuthenticated()">
-                                <a th:href="@{/}">Categories</a>
+                            <li class="has-sub"  sec:authorize="!isAuthenticated()">
+                                <a href="javascript:void(0)">BLOG</a>
+                                <ul class="sub-menu">
+                                    <li> <a th:href="@{/}">Categories</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="has-sub" sec:authorize="isAuthenticated()" >
+                                <a href="javascript:void(0)">JOB</a>
+                                <ul class="sub-menu">
+                                    <li> <a th:href="@{/jobs}">jobs</a></li>
+                                    <li th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}">
+                                        <a th:href="@{/your-job-detail}">job detail</a>
+                                    </li>
+                                </ul>
                             </li>
 
                             <li class="has-sub" sec:authorize="isAuthenticated()">
                                 <a href="javascript:void(0)">Labor</a>
                                 <ul class="sub-menu">
-                                    <li><a th:href="@{/labors}">Labors</a></li>
+                                    <li><a th:href="@{/labors-detail}">Labors</a></li>
                                     <li><a th:href="@{/labor-update-info}">CREATE Info</a></li>
+                                    <li><a th:href="@{/your-info-labor}">INFO</a></li>
                                 </ul>
                             </li>
 
                             <li class="has-sub"  sec:authorize="isAuthenticated()">
                                 <a href="javascript:void(0)">CUSTOMER</a>
                                 <ul class="sub-menu">
-                                    <li><a th:href="@{/labors}">Labors</a></li>
                                     <li ><a th:href="@{/customer-update-info}">CREATE Info</a></li>
+                                    <li><a th:href="@{/your-info-customer}">INFO</a></li>
                                 </ul>
                             </li>
                             <li sec:authorize="isAuthenticated()"><a th:href="@{/your-menu}">MENU</a></li>
-                            <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">LOGIN</a></li>
-
+                            <li sec:authorize="!isAuthenticated()"><a th:href="@{/labors-detail}">LABOR</a></li>
 
                         </ul>
 
                         <div class="border-button"  sec:authorize="!isAuthenticated()">
                             <a id="modal_trigger" href="#modal" class="sign-in-up"><i class="fa fa-user"></i> Sign In/Up</a>
                         </div>
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
 
                         <div class="border-button"  sec:authorize="isAuthenticated()">
                             <a id="modal_trigger" onclick="confirmLogout()"  th:href="@{/logout}" class="sign-in-up"><i class="fa fa-power-off"></i> LOGOUT</a>
                         </div>
-                        <a class='menu-trigger'>
-                            <span>Menu</span>
-                        </a>
+
                         <!-- ***** Menu End ***** -->
                     </nav>
                 </div>
@@ -93,14 +107,14 @@
                 </div>
 
                 <div class="action_btns">
-                    <div class="one_half"><a th:href="@{/login}" class="btn">Login</a></div>
+                    <div class="one_half"><a href="#" id="login_form" class="btn">Login</a></div>
                     <div class="one_half last"><a href="#" id="register_form" class="btn">Sign up</a></div>
                 </div>
             </div>
 
             <!-- Username & Password Login form -->
             <div class="user_login">
-                <form action="" method="post">
+                <form th:action="@{/login}" method="POST">
                     <label>Email / Username</label>
                     <input name="username" type="text" id="username" />
                     <br />
@@ -108,11 +122,6 @@
                     <label>Password</label>
                     <input name="password" type="password" id="password" />
                     <br />
-
-                    <div class="checkbox">
-                        <input id="remember" type="checkbox" />
-                        <label for="remember">Remember me on this computer</label>
-                    </div>
 
                     <div class="action_btns">
                         <div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Back</a></div>
@@ -151,9 +160,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright © 2048 <a href="#">SnapX</a> Photo Contest Co., Ltd. All rights reserved.
+                    <p>Copyright © 2024 <a href="#">BookingLabor</a> Our Labor High Quality.
 
-                        Design: <a title="CSS Templates" rel="sponsored" href="https://templatemo.com/page/1" target="_blank">TemplateMo</a> Distribution: <a title="CSS Templatesss" rel="sponsored" href="https://themewagon.com" target="_blank">ThemeWagon</a></p>
+                        A Labor <a title="CSS Templates" rel="sponsored" href="https://templatemo.com/page/1" target="_blank">Resource</a> Hight <a title="CSS Templatesss" rel="sponsored" href="https://themewagon.com" target="_blank"></a>Quality</p>
                 </div>
             </div>
         </div>

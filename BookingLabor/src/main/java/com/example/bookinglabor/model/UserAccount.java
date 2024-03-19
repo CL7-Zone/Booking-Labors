@@ -37,4 +37,9 @@ public class UserAccount {
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
     private List<Role> roles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "userAccount", cascade = CascadeType.REMOVE)
+    private List<Labor> labors = new ArrayList<>();
+    @OneToMany(mappedBy = "userAccount", cascade = CascadeType.REMOVE)
+    private List<Customer> customers = new ArrayList<>();
 }

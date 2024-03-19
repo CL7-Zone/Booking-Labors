@@ -1,8 +1,12 @@
 package com.example.bookinglabor.service.work;
 
 import com.example.bookinglabor.mapper.LaborMapper;
+import com.example.bookinglabor.model.City;
 import com.example.bookinglabor.model.Labor;
+import com.example.bookinglabor.model.UserAccount;
+import com.example.bookinglabor.repo.CityRepo;
 import com.example.bookinglabor.repo.LaborRepo;
+import com.example.bookinglabor.repo.UserRepo;
 import com.example.bookinglabor.service.LaborService;
 import com.example.bookinglabor.service.work.excel.UploadJob;
 import com.example.bookinglabor.service.work.excel.UploadLabor;
@@ -18,6 +22,9 @@ import java.util.stream.Collectors;
 public class LaborWork implements LaborService {
 
     private final LaborRepo laborRepo;
+    private final UserRepo userRepository;
+    private final CityRepo cityRepository;
+
 
     @Override
     public List<Labor> findAllLabors() {
@@ -46,5 +53,19 @@ public class LaborWork implements LaborService {
                 throw new IllegalArgumentException(e);
             }
         }
+    }
+
+    @Override
+    public void createLaborByUserIdAndCityId(Long user_id, Long city_id, Labor labor) {
+
+        UserAccount user = userRepository.findById(user_id).get();
+        City city = cityRepository.findById(city_id).get();
+        Labor labor_create = LaborMapper.mapToLabor(labor);
+        assert labor_create != null;
+        labor_create.setUserAccount(user);
+        labor_create.setCity(city);
+        laborRepo.save(labor_create);
+
+
     }
 }

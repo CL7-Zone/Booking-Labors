@@ -15,7 +15,7 @@
                         <div class="col-lg-6">
                             <div class="section-heading">
                                 <h6>Our Categories</h6>
-                                <h4>Check Out <em>Popular</em> Contest <em>Categories</em></h4>
+                                <h4>Check Our <em>Popular</em> <em>Categories</em></h4>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -31,7 +31,7 @@
                                 <div class="popular-item" th:each="categoryJob :${categoryJobs}" >
                                     <div class="top-content">
                                         <div class="icon">
-                                            <img src="assets/images/icon-01.png" alt="">
+                                            <img th:src="@{/assets/images/icon-01.png}" alt="">
                                         </div>
                                         <div class="right">
                                             <h4 th:text="${categoryJob.categoryName}"></h4>
@@ -65,8 +65,8 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="section-heading">
-                                <h6>Our Categories</h6>
-                                <h4>Check Out <em>Popular</em> Contest <em>Categories</em></h4>
+                                <h6>Our Job</h6>
+                                <h4>Check Our <em>Popular </em> <em>Jobs</em></h4>
                             </div>
                         </div>
 
@@ -85,7 +85,7 @@
                                     </ul>
                                     <span class="price" th:text="${job.price+' VNĐ'}"></span>
                                     <div class="border-button">
-                                        <a href="#" th:text="${'DETAIL '+ job.nameJob + ' JOB'}"></a>
+                                        <a th:href="@{'/jobs/show/' + ${job.id}}" th:text="${'DETAIL '+ job.nameJob + ' JOB'}"></a>
                                     </div>
                                 </div>
                             </div>
@@ -94,8 +94,6 @@
                     </div>
                 </div>
             </section>
-
-
 
         </div>
 </body>

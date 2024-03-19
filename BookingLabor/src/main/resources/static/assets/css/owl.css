@@ -6,6 +6,9 @@
 /*
  *  Owl Carousel - Core
  */
+.centered {
+  margin: 0 auto;
+}
 .owl-carousel {
   display: none;
   width: 100%;

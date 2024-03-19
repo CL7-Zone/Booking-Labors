@@ -1,12 +1,9 @@
 package com.example.bookinglabor.service.work;
 
-import com.example.bookinglabor.mapper.CategoryJobMapper;
 import com.example.bookinglabor.mapper.JobMapper;
-import com.example.bookinglabor.model.CategoryJob;
 import com.example.bookinglabor.model.Job;
 import com.example.bookinglabor.repo.JobRepo;
 import com.example.bookinglabor.service.JobService;
-import com.example.bookinglabor.service.work.excel.UploadCategoryJob;
 import com.example.bookinglabor.service.work.excel.UploadJob;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,7 +23,6 @@ public class JobWork implements JobService {
     @Override
     public List<Job> findAllJobs() {
 
-
         List<Job> jobs = jobRepo.findAll();
 
         return jobs.stream()
@@ -33,6 +30,13 @@ public class JobWork implements JobService {
                 .collect(Collectors
                 .toList());
 
+    }
+
+    @Override
+    public Job findJobById(Long id) {
+
+        Optional<Job> optionalJob = jobRepo.findById(id);
+        return optionalJob.map(JobMapper::mapToJob).orElse(null);
     }
 
     @Override

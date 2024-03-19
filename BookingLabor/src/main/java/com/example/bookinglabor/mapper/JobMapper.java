@@ -12,6 +12,7 @@ public class JobMapper {
                 .id(job.getId())
                 .nameJob(job.getNameJob())
                 .imageJob(job.getImageJob())
+                .description(job.getDescription())
                 .price(job.getPrice())
                 .createdOn(job.getCreatedOn())
                 .updatedOn(job.getUpdatedOn())
@@ -29,5 +30,6 @@ public class JobMapper {
             return null;
         }
     }
+
 
 }

@@ -1,8 +1,10 @@
 package com.example.bookinglabor.controller;
 import com.example.bookinglabor.model.CategoryJob;
 import com.example.bookinglabor.model.Job;
+import com.example.bookinglabor.model.Labor;
 import com.example.bookinglabor.service.CategoryJobService;
 import com.example.bookinglabor.service.JobService;
+import com.example.bookinglabor.service.LaborService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +25,7 @@ import java.util.function.Function;
 public class DisplayHomeController {
 
     private CategoryJobService categoryJobService;
+    private LaborService laborService;
     private JobService jobService;
 
 //    @Autowired
@@ -51,6 +54,17 @@ public class DisplayHomeController {
 
         return "home/index";
     }
+
+    @GetMapping("/labors-detail")
+    public String indexLabor(Model model){
+
+        List<Labor> labors = laborService.findAllLabors();
+
+        model.addAttribute("labors", labors);
+
+        return "user/labor/index";
+    }
+
 
     @GetMapping("/category-job/{id}")
     public String show(@PathVariable("id") Long id, Model model){

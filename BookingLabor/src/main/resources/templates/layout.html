@@ -46,7 +46,44 @@
 
     console.log("Hello world");
 
+    const selectBoxes = {
+        year: document.querySelector('#year'),
+        month: document.querySelector('#month'),
+        day: document.querySelector('#day')
+    };
 
+
+    function populateDays() {
+        selectBoxes.day.innerHTML = '<option value="">Choose your day of born</option>';
+        for (let i = 1; i <= 31; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = i;
+            selectBoxes.day.appendChild(option);
+        }
+    }
+    function populateYears() {
+        const currentYear = new Date().getFullYear();
+        for (let i = currentYear; i >= 1900; i--) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = i;
+            selectBoxes.year.appendChild(option);
+        }
+    }
+
+    function populateMonths() {
+        for (let i = 1; i <= 12; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = i;
+            selectBoxes.month.appendChild(option);
+        }
+    }
+
+    populateYears();
+    populateMonths();
+    populateDays();
     function confirmLogout() {
         if (confirm("Bạn thực sự muốn đăng xuất ra chứ?")) {
             window.location.href = "/logout";

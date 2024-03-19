@@ -49,22 +49,6 @@ public class DisplayAuthController {
     }
 
 
-    @PostMapping("/auth-login-user")
-    public String login(HttpServletRequest request, @RequestParam String email, @RequestParam String password){
-
-        System.out.println(email);
-
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtGenerator.generateToken(authentication);
-        request.getSession().getAttribute(token);
-
-
-        System.out.println(token);
-
-        return "redirect:/your-menu";
-    }
-
     @PostMapping("/register-save")
     public String register(@Valid @ModelAttribute("user") UserDto user, BindingResult res, Model model){
 

@@ -1,7 +1,10 @@
 package com.example.bookinglabor.service.work.excel;
 
 
+import com.example.bookinglabor.model.CategoryJob;
+import com.example.bookinglabor.model.City;
 import com.example.bookinglabor.model.Labor;
+import com.example.bookinglabor.model.UserAccount;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -151,6 +154,31 @@ public class UploadLabor {
                             }
                         }
                         break;
+
+                        case 10 : {
+                            if (cell.getCellType() == CellType.NUMERIC) {
+                                int user_id = (int) cell.getNumericCellValue();
+                                UserAccount user = new UserAccount();
+                                user.setId((long) user_id);
+                                labor.setUserAccount(user);
+                            } else {
+                                System.out.println("Not numeric");
+                            }
+                        }
+                        break;
+
+                        case 11 : {
+                            if (cell.getCellType() == CellType.NUMERIC) {
+                                int city_id = (int) cell.getNumericCellValue();
+                                City city = new City();
+                                city.setId((long) city_id);
+                                labor.setCity(city);
+                            } else {
+                                System.out.println("Not numeric");
+                            }
+                        }
+                        break;
+
                         default :
                         break;
                     }

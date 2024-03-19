@@ -57,6 +57,7 @@ public class UploadJob {
                                 System.out.println("Not string");
                             }
                         }
+
                         case 2 -> {
                             if (cell.getCellType() == CellType.STRING) {
                                 job.setImageJob(cell.getStringCellValue());
@@ -65,13 +66,20 @@ public class UploadJob {
                             }
                         }
                         case 3 -> {
+                            if (cell.getCellType() == CellType.STRING) {
+                                job.setDescription(cell.getStringCellValue());
+                            } else {
+                                System.out.println("Not string");
+                            }
+                        }
+                        case 4 -> {
                             if (cell.getCellType() == CellType.NUMERIC) {
                                 job.setPrice(cell.getNumericCellValue());
                             } else {
                                 System.out.println("Not numeric");
                             }
                         }
-                        case 4 -> {
+                        case 5 -> {
                             if (cell.getCellType() == CellType.NUMERIC) {
                                 int categoryId = (int) cell.getNumericCellValue();
                                 CategoryJob categoryJob = new CategoryJob();

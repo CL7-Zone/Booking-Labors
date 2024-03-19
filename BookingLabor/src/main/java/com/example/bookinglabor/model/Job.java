@@ -24,10 +24,12 @@ public class Job {
     private Long id;
     private String nameJob;
     private String imageJob;
+    private String description;
     private double price;
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = true)
     private CategoryJob categoryJob;
+
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp

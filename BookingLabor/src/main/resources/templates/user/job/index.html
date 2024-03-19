@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}" th:with="currentPage='Job'">
+<head>
+    <meta charset="UTF-8">
+    <title>Job</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div layout:fragment="content">
+
+        <div class="page-heading">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2 header-text">
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="contest-details">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="top-content">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <span class="open" >USER</span>
+                                    <span class="wish-list">
+                                        <i class="fa fa-user"></i>
+                                        <i th:text="${#authentication.name}"></i>
+                                    </span>
+                                </div>
+                                <div class="col-lg-8">
+                                    <ul>
+                                        <li><i class="fa fa-medal"></i>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="col-lg-12">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${param.unauthorized}">
+                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Failed:"><use xlink:href="#check-circle-fill"/></svg>
+                                <strong>403 Unauthorized!</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
+                        <div class="main-content">
+
+                            <h4>OUR JOB SERVICE INFORMATION</h4>
+                            <table>
+                                <tr>
+                                    <th>Name job</th>
+                                    <th>Price</th>
+                                    <th>Description</th>
+                                    <th>Image</th>
+                                    <th colspan="2">ACTION</th>
+                                </tr>
+                                <tr th:each="job :${jobs}">
+                                    <td th:text="${job.nameJob}"></td>
+                                    <td th:text="${job.price+ ' VNĐ'}"></td>
+                                    <td th:text="${job.description}"></td>
+                                    <td>
+                                        <img width="100%" th:src="${'/assets/images/'+job.imageJob}" alt="">
+                                    </td>
+                                    <td>
+                                        <a style="color: #00bdfe" th:href="@{'/jobs/show/' + ${job.id}}">
+                                            DETAIL
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-primary" th:action="@{'/jobs/show/' + ${job.id}}">
+                                            CHOOSE JOB
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

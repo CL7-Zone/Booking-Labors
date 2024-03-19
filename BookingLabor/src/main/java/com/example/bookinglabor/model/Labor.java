@@ -31,11 +31,17 @@ public class Labor {
     private Date birthday;
     private Date free_time_from;
     private Date free_time_to;
+    @ManyToOne
+    @JoinColumn(name = "city_id", nullable = true)
+    private City city;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = true)
+    private UserAccount userAccount;
 
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;
-
 
 }
