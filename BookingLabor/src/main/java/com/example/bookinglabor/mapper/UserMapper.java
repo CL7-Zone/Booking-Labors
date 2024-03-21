@@ -11,6 +11,7 @@ public class UserMapper {
         UserAccount userDto = UserAccount.builder()
         .id(user.getId())
         .roles(user.getRoles())
+        .labors(user.getLabors())
         .build();
 
         if (userDto != null) {

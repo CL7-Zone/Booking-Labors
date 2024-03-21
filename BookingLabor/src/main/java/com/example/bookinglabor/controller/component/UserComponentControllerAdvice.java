@@ -12,8 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
-public class UserControllerAdvice {
-
+public class UserComponentControllerAdvice {
 
     @ModelAttribute
     public void addUserRoleToModel(Model model, @AuthenticationPrincipal UserDetails userDetails) {

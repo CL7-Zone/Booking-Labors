@@ -55,17 +55,6 @@ public class DisplayHomeController {
         return "home/index";
     }
 
-    @GetMapping("/labors-detail")
-    public String indexLabor(Model model){
-
-        List<Labor> labors = laborService.findAllLabors();
-
-        model.addAttribute("labors", labors);
-
-        return "user/labor/index";
-    }
-
-
     @GetMapping("/category-job/{id}")
     public String show(@PathVariable("id") Long id, Model model){
 

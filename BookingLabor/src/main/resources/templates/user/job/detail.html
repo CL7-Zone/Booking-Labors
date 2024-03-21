@@ -1,13 +1,35 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}" th:with="currentPage='Your Job Detail'">
+<html  lang="en"
+       xmlns:th="http://thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:sec="http://www.thymeleaf.org"
+       layout:decorate="~{layout}" th:with="currentPage='Your Job'">
 <head>
     <meta charset="UTF-8">
-    <title>Your Job Detail</title>
+    <title>Your Job </title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
 </head>
 <body>
+
+    <div layout:fragment="content">
+
+    </div>
 
 </body>
 </html>

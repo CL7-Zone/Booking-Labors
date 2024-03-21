@@ -49,8 +49,8 @@ public class DisplayAuthController {
     }
 
 
-    @PostMapping("/register-save")
-    public String register(@Valid @ModelAttribute("user") UserDto user, BindingResult res, Model model){
+    @PostMapping("/register/save")
+    public String save(@Valid @ModelAttribute("user") UserDto user, BindingResult res, Model model){
 
         UserAccount existingUserEmail = userService.findByEmail(user.getEmail());
 
@@ -74,7 +74,7 @@ public class DisplayAuthController {
 
         userService.saveUser(user);
 
-        return "redirect:/register?success";
+        return "redirect:/login";
     }
 
 }

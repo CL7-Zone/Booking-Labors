@@ -1,49 +1,48 @@
 package com.example.bookinglabor.controller.user;
 
-import com.example.bookinglabor.model.Job;
-import com.example.bookinglabor.model.UserAccount;
+import com.example.bookinglabor.model.object.JobDetailObject;
 import com.example.bookinglabor.service.JobDetailService;
-import com.example.bookinglabor.service.JobService;
-import com.example.bookinglabor.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Collection;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
 public class DisplayJobDetailController {
 
-    private UserService userService;
+    private JobDetailService jobDetailService;
 
-    @GetMapping("/your-job-detail")
+    @GetMapping(value = "/your-job")
     private String index(Model model){
 
         return "/user/job/detail";
     }
 
+    @PostMapping(value = "/save/your-job")
+    private String store(Model model, HttpSession session, HttpServletRequest request){
 
-    @PostMapping("/save/job")
-    private String save(@AuthenticationPrincipal UserDetails userDetails, Model model){
+        try{
+            List<JobDetailObject> jobDetails = (List<JobDetailObject>) session.getAttribute("jobObjects");
 
-        if (userDetails != null) {
-            Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
-            List<String> roleUser = authorities.stream()
-            .map(GrantedAuthority::getAuthority)
-            .toList();
-            System.out.println(roleUser + " saved");
+            if(jobDetails != null){
+                jobDetailService.saveData(session);
+                System.out.println("saved to job detail");
+            }
+            session.removeAttribute("jobObjects");
 
+            return "redirect:/your-job";
+
+        }catch (Exception exception){
+
+            System.out.println("Saved job detail failed ex: " + exception);
+            return "redirect:/your-job";
         }
-
-        return "redirect:/your-job-detail";
     }
 
 }

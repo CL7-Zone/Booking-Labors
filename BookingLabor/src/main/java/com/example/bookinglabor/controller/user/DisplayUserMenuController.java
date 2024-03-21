@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -35,22 +36,42 @@ public class DisplayUserMenuController {
         List<Job> jobs = jobService.findAllJobs();
         List<JobDetail> jobDetails = jobDetailService.findAllJobDetails();
         String email = SecurityUtil.getSessionUser();
+        UserAccount role =   userService.findByEmail(email);
+        List<Role> roles = role.getRoles();
+        List<String> currentRoleUser = new ArrayList<>();
+        Long userID =   userService.findByEmail(email).getId();
+        Labor labor = laborService.findJobByUserId(userID);
 
-        if (userDetails != null) {
-            Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
-            List<String> roleUser = authorities.stream()
-            .map(GrantedAuthority::getAuthority)
-            .toList();
-            System.out.println(roleUser);
-            model.addAttribute("roleUser", roleUser);
+        try{
+
+            if (userDetails != null) {
+
+                Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+                List<String> roleUser = authorities.stream()
+                .map(GrantedAuthority::getAuthority)
+                .toList();
+
+                System.out.println("LABOR EMAIL: "+labor.getUserAccount().getEmail());
+                System.out.println("LABOR ID: "+labor.getId());
+                System.out.println(roleUser);
+            }
+
+            model.addAttribute("labor_id", labor.getId());
+
+        }catch (Exception exception){
+
+            System.out.println("ERROR: "+exception);
         }
 
+        for (Role r : roles) {
+            currentRoleUser.add("ROLE_"+r.getName());
+        }
+        model.addAttribute("roleUser", currentRoleUser);
         model.addAttribute("jobs", jobs);
+        model.addAttribute("jobDetails", jobDetails);
         model.addAttribute("email", email);
         model.addAttribute("labors", labors);
-        model.addAttribute("jobDetails", jobDetails);
 
         return "user/index";
-
     }
 }

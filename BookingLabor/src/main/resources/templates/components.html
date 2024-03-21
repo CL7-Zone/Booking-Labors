@@ -35,7 +35,10 @@
                                 <ul class="sub-menu">
                                     <li> <a th:href="@{/jobs}">jobs</a></li>
                                     <li th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}">
-                                        <a th:href="@{/your-job-detail}">job detail</a>
+                                        <a th:href="@{/your-cart}">cart</a>
+                                    </li>
+                                    <li th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}">
+                                        <a th:href="@{/your-job}">your job</a>
                                     </li>
                                 </ul>
                             </li>
@@ -43,17 +46,20 @@
                             <li class="has-sub" sec:authorize="isAuthenticated()">
                                 <a href="javascript:void(0)">Labor</a>
                                 <ul class="sub-menu">
-                                    <li><a th:href="@{/labors-detail}">Labors</a></li>
-                                    <li><a th:href="@{/labor-update-info}">CREATE Info</a></li>
                                     <li><a th:href="@{/your-info-labor}">INFO</a></li>
+                                    <li><a th:href="@{/labors}">Labors</a></li>
+                                    <li><a th:href="@{/labor-update-info}">CREATE Info</a></li>
                                 </ul>
                             </li>
 
                             <li class="has-sub"  sec:authorize="isAuthenticated()">
                                 <a href="javascript:void(0)">CUSTOMER</a>
                                 <ul class="sub-menu">
-                                    <li ><a th:href="@{/customer-update-info}">CREATE Info</a></li>
                                     <li><a th:href="@{/your-info-customer}">INFO</a></li>
+                                    <li ><a th:href="@{/customer-update-info}">CREATE Info</a></li>
+                                    <li th:if="${#lists.contains(userRoles, 'ROLE_CUSTOMER')}">
+                                        <a th:href="@{/your-booking-cart}">BOOKING CART</a>
+                                    </li>
                                 </ul>
                             </li>
                             <li sec:authorize="isAuthenticated()"><a th:href="@{/your-menu}">MENU</a></li>
@@ -134,7 +140,7 @@
 
             <!-- Register Form -->
             <div class="user_register">
-                <form th:action="@{/register-save}" method="POST">
+                <form th:action="@{/register/save}" method="POST">
                     <label>Email Address</label>
                     <input name="email" type="email" id="email" >
                     <br />
@@ -144,7 +150,7 @@
 
                     <div class="action_btns">
                         <div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Back</a></div>
-                        <div class="one_half last"><button th:href="@{/}" type="submit" class="btn btn_red">Register</button></div>
+                        <div class="one_half last"><button type="submit" class="btn btn_red">Register</button></div>
                     </div>
                 </form>
             </div>

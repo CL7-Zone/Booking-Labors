@@ -43,8 +43,18 @@ public class DisplayUserLaborController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
+    @GetMapping("/labors")
+    public String index(Model model){
+
+        List<Labor> labors = laborService.findAllLabors();
+
+        model.addAttribute("labors", labors);
+
+        return "user/labor/index";
+    }
+
     @GetMapping("/your-info-labor")
-    public String index(Model model, Principal principal){
+    public String info(Model model, Principal principal){
 
         List<City> cities = cityService.findAllCities();
         String sessionEmail = SecurityUtil.getSessionUser();

@@ -46,14 +46,16 @@
                     <div class="col-lg-12">
                         <div class="top-content">
                             <div class="row">
-                                <div class="col-lg-4">
-                                    <span class="open" >USER</span>
+                                <div class="col-lg-8">
+                                    <span th:if="${roleUser!=null}">
+                                        <span class="open" th:text="${roleUser}"></span>
+                                    </span>
                                     <span class="wish-list">
                                         <i class="fa fa-user"></i>
                                         <i th:text="${#authentication.name}"></i>
                                     </span>
                                 </div>
-                                <div class="col-lg-8">
+                                <div class="col-lg-4">
                                     <ul>
                                         <li><i class="fa fa-medal"></i>
                                     </ul>

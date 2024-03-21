@@ -14,7 +14,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,6 +38,26 @@ public class LaborWork implements LaborService {
                 .collect(Collectors
                 .toList());
     }
+
+    @Override
+    public Labor findJobById(Long id) {
+
+        Optional<Labor> laborOptional = laborRepo.findById(id);
+
+        return laborOptional.map(LaborMapper::mapToLabor).orElse(null);
+    }
+
+    @Override
+    public Labor findJobByUserId(Long user_id) {
+
+        Labor labor = laborRepo.findLaborByUserId(user_id);
+
+        if(labor != null)
+            return laborRepo.findLaborByUserId(user_id);
+
+        else return null;
+    }
+
 
     @Override
     public void saveAllDataFromExcel(MultipartFile file) {
