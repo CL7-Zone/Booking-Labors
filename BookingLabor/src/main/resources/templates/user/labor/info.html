@@ -6,6 +6,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Your info</title>
+    <style>
+        .btn-save-job-detail{
+            width: 100%;
+            font-size: 20px;
+            padding: 15px;
+            text-align: center;
+        }
+        .main-button button {
+            font-size: 15px;
+            color: #fff;
+            background-color: #00bdfe;
+            border: 1px solid #00bdfe;
+            padding: 10px 30px;
+            display: inline-block;
+            border-radius: 10px;
+            font-weight: 500;
+            text-transform: capitalize;
+            letter-spacing: 0.5px;
+            transition: all .3s;
+        }
+    </style>
 </head>
 <body>
 
@@ -21,91 +42,123 @@
             </div>
         </div>
 
-        <div class="user-info" th:each="labor : ${laborInfo}">
+
+        <div class="contest-details">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="avatar">
-                            <img src="assets/images/user-avatar.jpg" alt="">
-                            <h4 th:text="${'#'+labor.id + ' ' + labor.full_name}"></h4>
+                        <div class="top-content">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <span class="open" th:text="${roleUser}"></span>
+                                    <span class="wish-list">
+                                        <i class="fa fa-user"></i>
+                                        <em th:text="${email}"></em>
+                                    </span>
+                                </div>
+                                <div class="col-lg-4">
+                                    <ul>
+                                        <li><i class="fa fa-medal"></i> </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="main-content">
+                            <h4>YOUR INFORMATION</h4>
+                            <form th:each="labor : ${laborInfo}" th:action="@{'/update-info/' + ${labor.id}}" method="POST">
+                                <div class="row"  >
+                                    <div class="mb-3">
+                                        <label for="full_name" class="form-label">Full name</label>
+                                        <input type="text" class="form-control" th:value="${labor.full_name}" id="full_name" name="full_name" placeholder="Full name">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="address" class="form-label">Address</label>
+                                        <input type="text" class="form-control" th:value="${labor.address}" id="address" name="address" placeholder="Address">
+                                    </div>
+                                    <div  class="mb-3">
+                                        <label for="address_work_official" class="form-label">Official work address</label>
+                                        <input type="text" class="form-control" th:value="${labor.address_work_official}" id="address_work_official" name="address_work_official" placeholder="Official work address">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="phone_number" class="form-label">Phone number</label>
+                                        <input type="text" class="form-control"  th:value="${labor.phone_number}" id="phone_number" name="phone_number" placeholder="Phone number">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="birthday" class="form-label">Birthday</label>
+                                        <input type="text" class="form-control" th:value="${labor.birthday}" id="birthday" name="birthday" placeholder="Birthday">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="number_experience" class="form-label">Number experience</label>
+                                        <select name="number_experience" id="number_experience" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                            <option th:value="${labor.number_experience}" th:text="${labor.number_experience + ' Năm'}"></option>
+                                            <option value="1">1 Năm</option>
+                                            <option value="2">2 Năm</option>
+                                            <option value="3">3 Năm</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label for="status" class="form-label">Status</label>
+                                        <select name="status" id="status" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                            <span th:if="${labor.status==1}">
+                                                <option th:value="${labor.status}">Free now</option>
+                                            </span>
+                                            <span th:if="${labor.status==0}">
+                                                <option th:value="${labor.status}">Busy now</option>
+                                            </span>
+                                            <option value="0">Busy now</option>
+                                            <option value="1">Free now</option>
+                                        </select>
+                                    </div>
 
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-sm-6">
-                        <div class="info">
-                            <h6>Address</h6>
-                            <h5 th:text="${labor.address}"></h5>
-                            <span>of 1680</span>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-sm-6">
-                        <div class="info">
-                            <h6>Official work address</h6>
-                            <h5 th:text="${labor.address_work_official}"></h5>
-                            <span>of 5.00 Stars</span>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-sm-6">
-                        <div class="info">
-                            <h6>Phone number</h6>
-                            <h5 th:text="${labor.phone_number}"></h5>
-                            <span>Picture Category</span>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-2 col-sm-6">
-                        <div class="info">
-                            <h6>Birthday</h6>
-                            <h5 th:text="${labor.birthday}"></h5>
-                            <span>All Time</span>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-2 col-sm-6">
-                        <div class="info">
-                            <h6>Your number experience</h6>
-                            <h5 th:text="${labor.number_experience}"></h5>
-                            <span>Picture Category</span>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-2 col-sm-6">
-                        <div class="info">
-                            <h6>Your status</h6>
-                            <h5 th:if="${labor.status==1}">
-                                <h5>
-                                    Free now
-                                </h5>
-                            </h5>
-                            <h5 th:if="${labor.status!=1}">
-                                <h5>
-                                    Busy now
-                                </h5>
-                            </h5>
-                            <span>Picture Category</span>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-2 col-sm-6">
-                        <div class="info">
-                            <h6>Free time from</h6>
-                            <h5 th:text="${labor.free_time_from}"></h5>
-                            <span>All Time</span>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-2 col-sm-6">
-                        <div class="info">
-                            <h6>Free time to</h6>
-                            <h5 th:text="${labor.free_time_to}"></h5>
-                            <span>All Time</span>
-                        </div>
-                    </div>
+                                    <div class="mb-3">
+                                        <label for="free_time_from" class="form-label">Free time from</label>
+                                        <input type="text" class="form-control" th:value="${labor.free_time_from}" id="free_time_from" name="free_time_from" placeholder="Free time from">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="free_time_to" class="form-label">Free time to</label>
+                                        <input type="text" class="form-control" th:value="${labor.free_time_to}" id="free_time_to" name="free_time_to" placeholder="Free time to">
+                                    </div>
 
 
+                                    <div class="col-lg-12">
+                                        <select name="city_id" id="city_id" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                            <option th:value="${labor.city.id}" th:text="${labor.city.city_name}"> </option>
+                                            <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.city_name}"></option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-12" th:if="${success}" >
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" >
+                                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                                            <!--/*@thymesVar id="success" type="text"*/-->
+                                            <strong th:text="${success}"></strong>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12" th:if="${failed}">
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" >
+                                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                                            <!--/*@thymesVar id="failed" type="text"*/-->
+                                            <strong th:text="${failed}"></strong>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="main-button">
+                                    <button class="btn-save-job-detail" type="submit">UPDATE</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+
 
     </div>
 

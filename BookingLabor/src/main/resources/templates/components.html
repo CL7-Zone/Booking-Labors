@@ -48,7 +48,7 @@
                                 <ul class="sub-menu">
                                     <li><a th:href="@{/your-info-labor}">INFO</a></li>
                                     <li><a th:href="@{/labors}">Labors</a></li>
-                                    <li><a th:href="@{/labor-update-info}">CREATE Info</a></li>
+                                    <li><a th:href="@{/labor-create-info}">CREATE Info</a></li>
                                 </ul>
                             </li>
 
@@ -56,14 +56,14 @@
                                 <a href="javascript:void(0)">CUSTOMER</a>
                                 <ul class="sub-menu">
                                     <li><a th:href="@{/your-info-customer}">INFO</a></li>
-                                    <li ><a th:href="@{/customer-update-info}">CREATE Info</a></li>
+                                    <li ><a th:href="@{/customer-create-info}">CREATE Info</a></li>
                                     <li th:if="${#lists.contains(userRoles, 'ROLE_CUSTOMER')}">
                                         <a th:href="@{/your-booking-cart}">BOOKING CART</a>
                                     </li>
                                 </ul>
                             </li>
                             <li sec:authorize="isAuthenticated()"><a th:href="@{/your-menu}">MENU</a></li>
-                            <li sec:authorize="!isAuthenticated()"><a th:href="@{/labors-detail}">LABOR</a></li>
+                            <li sec:authorize="!isAuthenticated()"><a th:href="@{/labors}">LABOR</a></li>
 
                         </ul>
 

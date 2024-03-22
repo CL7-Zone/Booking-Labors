@@ -43,6 +43,12 @@ public class JobDetailWork implements JobDetailService {
     }
 
     @Override
+    public List<JobDetail> findJobDetailByLaborId(Long labor_id) {
+
+        return jobDetailRepo.findJobDetailByLaborId(labor_id);
+    }
+
+    @Override
     public boolean saveDataToSessionStore(List<JobDetailObject> jobDetailObjects,HttpServletRequest request, HttpSession session, Job job, Long id) {
 
         if (jobDetailObjects == null) {
@@ -89,6 +95,32 @@ public class JobDetailWork implements JobDetailService {
         }
 
 
+    }
+
+    @Override
+    public boolean updateById(long id, long job_id, long labor_id, JobDetail jobDetail) {
+
+        Optional<Job> jobOptional = jobRepo.findById(job_id);
+        Optional<Labor> laborOptional = laborRepo.findById(labor_id);
+        if(jobOptional.isPresent()&& laborOptional.isPresent()){
+            Job job = jobOptional.get();
+            Labor labor = laborOptional.get();
+            JobDetail jobDetail_update = JobDetailMapper.mapToJobDetail(jobDetail);
+            assert jobDetail_update != null;
+            jobDetail_update.setJob(job);
+            jobDetail_update.setLabor(labor);
+            jobDetailRepo.save(jobDetail_update);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public void deleteById(long id) {
+
+        jobDetailRepo.deleteById(id);
     }
 
     @Override

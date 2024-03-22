@@ -96,9 +96,13 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <button class="btn btn-primary" th:action="@{'/jobs/show/' + ${job.id}}">
-                                            CHOOSE JOB
-                                        </button>
+                                        <form th:action="@{'/save/cart/job/' + ${job.id}}" method="POST">
+                                              <span th:if="${labor_id != null}">
+                                                <input type="hidden" th:value="${labor_id}" name="labor_id" id="labor_id">
+                                              </span>
+                                            <input type="hidden" th:value="${job.id}" name="id" th:id="'id_' + ${job.id}">
+                                            <button th:if="${#lists.contains(roleUser, 'ROLE_LABOR')}" class="btn btn-primary" type="submit" name="selectedJobId">CHOOSE JOB</button>
+                                        </form>
                                     </td>
                                 </tr>
 

@@ -56,7 +56,15 @@
                                 <div class="col-lg-12">
                                     <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${param.please}">
                                         <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Failed:"><use xlink:href="#check-circle-fill"/></svg>
-                                        <strong>Login into page to choose your job, Please!</strong>
+                                        <strong>Login to the page to choose your job, Please!</strong>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${param.bookingNow}">
+                                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Failed:"><use xlink:href="#check-circle-fill"/></svg>
+                                        <strong>Login to the page to book labor, Please!</strong>
                                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                     </div>
                                 </div>

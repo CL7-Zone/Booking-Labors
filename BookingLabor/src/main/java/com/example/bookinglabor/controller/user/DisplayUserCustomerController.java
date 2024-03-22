@@ -44,7 +44,7 @@ public class DisplayUserCustomerController {
 
     }
 
-    @GetMapping("/customer-update-info")
+    @GetMapping("/customer-create-info")
     public String create(Model model, Principal principal){
 
         List<Labor> labors = laborService.findAllLabors();
@@ -95,11 +95,11 @@ public class DisplayUserCustomerController {
                         this.customerService.createCustomerByUserId(user.getId(), customer);
                     }
 
-                    return "redirect:/customer-update-info?success";
+                    return "redirect:/customer-create-info?success";
                 }
             }
 
-            return "redirect:/customer-update-info?failed";
+            return "redirect:/customer-create-info?failed";
 
 
         }catch (Exception exception){
@@ -107,7 +107,7 @@ public class DisplayUserCustomerController {
             System.out.println("ERROR: "+exception);
             flashMessage.addFlashAttribute("failed", "Error: "+exception);
 
-            return "redirect:/labor-update-info";
+            return "redirect:/labor-create-info";
         }
     }
 

@@ -2,6 +2,7 @@
 <html lang="en"
       xmlns:th="http://thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org"
       layout:decorate="~{layout}" th:with="currentPage='Show'">
 <head>
     <meta charset="UTF-8">
@@ -51,7 +52,7 @@
                                     </span>
                                 </div>
                                 <div class="border-button">
-                                    <a >Xem công việc của danh mục này</a>
+                                    <a th:href="${'/jobs/show/' + job.id}" >CHOOSE JOB</a>
                                 </div>
                             </div>
 
@@ -79,8 +80,11 @@
                                         <b>Not Job</b>
                                     </span>
                                     </div>
-                                    <div class="border-button">
-                                        <a href="">Xem công việc</a>
+                                    <div class="border-button" sec:authorize="!isAuthenticated()">
+                                        <a th:href="@{/login?please}">CHOOSE JOB</a>
+                                    </div>
+                                    <div class="border-button" sec:authorize="isAuthenticated()">
+                                        <a th:href="@{/your-job-detail}">CHOOSE JOB</a>
                                     </div>
                                 </div>
                             </div>

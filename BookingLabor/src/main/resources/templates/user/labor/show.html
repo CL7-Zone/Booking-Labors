@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}" th:with="currentPage='Show Detail Labor'">
 <head>
@@ -10,6 +11,133 @@
 <body>
 
     <div layout:fragment="content">
+
+        <div class="page-heading">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2 header-text">
+                        <div class="main-content">
+                            <div class="counter">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contest-details">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="top-content">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <span class="open" th:if="${roleUser==null}">
+                                        <span th:text="${'[GUEST]'}"></span>
+                                    </span>
+                                    <span class="open" th:if="${roleUser!=null}">
+                                        <span class="open" th:text="${roleUser}"></span>
+                                    </span>
+                                    <span class="wish-list">
+                                        <i class="fa fa-user"></i>
+                                        <i th:text="${#authentication.name}"></i>
+                                    </span>
+                                </div>
+                                <div class="col-lg-4">
+                                    <ul>
+                                        <li><i class="fa fa-medal"></i></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="main-content">
+                            <h4>Job detail by labor</h4>
+                            <h5>Labor Information</h5>
+                            <div >
+                                <p>
+                                    <b class="text-info">Full name:</b>
+                                    <span th:text="${labor.full_name}"></span>
+                                </p>
+                                <p>
+                                    <b class="text-info">Address:</b>
+                                    <span th:text="${labor.address}"></span>
+                                </p>
+                                <p>
+                                    <b class="text-info">Official work address:</b>
+                                    <span th:text="${labor.address_work_official}"></span>
+                                </p>
+                                <p>
+                                    <b>Phone number:</b>
+                                    <span th:text="${labor.phone_number}"></span>
+                                </p>
+                                <p>
+                                    <b>Birthday:</b>
+                                    <span th:text="${labor.birthday}"></span>
+                                </p>
+                                <p>
+                                    <b>Number experience:</b>
+                                    <span th:text="${labor.number_experience+ ' Year'}"></span>
+                                </p>
+                                <p>
+                                    <b>Status:</b>
+                                    <span th:if="${labor.status==1}">
+                                    Free now
+                                </span>
+                                    <span th:if="${labor.status!=1}">
+                                    Busy now
+                                </span>
+                                </p>
+                                <p>
+                                    <b class="text-info">Free time from:</b>
+                                    <span th:text="${labor.free_time_from}"></span>
+                                </p>
+                                <p>
+                                    <b class="text-info">Free time to:</b>
+                                    <span th:text="${labor.free_time_to}"></span>
+                                </p>
+                            </div>
+
+                            <h5  class="second-title">Job information by labor</h5>
+                            <br>
+                            <div th:if="${laborDetails!=null}"  th:each="jobDetail : ${laborDetails}">
+                                <em>
+                                    <b class="text-info">Category </b>
+                                    <span th:text="${jobDetail.job.categoryJob.categoryName}"></span>
+                                </em>
+                                <p>
+                                    <b>Name job:</b>
+                                    <span th:text="${jobDetail.job.nameJob}"></span>
+                                </p>
+                                <h4>
+                                    <b class="text">price job:</b>
+                                    <span class="text-warning" th:text="${jobDetail.job.price+ ' VNĐ'}"></span>
+                                </h4>
+
+                                <div sec:authorize="isAuthenticated()">
+                                    <div th:if="${#lists.contains(userRoles, 'ROLE_CUSTOMER')}" >
+                                        <div class="col-lg-12">
+                                            <form th:action="@{'/save/cart/job-detail/' + ${jobDetail.id}}" method="POST">
+                                                <button type="submit" class="btn btn-primary">BOOK NOW</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+
+                            <div class="main-button" sec:authorize="!isAuthenticated()" >
+                                <a th:href="${'/login?bookingNow'}">Booking now</a>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 

@@ -6,31 +6,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Labor list</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
 </head>
 <body>
-
-
-
     <div layout:fragment="content">
-
-        <style>
-            table {
-                font-family: arial, sans-serif;
-                border-collapse: collapse;
-                width: 100%;
-            }
-
-            td, th {
-                border: 1px solid #dddddd;
-                text-align: left;
-                padding: 8px;
-            }
-
-            tr:nth-child(even) {
-                background-color: #dddddd;
-            }
-        </style>
-
         <section class="featured-contests">
             <div class="container">
                 <div class="row">
@@ -73,7 +68,7 @@
                                             </span>
                                             </div>
                                             <div class="border-button">
-                                                <a th:href="${labor.id}">CHOOSE</a>
+                                                <a th:href="${'/labors/'+ labor.id}">Detail</a>
                                             </div>
                                         </div>
                                     </div>

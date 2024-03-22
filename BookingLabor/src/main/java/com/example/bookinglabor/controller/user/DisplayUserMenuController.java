@@ -42,6 +42,11 @@ public class DisplayUserMenuController {
         Long userID =   userService.findByEmail(email).getId();
         Labor labor = laborService.findJobByUserId(userID);
 
+        for(JobDetail jobDetail : jobDetails){
+
+            System.out.println(jobDetail.getJob().getNameJob());
+        }
+
         try{
 
             if (userDetails != null) {

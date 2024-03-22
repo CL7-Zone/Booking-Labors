@@ -72,9 +72,27 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         </div>
+
                         <div class="main-content">
+                            <div style="padding-bottom: 40px" th:if="${#lists.contains(userRoles, 'ROLE_USER')}">
+                                <h4 style="margin-bottom: 10px">ATTENTION:</h4>
+                                <script th:inline="javascript">
+                                    alert("Create info to create jobs and book labor, Please!");
+                                </script>
+                                <ul style="list-style: disc; padding: 0px 20px">
+                                    <li style="list-style: disc;">
+                                        <span class="text-danger">Create info to create jobs and book labor, Please!</span>
+                                    </li>
+                                    <li style="list-style: disc;">
+                                        <span class="text-danger">For create info labor, go to path /LABOR/CREATE INFO</span>
+                                    </li>
+                                    <li style="list-style: disc;">
+                                        <span class="text-danger">For create info customer, go to path /CUSTOMER/CREATE INFO</span>
+                                    </li>
+                                </ul>
+                            </div>
                             <h4>OUR LABORS INFORMATION</h4>
-                            <table>
+                            <table >
                                 <tr>
                                     <th>FullName</th>
                                     <th>Address</th>
@@ -84,21 +102,45 @@
                                     <th>Official work address</th>
                                     <th>Free time from</th>
                                     <th>Free time to</th>
+                                    <th>Name job</th>
+                                    <th>Price job</th>
+                                    <th>In city</th>
+                                    <th colspan="2">ACTION</th>
                                 </tr>
-                                <tr>
-                                    <td>Magazzini Alimentari Riuniti</td>
-                                    <td>Magazzini Alimentari Riuniti</td>
-                                    <td>Magazzini Alimentari Riuniti</td>
-                                    <td>Magazzini Alimentari Riuniti</td>
-                                    <td>Magazzini Alimentari Riuniti</td>
-                                    <td>Magazzini Alimentari Riuniti</td>
-                                    <td>Magazzini Alimentari Riuniti</td>
-                                    <td>Magazzini Alimentari Riuniti</td>
+                                <tr th:each="jobDetail :${jobDetails}">
+                                    <td th:text="${jobDetail.labor.full_name}"></td>
+                                    <td th:text="${jobDetail.labor.address}"></td>
+                                    <td th:text="${jobDetail.labor.phone_number}"></td>
+                                    <td th:text="${jobDetail.labor.birthday}"></td>
+                                    <td th:if="${jobDetail.labor.status==1}">
+                                        <span>Free now</span>
+                                    </td>
+                                    <td th:if="${jobDetail.labor.status==0}">
+                                        <span>Busy now</span>
+                                    </td>
+                                    <td th:text="${jobDetail.labor.address_work_official}"></td>
+                                    <td th:text="${jobDetail.labor.free_time_from}"></td>
+                                    <td th:text="${jobDetail.labor.free_time_to}"></td>
+                                    <td th:text="${jobDetail.job.nameJob}"></td>
+                                    <td class="text" th:text="${jobDetail.job.price+' VNĐ'}"></td>
+                                    <td>
+                                        <i class="text-info fa fa-city"></i>
+                                        <span th:text="${jobDetail.labor.city.city_name}"></span>
+                                    </td>
+                                    <td>
+                                        <a th:href="${'labors/' + jobDetail.labor.id}">DETAIL</a>
+                                    </td>
+                                    <td th:if="${#lists.contains(userRoles, 'ROLE_CUSTOMER')}">
+                                        <form th:action="@{'/save/cart/job-detail/' + ${jobDetail.id}}" method="POST">
+                                            <button class="btn btn-primary" type="submit" name="selectedJobId">BOOK NOW</button>
+                                        </form>
+                                    </td>
                                 </tr>
 
                             </table>
                             <br><br>
                             <h4>OUR JOB SERVICE INFORMATION</h4>
+
                                 <table>
                                     <tr>
                                         <th>ID</th>

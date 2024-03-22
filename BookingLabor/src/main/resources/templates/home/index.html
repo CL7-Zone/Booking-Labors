@@ -60,6 +60,63 @@
             </section>
 
 
+            <section class="featured-contests">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="section-heading text-center">
+                                <h6>our labor</h6>
+                                <h4>choose<em> labor</em> now</h4>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div th:each="labor : ${labors}" class="col-lg-4 item">
+                                    <div class="thumb">
+                                        <img th:src="@{/assets/images/featured-image-03.jpg}" alt="">
+                                        <div class="hover-effect">
+                                            <div class="content">
+                                                <div class="top-content">
+                                                    <span class="award" th:text="${labor.id}"></span>
+                                                    <span th:if="${labor.status == 1}">
+                                                    <span class="price">Free now</span>
+                                                </span>
+                                                </div>
+                                                <b th:text="${'Full Name: '+labor.full_name}"></b>
+                                                <br>
+                                                <b th:text="${'Birthday: '+labor.birthday}"></b>
+                                                <br>
+                                                <b th:text="${'Address: '+labor.address}"></b><br>
+                                                <b th:text="${'Official Work Address: '+labor.address_work_official}"></b>
+                                                <div class="info">
+                                            <span class="participants">
+                                                <img th:src="@{/assets/images/icon-03.png}" alt=""><br>
+                                                <span th:text="${'Phone number: '+labor.phone_number}"></span><br>
+                                                <span th:text="${'Free time from: '+labor.free_time_from}"></span>
+                                            </span>
+                                                    <span class="submittions">
+                                                <img th:src="@{/assets/images/icon-01.png}" alt=""><br>
+                                                <span th:text="${'Number experience: '+labor.number_experience}"></span><br>
+                                                <span th:text="${'Free time to: '+labor.free_time_to}"></span>
+                                            </span>
+                                                </div>
+                                                <div class="border-button">
+                                                    <a th:href="${'/labors/'+ labor.id}">Detail</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </section>
+
+
             <section class="popular-categories">
                 <div class="container-fluid">
                     <div class="row">

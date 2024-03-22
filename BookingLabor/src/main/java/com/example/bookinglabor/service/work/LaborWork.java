@@ -14,7 +14,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -46,6 +45,14 @@ public class LaborWork implements LaborService {
 
         return laborOptional.map(LaborMapper::mapToLabor).orElse(null);
     }
+
+    @Override
+    public Labor findById(Long id) {
+        Optional<Labor> laborOptional = laborRepo.findById(id);
+
+        return laborOptional.map(LaborMapper::mapToLabor).orElse(null);
+    }
+
 
     @Override
     public Labor findJobByUserId(Long user_id) {
@@ -89,5 +96,17 @@ public class LaborWork implements LaborService {
         laborRepo.save(labor_create);
 
 
+    }
+
+    @Override
+    public void update(Long userId, Long city_id, Labor labor) {
+
+        UserAccount user = userRepository.findById(userId).get();
+        City city = cityRepository.findById(city_id).get();
+        Labor labor_update = LaborMapper.mapToLabor(labor);
+        assert labor_update != null;
+        labor_update.setUserAccount(user);
+        labor_update.setCity(city);
+        laborRepo.save(labor_update);
     }
 }

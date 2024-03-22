@@ -41,6 +41,7 @@ public class DisplayHomeController {
     private String index(Model model){
 
         List<CategoryJob> categoryJobs = categoryJobService.findAllCategoryJobs();
+        List<Labor> labors = laborService.findAllLabors();
         List<Job> jobs = jobService.findAllJobs();
         Long countJob = categoryJobService.countJob();
 
@@ -50,6 +51,7 @@ public class DisplayHomeController {
 
         model.addAttribute("countJobsByCategoryJob", countJobsByCategoryJobFunction);
         model.addAttribute("categoryJobs", categoryJobs);
+        model.addAttribute("labors", labors);
         model.addAttribute("jobs", jobs);
 
         return "home/index";
@@ -61,10 +63,8 @@ public class DisplayHomeController {
         CategoryJob categoryJob = categoryJobService.findCategoryJobById(id);
         Function<Long, Long> countJobsByCategoryJobFunction = categoryJobService::countJobsByCategoryJob;
 
-
         model.addAttribute("categoryJob", categoryJob);
         model.addAttribute("countJobsByCategoryJob", countJobsByCategoryJobFunction);
-
 
         return "home/show";
     }

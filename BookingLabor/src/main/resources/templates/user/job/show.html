@@ -28,14 +28,16 @@
                     <div class="col-lg-12">
                         <div class="top-content">
                             <div class="row">
-                                <div class="col-lg-4">
-                                    <span class="open">USER</span>
+                                <div class="col-lg-8">
+                                     <span th:if="${roleUser!=null}">
+                                        <span class="open" th:text="${roleUser}"></span>
+                                    </span>
                                     <span class="wish-list">
                                         <i class="fa fa-user"></i>
-                                       <i th:text="${#authentication.name}"></i>
+                                        <i th:text="${#authentication.name}"></i>
                                     </span>
                                 </div>
-                                <div class="col-lg-8">
+                                <div class="col-lg-4">
                                     <ul>
                                         <li><i class="fa fa-medal"></i>
                                     </ul>
@@ -62,9 +64,18 @@
                             <div class="main-button" sec:authorize="!isAuthenticated()">
                                 <a th:href="@{/login?please}">CHOOSE JOB</a>
                             </div>
-                            <div class="main-button" sec:authorize="isAuthenticated()">
-                                <a th:href="@{/your-job-detail}">CHOOSE JOB</a>
+                            <div class="main-button" th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}" sec:authorize="isAuthenticated()">
+                                <form th:action="@{'/save/cart/job/' + ${job.id}}" method="POST">
+                                      <span th:if="${labor_id != null}">
+                                        <input type="hidden" th:value="${labor_id}" name="labor_id" id="labor_id">
+                                      </span>
+                                    <input type="hidden" th:value="${job.id}" name="id" th:id="'id_' + ${job.id}">
+                                    <button th:if="${#lists.contains(roleUser, 'ROLE_LABOR')}" class="btn btn-primary" type="submit" name="selectedJobId">
+                                        CHOOSE JOB
+                                    </button>
+                                </form>
                             </div>
+
                         </div>
                     </div>
                 </div>
