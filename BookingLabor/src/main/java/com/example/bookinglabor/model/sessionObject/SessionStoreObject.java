@@ -1,4 +1,4 @@
-package com.example.bookinglabor.model.object;
+package com.example.bookinglabor.model.sessionObject;
 
 import java.io.Serial;
 import java.io.Serializable;

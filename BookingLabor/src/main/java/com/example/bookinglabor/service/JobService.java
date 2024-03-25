@@ -10,7 +10,7 @@ public interface JobService {
 
     List<Job> findAllJobs();
 
-    Job findJobById(Long id);
+    Job findById(Long id);
     void saveAllDataFromExcel(MultipartFile file);
 
 }

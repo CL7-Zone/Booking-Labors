@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -17,12 +18,23 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class Booking {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private int accept;
     private double total_price;
+    private String book_address;
+    private String message;
+    private String city_name;
+    private Date checkin;
+    private Date checkout;
     @ManyToOne
     @JoinColumn(name = "job_detail_id", nullable = true)
     private JobDetail jobDetail;
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = true)
+    private Customer customer;
 
     @CreationTimestamp
     private LocalDateTime createdOn;

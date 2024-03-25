@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -40,13 +41,21 @@ public class DisplayUserMenuController {
         List<Role> roles = role.getRoles();
         List<String> currentRoleUser = new ArrayList<>();
         Long userID =   userService.findByEmail(email).getId();
-        Labor labor = laborService.findJobByUserId(userID);
+        Labor labor = laborService.findByUserId(userID);
+        DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
 
         for(JobDetail jobDetail : jobDetails){
-
+            String moneyJobDetail = decimalFormat.format(jobDetail.getJob().getPrice());
+            model.addAttribute("moneyJobDetail",moneyJobDetail);
             System.out.println(jobDetail.getJob().getNameJob());
         }
-
+        for(Job job : jobs){
+            String money = decimalFormat.format(job.getPrice());
+            model.addAttribute("moneyJob",money);
+        }
+        for (Role ro : roles) {
+            currentRoleUser.add("ROLE_"+ro.getName());
+        }
         try{
 
             if (userDetails != null) {
@@ -66,10 +75,6 @@ public class DisplayUserMenuController {
         }catch (Exception exception){
 
             System.out.println("ERROR: "+exception);
-        }
-
-        for (Role r : roles) {
-            currentRoleUser.add("ROLE_"+r.getName());
         }
         model.addAttribute("roleUser", currentRoleUser);
         model.addAttribute("jobs", jobs);

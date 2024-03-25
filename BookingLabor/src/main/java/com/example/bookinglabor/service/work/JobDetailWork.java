@@ -2,11 +2,12 @@ package com.example.bookinglabor.service.work;
 
 import com.example.bookinglabor.mapper.JobDetailMapper;
 import com.example.bookinglabor.model.*;
-import com.example.bookinglabor.model.object.JobDetailObject;
+import com.example.bookinglabor.model.sessionObject.JobDetailObject;
 import com.example.bookinglabor.repo.JobDetailRepo;
 import com.example.bookinglabor.repo.JobRepo;
 import com.example.bookinglabor.repo.LaborRepo;
 import com.example.bookinglabor.repo.UserRepo;
+import com.example.bookinglabor.security.SecurityUtil;
 import com.example.bookinglabor.service.JobDetailService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,8 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -43,38 +44,75 @@ public class JobDetailWork implements JobDetailService {
     }
 
     @Override
+    public JobDetail findById(Long id) {
+
+        Optional<JobDetail> optionalJobDetail = jobDetailRepo.findById(id);
+
+        return optionalJobDetail
+                .map(JobDetailMapper::mapToJobDetail)
+                .orElse(null);
+    }
+
+    @Override
     public List<JobDetail> findJobDetailByLaborId(Long labor_id) {
 
         return jobDetailRepo.findJobDetailByLaborId(labor_id);
     }
 
     @Override
-    public boolean saveDataToSessionStore(List<JobDetailObject> jobDetailObjects,HttpServletRequest request, HttpSession session, Job job, Long id) {
+    public int countJobDetail() {
+
+        return (int) jobDetailRepo.count();
+    }
+
+    @Override
+    public int countJobDetailByLaborId(long labor_id) {
+
+        return jobDetailRepo.countJobDetailsByLaborId(labor_id);
+    }
+
+    @Override
+    public int saveDataToSessionStore(List<JobDetailObject> jobDetailObjects,
+                                          HttpServletRequest request,
+                                          HttpSession session, Job job, Long id) {
+
+        Long user_id = userRepo.findByEmail(SecurityUtil.getSessionUser()).getId();
+        Long labor_id = laborRepo.findLaborByUserId(user_id).getId();
+        List<JobDetail> jobDetailList = jobDetailRepo.findJobDetailByLaborId(labor_id);
+        System.out.println("size: "+jobDetailList.size());
 
         if (jobDetailObjects == null) {
             jobDetailObjects = new ArrayList<>();
             request.getSession().setAttribute("jobObjects", jobDetailObjects);
         }
-
         JobDetailObject jobDetailObject = new JobDetailObject(
                 job.getId(), job.getNameJob(), job.getPrice(),
                 job.getImageJob(), job.getDescription(),
                 job.getCategoryJob().getCategoryName(), id
         );
+        List<JobDetailObject> jobDetails = (List<JobDetailObject>) session.getAttribute("jobObjects");
 
-        List<JobDetailObject> jobDetail = (List<JobDetailObject>) session.getAttribute("jobObjects");
-
-        if(!jobDetail.isEmpty()){
-            if(jobDetail.size() > 4){
-                System.out.println("Save to cart failed!!!");
-                return false;
+        for(JobDetailObject jobCart : jobDetails){
+            if(Objects.equals(jobCart.getId(), job.getId())){
+                return 0;
             }
         }
-
+        if(!jobDetails.isEmpty()){
+            if(jobDetails.size() > 4){
+                System.out.println("Save to cart failed!!!");
+                return 1;
+            }
+        }
+        if(jobDetailRepo.countJobDetailsByJobId(job.getId(), labor_id) > 0){
+            return 2;
+        }
+        if(jobDetailList.size() >= 5){
+            return 3;
+        }
         jobDetailObjects.add(jobDetailObject);
         request.getSession().setAttribute("jobObjects", jobDetailObjects);
 
-        return true;
+        return 4;
     }
 
     @Override
@@ -93,7 +131,6 @@ public class JobDetailWork implements JobDetailService {
                 jobDetailRepo.save(jobDetail_);
             }
         }
-
 
     }
 

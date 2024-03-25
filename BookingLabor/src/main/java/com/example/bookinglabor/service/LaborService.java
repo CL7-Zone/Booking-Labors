@@ -13,7 +13,7 @@ public interface LaborService {
     Labor findJobById(Long id);
 
     Labor findById(Long id);
-    Labor findJobByUserId(Long user_id);
+    Labor findByUserId(Long user_id);
 
     void saveAllDataFromExcel(MultipartFile file);
 

@@ -16,7 +16,7 @@
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
                         <a th:href="@{/}" class="logo">
-                            <img th:src="@{/assets/images/bookingLaborLogo.png}" alt="SnapX Photography Template">
+                            <img th:src="@{/assets/images/bookingLaborLogo.png}" alt="bookingLaborLogo">
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
@@ -30,12 +30,15 @@
                                 </ul>
                             </li>
 
+                            <li sec:authorize="!isAuthenticated()"><a th:href="@{/labors}">LABOR</a></li>
+                            <li sec:authorize="!isAuthenticated()"><a th:href="@{/}">CONTACT</a></li>
+
                             <li class="has-sub" sec:authorize="isAuthenticated()" >
                                 <a href="javascript:void(0)">JOB</a>
                                 <ul class="sub-menu">
                                     <li> <a th:href="@{/jobs}">jobs</a></li>
                                     <li th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}">
-                                        <a th:href="@{/your-cart}">cart</a>
+                                        <a th:href="@{/your-cart}">job cart</a>
                                     </li>
                                     <li th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}">
                                         <a th:href="@{/your-job}">your job</a>
@@ -60,10 +63,13 @@
                                     <li th:if="${#lists.contains(userRoles, 'ROLE_CUSTOMER')}">
                                         <a th:href="@{/your-booking-cart}">BOOKING CART</a>
                                     </li>
+                                    <li th:if="${#lists.contains(userRoles, 'ROLE_CUSTOMER')}">
+                                        <a th:href="@{/your-booking}">YOUR BOOKING</a>
+                                    </li>
                                 </ul>
                             </li>
                             <li sec:authorize="isAuthenticated()"><a th:href="@{/your-menu}">MENU</a></li>
-                            <li sec:authorize="!isAuthenticated()"><a th:href="@{/labors}">LABOR</a></li>
+
 
                         </ul>
 
@@ -157,6 +163,17 @@
 
         </section>
     </div>
+
+    <div class="page-heading">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 header-text">
+                    <img height="100%" width="50%" th:src="@{/assets/images/book1.png}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </div>
 

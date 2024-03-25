@@ -101,13 +101,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-
         http.csrf().disable() // Vô hiệu hóa CSRF protection để cho phép đăng nhập qua form POST mà không cần token CSRF
                 .authorizeRequests() // Bắt đầu cấu hình cho việc xác thực yêu cầu
                 .antMatchers("/","/error","/login", "/admin/work/creates",
-                "/labors/**", "/category-job/**","/jobs/show/**", "/assets/**", "/vendor/**")
-                .permitAll()
-                .antMatchers(HttpMethod.POST, "/register/save").permitAll()// Cho phép mọi người truy cập các đường dẫn này mà không cần xác thực
+                "/labors/**", "/category-job/**","/jobs/show/**", "/assets/**", "/vendor/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/register/save").permitAll()
+                // Cho phép mọi người truy cập các đường dẫn này mà không cần xác thực
                 .antMatchers(HttpMethod.GET,"/your-menu", "/labor-create-info", "/customer-create-info")
                 .hasAnyRole("USER", "LABOR", "CUSTOMER", "ADMIN")// Cho phép người dùng có role là USER truy cập vào các route trên
                 .antMatchers(HttpMethod.POST, "/labor/info/save", "/customer/info/save")
@@ -115,11 +114,12 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.GET, "/your-info-labor",  "/your-cart", "/your-job").hasAnyRole("LABOR")
                 .antMatchers(HttpMethod.POST, "/save/cart/job/**", "/save/your-job","/update/job-detail/**",
                 "/delete/job-cart/**", "/delete/job-detail/**").hasAnyRole("LABOR")
-                .antMatchers(HttpMethod.GET, "/your-info-customer", "/your-booking-cart").hasAnyRole("CUSTOMER")
-                .antMatchers(HttpMethod.POST, "/save/cart/job-detail/**").hasAnyRole("CUSTOMER")
+                .antMatchers(HttpMethod.GET, "/your-info-customer", "/your-booking-cart",
+                "/your-booking", "/delete/booking-cart/**").hasAnyRole("CUSTOMER")
+                .antMatchers(HttpMethod.POST, "/save/cart/job-detail/**", "/save/cart/booking",
+                 "/save/booking").hasAnyRole("CUSTOMER")
                 .antMatchers(HttpMethod.GET , "/admin/home", "/admin/work/creates")
-                .hasAnyRole("ADMIN").antMatchers()
-                .authenticated()// Yêu cầu xác thực (đăng nhập) để truy cập các đường dẫn này
+                .hasAnyRole("ADMIN").antMatchers().authenticated()// Yêu cầu xác thực (đăng nhập) để truy cập các đường dẫn này
                 .anyRequest().authenticated() // Bất kỳ yêu cầu nào khác cũng yêu cầu xác thực
                 .and() // Kết thúc phần cấu hình cho authorizeRequests(), bắt đầu một cấu hình mới
                 .formLogin(form -> form // Cấu hình đăng nhập thông qua form
@@ -153,7 +153,6 @@ public class SecurityConfig {
 
         builder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
-
 
 
 }

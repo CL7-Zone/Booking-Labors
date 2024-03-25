@@ -2,7 +2,7 @@ package com.example.bookinglabor.controller.user;
 import com.example.bookinglabor.model.Job;
 import com.example.bookinglabor.model.Role;
 import com.example.bookinglabor.model.UserAccount;
-import com.example.bookinglabor.model.object.JobDetailObject;
+import com.example.bookinglabor.model.sessionObject.JobDetailObject;
 import com.example.bookinglabor.security.SecurityUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,14 +16,13 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 @AllArgsConstructor
@@ -43,17 +42,21 @@ public class DisplayJobCartController {
         UserAccount role =   userService.findByEmail(email);
         List<Role> roles = role.getRoles();
         List<String> currentRoleUser = new ArrayList<>();
+        DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
+        long user_id = userService.findByEmail(SecurityUtil.getSessionUser()).getId();
+        long labor_id = laborService.findByUserId(user_id).getId();
 
         if(jobDetails!= null){
-            for (JobDetailObject post : jobDetails) {
-                System.out.println(post);
+            for (JobDetailObject jobDetail : jobDetails) {
+
+                String money = decimalFormat.format(jobDetail.getPrice());
+                model.addAttribute("money", money);
             }
         }
-
         for (Role r : roles) {
             currentRoleUser.add("ROLE_"+r.getName());
         }
-
+        System.out.println("Number job detail: "+ jobDetailService.countJobDetailByLaborId(labor_id));
         model.addAttribute("roleUser", currentRoleUser);
         model.addAttribute("jobDetails",jobDetails);
 
@@ -77,16 +80,25 @@ public class DisplayJobCartController {
                 List<String> roleUser = authorities.stream().map(GrantedAuthority::getAuthority).toList();
                 String sessionEmail = SecurityUtil.getSessionUser();
                 UserAccount user = userService.findByEmail(sessionEmail);
-                Job job = jobService.findJobById(job_id);
+                Job job = jobService.findById(job_id);
                 System.out.println(roleUser + " saved to session store");
                 System.out.println("Job id: "+ job.getId());
                 System.out.println("Job name: "+ job.getNameJob());
-                if(!jobDetailService.saveDataToSessionStore(jobDetailObjects, request, session, job, labor_id)){
 
-                    res.addFlashAttribute("overLimit", "You have saved into the cart over the limit!!!");
-                    return "redirect:/your-cart";
+                switch (jobDetailService.saveDataToSessionStore(jobDetailObjects, request, session, job, labor_id)){
+                    case 0:
+                        res.addFlashAttribute("overLimit", "You are not allowed to select the same job!!!");
+                        return "redirect:/your-cart";
+                    case 1:
+                        res.addFlashAttribute("overLimit", "You have saved into the cart over the limit!!!");
+                        return "redirect:/your-cart";
+                    case 2:
+                        res.addFlashAttribute("overLimit", "You have had this job!!!");
+                        return "redirect:/your-cart";
+                    case 3:
+                        res.addFlashAttribute("overLimit", "Your number of jobs over the limited. Your number of jobs must <= 5!!!");
+                        return "redirect:/your-cart";
                 }
-
             }
             return "redirect:/your-cart?success";
 

@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,9 +34,15 @@ public class DisplayUserJobController {
         UserAccount user =   userService.findByEmail(email);
         List<Role> roles = user.getRoles();
         List<String> currentRoleUser = new ArrayList<>();
+        DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
 
+        for(Job job : jobs){
+
+            String money = decimalFormat.format(job.getPrice());
+            model.addAttribute("money", money);
+        }
         try{
-            Long labor_id = laborService.findJobByUserId(user.getId()).getId();
+            Long labor_id = laborService.findByUserId(user.getId()).getId();
             model.addAttribute("labor_id", labor_id);
 
         }catch (Exception error){
@@ -53,8 +60,11 @@ public class DisplayUserJobController {
     @GetMapping("/jobs/show/{id}")
     private String show(Model model, @PathVariable Long id){
 
-        Job job = jobService.findJobById(id);
+        Job job = jobService.findById(id);
         String email = SecurityUtil.getSessionUser();
+        DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
+        String money = decimalFormat.format(job.getPrice());
+
         if(email!=null){
             UserAccount role =   userService.findByEmail(email);
             List<Role> roles = role.getRoles();
@@ -62,7 +72,7 @@ public class DisplayUserJobController {
             Long userID =   userService.findByEmail(email).getId();
 
             try{
-                Long labor_id = laborService.findJobByUserId(userID).getId();
+                Long labor_id = laborService.findByUserId(userID).getId();
 
                 if(labor_id !=  null){
                     model.addAttribute("labor_id", labor_id);
@@ -77,6 +87,7 @@ public class DisplayUserJobController {
         }
 
         model.addAttribute("job", job);
+        model.addAttribute("money", money);
 
         return "/user/job/show";
     }

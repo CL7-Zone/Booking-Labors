@@ -28,15 +28,6 @@
 <body>
 
     <div layout:fragment="content">
-        <div class="page-heading">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 offset-lg-2 header-text">
-                        <p></p>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="contest-details">
             <div class="container">
@@ -120,7 +111,7 @@
                                         </form>
                                     </td>
                                     <td>
-                                        <span th:text="${jobDetail.job.price + ' VNĐ'}"></span>
+                                        <span th:text="${money}"></span>
                                     </td>
                                     <td>
                                         <img width="100%" th:src="${'/assets/images/' + jobDetail.job.imageJob}" alt="">

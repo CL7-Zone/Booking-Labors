@@ -55,7 +55,7 @@ public class LaborWork implements LaborService {
 
 
     @Override
-    public Labor findJobByUserId(Long user_id) {
+    public Labor findByUserId(Long user_id) {
 
         Labor labor = laborRepo.findLaborByUserId(user_id);
 

@@ -33,7 +33,7 @@ public class JobWork implements JobService {
     }
 
     @Override
-    public Job findJobById(Long id) {
+    public Job findById(Long id) {
 
         Optional<Job> optionalJob = jobRepo.findById(id);
         return optionalJob.map(JobMapper::mapToJob).orElse(null);

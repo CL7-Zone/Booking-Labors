@@ -12,20 +12,6 @@
 
     <div layout:fragment="content">
 
-        <div class="page-heading">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 offset-lg-2 header-text">
-                        <div class="main-content">
-                            <div class="counter">
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="contest-details">
             <div class="container">
                 <div class="row">
@@ -113,7 +99,7 @@
                                 </p>
                                 <h4>
                                     <b class="text">price job:</b>
-                                    <span class="text-warning" th:text="${jobDetail.job.price+ ' VNĐ'}"></span>
+                                    <span class="text-warning" th:text="${money}"></span>
                                 </h4>
 
                                 <div sec:authorize="isAuthenticated()">

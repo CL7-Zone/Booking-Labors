@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.function.Function;
 
@@ -44,10 +45,13 @@ public class DisplayHomeController {
         List<Labor> labors = laborService.findAllLabors();
         List<Job> jobs = jobService.findAllJobs();
         Long countJob = categoryJobService.countJob();
-
-        System.out.println(countJob);
-
+        DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
         Function<Long, Long> countJobsByCategoryJobFunction = categoryJobService::countJobsByCategoryJob;
+
+        for(Job job : jobs){
+            String money = decimalFormat.format(job.getPrice());
+            model.addAttribute("money",money);
+        }
 
         model.addAttribute("countJobsByCategoryJob", countJobsByCategoryJobFunction);
         model.addAttribute("categoryJobs", categoryJobs);

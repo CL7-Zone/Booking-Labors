@@ -66,7 +66,7 @@
                         <div class="col-lg-12">
                             <div class="section-heading text-center">
                                 <h6>our labor</h6>
-                                <h4>choose<em> labor</em> now</h4>
+                                <h4>Our<em> labor</em></h4>
                             </div>
                         </div>
 
@@ -140,7 +140,7 @@
                                             <b th:text="${job.categoryJob.categoryName}"></b>
                                         </li>
                                     </ul>
-                                    <span class="price" th:text="${job.price+' VNĐ'}"></span>
+                                    <span class="price" th:text="${money}"></span>
                                     <div class="border-button">
                                         <a th:href="@{'/jobs/show/' + ${job.id}}" th:text="${'DETAIL '+ job.nameJob + ' JOB'}"></a>
                                     </div>

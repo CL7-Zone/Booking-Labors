@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +31,24 @@ public class CustomerWork implements CustomerService {
                 .map(CustomerMapper::mapToCustomer)
                 .collect(Collectors
                 .toList());
+    }
+
+    @Override
+    public Customer findById(Long id) {
+
+        Optional<Customer> customer = customerRepo.findById(id);
+
+        return customer.map(CustomerMapper::mapToCustomer).orElse(null);
+    }
+
+    @Override
+    public List<Customer> findByUserId(Long user_id) {
+
+        List<Customer> customers = customerRepo.findByUserId(user_id);
+
+        return customers.stream()
+                .map(CustomerMapper::mapToCustomer)
+                .collect(Collectors.toList());
     }
 
     @Override

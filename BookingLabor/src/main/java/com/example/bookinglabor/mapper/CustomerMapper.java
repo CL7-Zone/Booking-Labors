@@ -17,6 +17,7 @@ public class CustomerMapper {
                 .createdOn(customer.getCreatedOn())
                 .updatedOn(customer.getUpdatedOn())
                 .userAccount(customer.getUserAccount())
+                .bookings(customer.getBookings())
                 .build();
 
         if (customerUser != null) {

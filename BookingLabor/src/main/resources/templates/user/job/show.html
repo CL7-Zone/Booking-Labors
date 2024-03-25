@@ -12,16 +12,6 @@
 
     <div layout:fragment="content">
 
-        <div class="page-heading">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 offset-lg-2 header-text">
-                        <p></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="contest-details">
             <div class="container">
                 <div class="row">
@@ -56,7 +46,7 @@
                                 <span th:text="${job.description}"></span>
                             </p>
                             <h5>
-                                Price: <span th:text="${job.price}"></span> VNĐ
+                                Price: <span th:text="${money}"></span>
                             </h5>
                             <div class="row">
 

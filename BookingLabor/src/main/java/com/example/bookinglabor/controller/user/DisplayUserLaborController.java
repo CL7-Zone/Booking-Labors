@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
@@ -60,7 +61,12 @@ public class DisplayUserLaborController {
 
         Labor labor = laborService.findById(labor_id);
         List<JobDetail>  laborDetails =  jobDetailService.findJobDetailByLaborId(labor_id);
+        DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
 
+        for(JobDetail jobDetail : laborDetails){
+            String money = decimalFormat.format(jobDetail.getJob().getPrice());
+            model.addAttribute("money",money);
+        }
         try{
             String sessionEmail = SecurityUtil.getSessionUser();
             if(sessionEmail!=null){

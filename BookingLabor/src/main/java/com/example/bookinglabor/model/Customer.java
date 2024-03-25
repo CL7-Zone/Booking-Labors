@@ -7,7 +7,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -37,6 +39,6 @@ public class Customer {
     @UpdateTimestamp
     private LocalDateTime updatedOn;
 
-
-
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
+    private List<Booking> bookings = new ArrayList<>();
 }

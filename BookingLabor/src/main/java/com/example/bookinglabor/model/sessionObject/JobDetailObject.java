@@ -1,6 +1,5 @@
-package com.example.bookinglabor.model.object;
+package com.example.bookinglabor.model.sessionObject;
 
-import com.example.bookinglabor.model.Job;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +15,6 @@ public class JobDetailObject implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
-
     private Long id;
     private String nameJob;
     private double price;

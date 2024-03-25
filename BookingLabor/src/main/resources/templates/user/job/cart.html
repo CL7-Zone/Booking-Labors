@@ -49,15 +49,6 @@
 
     <div layout:fragment="content">
 
-        <div class="page-heading">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 offset-lg-2 header-text">
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="contest-details">
             <div class="container">
                 <div class="row">
@@ -134,7 +125,7 @@
                             <div style="padding-bottom: 40px">
                                 <ul style="list-style: disc; padding: 0px 20px">
                                     <li style="list-style: disc;">
-
+                                        <b class="text-danger">Your number job must <= 5</b>
                                     </li>
                                     <li style="list-style: disc;">
 
@@ -162,7 +153,7 @@
                                         <span th:text="${item.nameJob}"></span>
                                     </td>
                                     <td>
-                                        <span th:text="${item.price + ' VNĐ'}"></span>
+                                        <span th:text="${money}"></span>
                                     </td>
                                     <td>
                                         <span th:text="${item.description}"></span>
@@ -173,7 +164,7 @@
                                     <td>
                                         <form th:action="@{'/delete/job-cart/' + ${I.index}}" method="POST">
                                             <button class="btn-danger" type="submit" >
-                                                XÓA
+                                                DELETE
                                             </button>
                                         </form>
                                     </td>
