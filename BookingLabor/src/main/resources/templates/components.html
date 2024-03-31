@@ -21,37 +21,50 @@
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li><a th:href="@{/}" class="active">Home</a></li>
+                            <li  sec:authorize="!isAuthenticated()" ><a th:href="@{/}" class="active">Home</a></li>
 
-                            <li class="has-sub"  sec:authorize="!isAuthenticated()">
-                                <a href="javascript:void(0)">BLOG</a>
-                                <ul class="sub-menu">
-                                    <li> <a th:href="@{/}">Categories</a></li>
+                            <li class="has-sub" >
+                                <a href="javascript:void(0)">CATEGORY</a>
+                                <ul class="sub-menu" style="width: 300px">
+                                    <li th:each="categoryJob : ${categoryJobs}">
+                                        <a th:href="@{'/category-job/' + ${categoryJob.id}}" th:text="${categoryJob.categoryName}"></a>
+                                    </li>
                                 </ul>
                             </li>
 
-                            <li sec:authorize="!isAuthenticated()"><a th:href="@{/labors}">LABOR</a></li>
-                            <li sec:authorize="!isAuthenticated()"><a th:href="@{/}">CONTACT</a></li>
+
+                            <li class="has-sub" >
+                                <a href="javascript:void(0)">post</a>
+                                <ul class="sub-menu">
+                                    <li> <a th:href="@{/post/create}">create post</a></li>
+                                    <li> <a th:href="@{/blog}">blog</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="has-sub" >
+                                <a href="javascript:void(0)">CONTACT</a>
+                                <ul class="sub-menu">
+                                    <li> <a th:href="@{/}">contact now</a></li>
+                                    <li> <a th:href="@{/}">report</a></li>
+                                </ul>
+                            </li>
 
                             <li class="has-sub" sec:authorize="isAuthenticated()" >
                                 <a href="javascript:void(0)">JOB</a>
                                 <ul class="sub-menu">
                                     <li> <a th:href="@{/jobs}">jobs</a></li>
+                                    <li><a th:href="@{/your-info-labor}">INFO</a></li>
+                                    <li><a th:href="@{/labors}">Labors</a></li>
+                                    <li><a th:href="@{/labor-create-info}">CREATE Info</a></li>
                                     <li th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}">
                                         <a th:href="@{/your-cart}">job cart</a>
                                     </li>
                                     <li th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}">
                                         <a th:href="@{/your-job}">your job</a>
                                     </li>
-                                </ul>
-                            </li>
-
-                            <li class="has-sub" sec:authorize="isAuthenticated()">
-                                <a href="javascript:void(0)">Labor</a>
-                                <ul class="sub-menu">
-                                    <li><a th:href="@{/your-info-labor}">INFO</a></li>
-                                    <li><a th:href="@{/labors}">Labors</a></li>
-                                    <li><a th:href="@{/labor-create-info}">CREATE Info</a></li>
+                                    <li th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}">
+                                        <a th:href="@{/booking-manager-by-labor}">booking</a>
+                                    </li>
                                 </ul>
                             </li>
 
@@ -68,6 +81,7 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li sec:authorize="!isAuthenticated()"><a th:href="@{/labors}">LABOR</a></li>
                             <li sec:authorize="isAuthenticated()"><a th:href="@{/your-menu}">MENU</a></li>
 
 
@@ -168,14 +182,130 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 offset-lg-2 header-text">
-                    <img height="100%" width="50%" th:src="@{/assets/images/book1.png}" alt="">
+                    <img height="100%" width="30%" th:src="@{/assets/images/book1.png}" alt="">
                 </div>
             </div>
         </div>
     </div>
 
 
+    <div class="search-form">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <form sec:authorize="isAuthenticated()"  th:action="@{'/user/search'}" id="search-form" name="gs" method="POST" role="search">
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <fieldset>
+                                    <label for="nameJob" class="form-label">Enter name job</label>
+                                    <input name="nameJob" id="nameJob" placeholder="Enter name job...">
+                                </fieldset>
+                            </div>
+
+                            <div class="col-lg-2">
+                                <fieldset>
+                                    <button type="submit" class="main-button">Search</button>
+                                </fieldset>
+                            </div>
+                            <br/><br/><br><br>
+                            <div class="col-lg-12 pt-2">
+                                 <span  style="padding-right: 15px">
+                                    <a class="text-info" id="search-option" th:text="${#strings.toUpperCase('#SEARCH')}"></a>
+                                </span>
+                                <span  style="padding-right: 15px">
+                                    <a class="text-black" th:href="${'/your-menu'}" th:text="${#strings.toUpperCase('#MENU')}"></a>
+                                </span>
+                                <span  style="padding-right: 15px">
+                                    <a class="text-success" th:href="@{'/post/create'}" th:text="${#strings.toUpperCase('#recruitment posting')}"></a>
+                                </span>
+                                <span style="padding-right: 15px">
+                                    <a class="text-info" th:href="${'/'}" th:text="${#strings.toUpperCase('#Contact with our')}"></a>
+                                </span>
+                                <span style="padding-right: 15px">
+                                    <a class="text-danger" th:href="${'/'}" th:text="${#strings.toUpperCase('#Report')}"></a>
+                                </span>
+                                <span style="padding-right: 15px">
+                                    <a class="text-info" th:href="${'/login'}" th:text="${#strings.toUpperCase('#Login')}"></a>
+                                </span>
+                            </div>
+
+                        </div>
+                    </form>
+
+                    <form sec:authorize="!isAuthenticated()"  th:action="@{'/guest-search'}" id="search-form" name="gs" method="POST" role="search">
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <fieldset>
+                                    <label for="nameJob" class="form-label">Enter name job</label>
+                                    <input name="nameJob" id="nameJob" placeholder="Enter name job...">
+                                </fieldset>
+                            </div>
+
+                            <div class="col-lg-2">
+                                <fieldset>
+                                    <button type="submit" class="main-button">Search</button>
+                                </fieldset>
+                            </div>
+                            <br/><br/><br><br>
+                            <div class="col-lg-12 pt-2">
+                                 <span  style="padding-right: 15px">
+                                    <a class="text-info" id="search-option" th:text="${#strings.toUpperCase('#SEARCH')}"></a>
+                                </span>
+                                <div id="myModal" class="modal">
+                                    <div class="modal-content">
+                                        <span class="close">&times;</span>
+                                        <!-- Nội dung của modal -->
+                                        <p>This is your modal content.</p>
+                                    </div>
+                                </div>
+                                <script th:inline="javascript">
+                                    const modal = document.getElementById("myModal");
+                                    const span = document.getElementsByClassName("close")[0];
+
+                                    document.getElementById("search-option").addEventListener("click", function() {
+                                        modal.style.display = "block";
+                                    });
+
+                                    span.onclick = function() {
+                                        modal.style.display = "none";
+                                    };
+
+                                    window.onclick = function(event) {
+                                        if (event.target === modal) {
+                                            modal.style.display = "none";
+                                        }
+                                    };
+
+                                </script>
+                                <span  style="padding-right: 15px">
+                                    <a class="text-black" th:href="${'/'}" th:text="${#strings.toUpperCase('#HOME')}"></a>
+                                </span>
+                                <span  style="padding-right: 15px">
+                                    <a class="text-success" th:href="${'/'}" th:text="${#strings.toUpperCase('#recruitment posting')}"></a>
+                                </span>
+                                <span style="padding-right: 15px">
+                                    <a class="text-info" th:href="${'/'}" th:text="${#strings.toUpperCase('#Contact with our')}"></a>
+                                </span>
+                                <span style="padding-right: 15px">
+                                    <a class="text-danger" th:href="${'/'}" th:text="${#strings.toUpperCase('#Report')}"></a>
+                                </span>
+                                <span style="padding-right: 15px">
+                                    <a class="text-info" th:href="${'/login'}" th:text="${#strings.toUpperCase('#Login')}"></a>
+                                </span>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br>
+
+
 </div>
+
+
 
 <div  th:fragment="footer">
     <!-- Footer Start -->

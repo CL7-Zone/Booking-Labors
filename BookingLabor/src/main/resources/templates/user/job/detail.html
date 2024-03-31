@@ -96,22 +96,11 @@
                                     <td>
                                         <span th:text="${jobDetail.labor.full_name}"></span>
                                     </td>
-                                    <td >
-                                        <form th:action="@{'/update/job-detail/' + ${jobDetail.id}}" method="POST" th:object="${jobDetail}">
-                                            <select  class="form-select" th:id="'job_id_' + ${jobDetail.job.id}" name="job_id" >
-                                                <option th:value="${jobDetail.job.id}" th:text="${jobDetail.job.nameJob}"></option>
-                                                <option th:each="job : ${jobs}" th:value="${job.id}" th:text="${job.nameJob}"></option>
-                                            </select>
-                                            <input type="hidden" th:value="${labor_id}" name="labor_id" id="labor_id">
-                                            <div class="d-flex justify-content-center pt-2">
-                                                <button class="btn-warning" type="submit" >
-                                                    UPDATE
-                                                </button>
-                                            </div>
-                                        </form>
+                                    <td th:text="${jobDetail.job.nameJob}">
+
                                     </td>
                                     <td>
-                                        <span th:text="${money}"></span>
+                                        <span  th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></span>
                                     </td>
                                     <td>
                                         <img width="100%" th:src="${'/assets/images/' + jobDetail.job.imageJob}" alt="">
@@ -124,6 +113,21 @@
                                             <button class="btn-danger" type="submit" >
                                                 DELETE
                                             </button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form th:action="@{'/update/job-detail/' + ${jobDetail.id}}" method="POST" th:object="${jobDetail}">
+<!--                                            <select class="form-select" th:id="'job_id_' + ${jobDetail.job.id}" name="job_id" >-->
+<!--                                                <option th:value="${jobDetail.job.id}" th:text="${jobDetail.job.nameJob}"></option>-->
+<!--                                                <option th:each="job : ${jobs}" th:value="${job.id}" th:text="${job.nameJob}"></option>-->
+<!--                                            </select>-->
+                                            <input type="hidden" th:value="${jobDetail.job.id}" name="job_id" th:id="'job_id_' + ${jobDetail.job.id}">
+                                            <input type="hidden" th:value="${labor_id}" name="labor_id" id="labor_id">
+                                            <div class="d-flex justify-content-center pt-2">
+                                                <button class="btn-warning" type="submit" >
+                                                    UPDATE
+                                                </button>
+                                            </div>
                                         </form>
                                     </td>
 

@@ -20,6 +20,7 @@ public class BookingDto {
 
     private Long id;
     private int accept;
+    private int status;
     private double total_price;
     @NotEmpty(message = "Total price not be empty!!!")
     private String book_address;
@@ -31,6 +32,7 @@ public class BookingDto {
     private Date checkout;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
+    private LocalDateTime cancel_time;
     private JobDetail jobDetail;
     private Customer customer;
 

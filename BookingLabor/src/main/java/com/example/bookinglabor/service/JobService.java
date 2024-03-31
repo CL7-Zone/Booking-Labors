@@ -10,6 +10,8 @@ public interface JobService {
 
     List<Job> findAllJobs();
 
+    List<Double> findJobPriceDistinct();
+
     Job findById(Long id);
     void saveAllDataFromExcel(MultipartFile file);
 

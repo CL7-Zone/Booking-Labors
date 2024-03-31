@@ -1,5 +1,6 @@
 package com.example.bookinglabor.service.work;
 
+import com.example.bookinglabor.dto.BookingDto;
 import com.example.bookinglabor.mapper.BookingMapper;
 import com.example.bookinglabor.model.Booking;
 import com.example.bookinglabor.model.Customer;
@@ -11,11 +12,14 @@ import com.example.bookinglabor.repo.JobDetailRepo;
 import com.example.bookinglabor.repo.UserRepo;
 import com.example.bookinglabor.security.SecurityUtil;
 import com.example.bookinglabor.service.BookingService;
+import com.example.bookinglabor.service.SendMailService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,7 +31,8 @@ public class BookingWork implements BookingService {
     private JobDetailRepo jobDetailRepo;
     private CustomerRepo customerRepo;
     private UserRepo userRepo;
-
+    @Autowired
+    private SendMailService sendMailService;
 
     @Override
     public List<Booking> findAllBookings() {
@@ -41,34 +46,36 @@ public class BookingWork implements BookingService {
     }
 
     @Override
-    public boolean saveData(Booking booking, HttpSession session, Long customer_id) {
+    public List<BookingDto> findAllBookingDTOs() {
 
-        List<BookingObject> bookingObjects = (List<BookingObject>) session.getAttribute("bookingObjects");
+        List<Booking> bookings = bookingRepo.findAll();
 
-        if(bookingRepo.invalidBooking(booking.getCheckin(), booking.getCheckout()) > 0) {
-            System.out.println(bookingRepo.invalidBooking(booking.getCheckin(), booking.getCheckout()) +" Invalid!!!");
+        return bookings.stream()
+                .map(BookingMapper::mapToBookingDto)
+                .collect(Collectors
+                .toList());
+    }
 
-            return false;
-        }
-        for (BookingObject item : bookingObjects){
+    @Override
+    public List<BookingDto> findBookingsByCustomerId(Long customer_id) {
 
-            Optional<JobDetail> jobDetail = jobDetailRepo.findById(item.getId());
-            Optional<Customer> customer = customerRepo.findById(customer_id);
-            if(jobDetail.isPresent() && customer.isPresent()){
-                Booking book =  new Booking();
-                book.setAccept(0);
-                book.setTotal_price(booking.getTotal_price());
-                book.setBook_address(booking.getBook_address());
-                book.setCity_name(booking.getCity_name());
-                book.setMessage(booking.getMessage());
-                book.setCheckin(booking.getCheckin());
-                book.setCheckout(booking.getCheckout());
-                book.setJobDetail(jobDetail.get());
-                book.setCustomer(customer.get());
-                bookingRepo.save(book);
-            }
-        }
-        return true;
+        List<Booking> bookings = bookingRepo.findBookingsByCustomerId(customer_id);
+
+        return bookings.stream()
+                .map(BookingMapper::mapToBookingDto)
+                .collect(Collectors
+                .toList());
+    }
+
+    @Override
+    public List<BookingDto> findBookingsByJobDetailId(Long job_detail_id) {
+
+        List<Booking> bookings = bookingRepo.findBookingsByJobDetailId(job_detail_id);
+
+        return bookings.stream()
+                .map(BookingMapper::mapToBookingDto)
+                .collect(Collectors
+                .toList());
     }
 
     @Override
@@ -101,14 +108,7 @@ public class BookingWork implements BookingService {
                 jobDetail.getLabor().getId()
         );
         List<BookingObject> bookingCarts = (List<BookingObject>) session.getAttribute("bookingObjects");
-        System.out.println(bookingObjects.size());
 
-//        if(bookingObjects.size() >= 5){
-//            return false;
-//        }
-//        if(bookingCarts.size() + bookingRepo.countBookingsByCustomerId(customerId) > 5){
-//            return false;
-//        }
         for(BookingObject book : bookingCarts){
             if(Objects.equals(jobDetail.getId(), book.getId())){
                 System.out.println("Saved failed!!!");
@@ -128,4 +128,90 @@ public class BookingWork implements BookingService {
 
         return true;
     }
+
+    @Override
+    public boolean saveData(Booking booking, HttpSession session, Long customer_id) {
+
+        List<BookingObject> bookingObjects = (List<BookingObject>) session.getAttribute("bookingObjects");
+        List<BookingDto> bookings = findAllBookingDTOs();
+        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime cancelLimitTime = currentTime.plusMinutes(2);
+        System.out.println("Limit time: "+cancelLimitTime);
+
+        for (BookingObject item : bookingObjects){
+            Optional<JobDetail> jobDetail = jobDetailRepo.findById(item.getId());
+            Optional<Customer> customer = customerRepo.findById(customer_id);
+
+            if(jobDetail.isPresent() && customer.isPresent()){
+                if(bookings != null){
+                    for(BookingDto b : bookings){
+                        if(Objects.equals(b.getJobDetail().getLabor().getId(),
+                            jobDetail.get().getLabor().getId())){
+                            if(bookingRepo.invalidBooking(booking.getCheckin(),
+                                booking.getCheckout()) > 0) {
+                                System.out.println(bookingRepo
+                                .invalidBooking(booking.getCheckin(),
+                                booking.getCheckout()) +" Invalid!!!");
+
+                                return false;
+                            }
+                        }
+                    }
+                }
+                Booking book =  new Booking();
+                book.setAccept(0);
+                book.setStatus(0);
+                book.setTotal_price(booking.getTotal_price());
+                book.setBook_address(booking.getBook_address());
+                book.setCity_name(booking.getCity_name());
+                book.setMessage(booking.getMessage());
+                book.setCheckin(booking.getCheckin());
+                book.setCheckout(booking.getCheckout());
+                book.setCancel_time(cancelLimitTime);
+                book.setJobDetail(jobDetail.get());
+                book.setCustomer(customer.get());
+                bookingRepo.save(book);
+                sendMailService.setMailSender(jobDetail.get().getLabor().getUserAccount().getEmail()
+                , "Hóa đơn số: " + book.getId(), "Xin chào "+ item.getLabor_name() +
+                "\n\n" + customer.get().getFull_name()+" đã book bạn," +
+                "\n\nNếu có bất kỳ thắc mắc nào vui lòng liên hệ với chúng tôi," +
+                "\n\nTruy cập vào đường dẫn này để đồng ý lịch hẹn với người đặt:" +
+                "\n\nhttp://localhost:8080/your-booking-labor/" + book.getId() +
+                "\n\nBest regards," +
+                "\nBookingLabor Website");
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void updateById(Booking booking, Long job_detail_id, Long customer_id) {
+
+        Optional<JobDetail> jobDetail = jobDetailRepo.findById(job_detail_id);
+        Optional<Customer> customer = customerRepo.findById(customer_id);
+
+        if(jobDetail.isPresent() && customer.isPresent()){
+            Booking bookingUpdate = BookingMapper.mapToBooking(booking);
+            assert bookingUpdate != null;
+            bookingUpdate.setJobDetail(jobDetail.get());
+            bookingUpdate.setCustomer(customer.get());
+            System.out.println("updated");
+            bookingRepo.save(bookingUpdate);
+        }
+
+
+    }
+
+    @Override
+    public int invalidCancelBooking(LocalDateTime cancel_time, Long id) {
+
+        return bookingRepo.invalidCancelBooking(cancel_time, id);
+    }
+
+    @Override
+    public int invalidAcceptBooking(LocalDateTime accept_time, Long id) {
+
+        return  bookingRepo.invalidAcceptBooking(accept_time, id);
+    }
+
 }

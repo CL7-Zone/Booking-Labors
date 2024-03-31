@@ -1,8 +1,7 @@
 package com.example.bookinglabor.model;
 
+public class Post {
 
-
-public class CommentSkill {
 
 
 

@@ -1,8 +1,12 @@
 package com.example.bookinglabor.controller;
 import com.example.bookinglabor.model.CategoryJob;
 import com.example.bookinglabor.model.Job;
+import com.example.bookinglabor.model.JobDetail;
 import com.example.bookinglabor.model.Labor;
+import com.example.bookinglabor.repo.JobDetailRepo;
+import com.example.bookinglabor.repo.LaborRepo;
 import com.example.bookinglabor.service.CategoryJobService;
+import com.example.bookinglabor.service.JobDetailService;
 import com.example.bookinglabor.service.JobService;
 import com.example.bookinglabor.service.LaborService;
 import lombok.AllArgsConstructor;
@@ -10,15 +14,19 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.function.Function;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 @Getter
 @Setter
 @Controller
@@ -28,6 +36,9 @@ public class DisplayHomeController {
     private CategoryJobService categoryJobService;
     private LaborService laborService;
     private JobService jobService;
+    private JobDetailService jobDetailService;
+    private JobDetailRepo jobDetailRepo;
+    private LaborRepo laborRepo;
 
 //    @Autowired
 //    private int loadCounter;
@@ -39,11 +50,16 @@ public class DisplayHomeController {
 //    }
 
     @GetMapping("/")
-    private String index(Model model){
+    private String index(Model model, Pageable pageable,
+                         @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
+                         @RequestParam(value = "size", required = false, defaultValue = "3") int size){
 
         List<CategoryJob> categoryJobs = categoryJobService.findAllCategoryJobs();
         List<Labor> labors = laborService.findAllLabors();
         List<Job> jobs = jobService.findAllJobs();
+        List<JobDetail> jobDetails = jobDetailService.findAllJobDetails();
+        Page<JobDetail> jobDetailPage = jobDetailRepo.findAll(PageRequest.of(pageNumber, size));
+        Page<Labor> laborPage = laborRepo.findAll(PageRequest.of(pageNumber, size));
         Long countJob = categoryJobService.countJob();
         DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
         Function<Long, Long> countJobsByCategoryJobFunction = categoryJobService::countJobsByCategoryJob;
@@ -55,8 +71,14 @@ public class DisplayHomeController {
 
         model.addAttribute("countJobsByCategoryJob", countJobsByCategoryJobFunction);
         model.addAttribute("categoryJobs", categoryJobs);
+        model.addAttribute("jobDetails", jobDetails);
         model.addAttribute("labors", labors);
         model.addAttribute("jobs", jobs);
+        model.addAttribute("jobDetailList", jobDetailPage.getContent());
+        model.addAttribute("pages", new int[jobDetailPage.getTotalPages()]);
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("laborList", laborPage.getContent());
+        model.addAttribute("pageLabors", new int[laborPage.getTotalPages()]);
 
         return "home/index";
     }
@@ -71,6 +93,29 @@ public class DisplayHomeController {
         model.addAttribute("countJobsByCategoryJob", countJobsByCategoryJobFunction);
 
         return "home/show";
+    }
+
+    @PostMapping("/guest-search")
+    private String search(@RequestParam("nameJob") String nameJob, Model model,
+                          @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
+                          @RequestParam(value = "size", required = false, defaultValue = "3") int size){
+
+        if(nameJob != null){
+
+            Page<JobDetail> jobDetailPage = jobDetailService.findJobDetailsByNameJob(nameJob, PageRequest.of(pageNumber, size));
+            Page<Labor> laborPage = laborRepo.findAll(PageRequest.of(pageNumber, size));
+            Function<Long, Long> countJobsByCategoryJobFunction = categoryJobService::countJobsByCategoryJob;
+
+            System.out.println(nameJob);
+
+            model.addAttribute("jobDetailList", jobDetailPage.getContent());
+            model.addAttribute("pages", new int[jobDetailPage.getTotalPages()]);
+            model.addAttribute("currentPage", pageNumber);
+            model.addAttribute("laborList", laborPage.getContent());
+            model.addAttribute("pageLabors", new int[laborPage.getTotalPages()]);
+            model.addAttribute("countJobsByCategoryJob", countJobsByCategoryJobFunction);
+        }
+        return "home/index";
     }
 
 

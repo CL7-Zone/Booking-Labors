@@ -15,6 +15,7 @@ public class JobDetailMapper {
                 .updatedOn(jobDetail.getUpdatedOn())
                 .job(jobDetail.getJob())
                 .labor(jobDetail.getLabor())
+                .bookings(jobDetail.getBookings())
                 .build();
 
         if (jopDetailService != null) {

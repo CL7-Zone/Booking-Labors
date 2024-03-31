@@ -74,7 +74,7 @@
                                 </tr>
                                 <tr th:each="job :${jobs}">
                                     <td th:text="${job.nameJob}"></td>
-                                    <td th:text="${money}"></td>
+                                    <td th:text="${#numbers.formatDecimal(job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></td>
                                     <td th:text="${job.description}"></td>
                                     <td>
                                         <img width="100%" th:src="${'/assets/images/'+job.imageJob}" alt="">

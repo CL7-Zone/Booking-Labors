@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html  lang="en"
+       xmlns:th="http://thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:sec="http://www.thymeleaf.org"
+       layout:decorate="~{layout}" th:with="currentPage='Booking Manager By labor'">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Manager By labor</title>
+</head>
+<body>
+
+    <div layout:fragment="content">
+
+        <div class="contest-details">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="top-content">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <span>
+                                        <span class="open" th:text="${roleUser}"></span>
+                                    </span>
+                                    <span class="wish-list">
+                                        <i class="fa fa-user"></i>
+                                         <i th:text="${#authentication.name}"></i>
+                                    </span>
+                                </div>
+                                <div class="col-lg-4">
+                                    <ul>
+                                        <li>
+                                            <i class="fa fa-medal"></i>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="main-content">
+                            <div class="col-lg-12">
+                                <!--/*@thymesVar id="success" type="text"*/-->
+                                <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success}">
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                                    <strong th:text="${success}"></strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <!--/*@thymesVar id="failed" type="text"*/-->
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${failed}">
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Failed:"><use xlink:href="#check-circle-fill"/></svg>
+                                    <strong th:text="${failed}"></strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                            <ul>
+                                <h4><i class="fa fa-cart-plus text-info"></i> BOOKING MANAGER</h4>
+                            </ul>
+                            <b>ATTENTION:</b>
+                            <div style="padding-bottom: 10px">
+                                <ul style="list-style: disc; padding: 0px 20px">
+                                    <br>
+                                    <li style="list-style: disc;">
+                                        <b class="text-danger">Accept booking, Please!</b>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div style="padding-bottom: 0px" th:each="jobDetail : ${jobDetails}">
+                                    <p >
+                                        <b class="text-danger">JOB DETAIL ID: </b>
+                                        <span th:text="${jobDetail.id}"></span>
+                                        <b class="text-danger">Job name: </b>
+                                        <span th:text="${jobDetail.job.nameJob}"></span>
+                                    </p>
+                                    <div th:each="booking : ${jobDetail.bookings}">
+                                        <p>
+                                            <b class="text-info">Booking ID: </b>
+                                            <span style="padding-right: 10px" th:text="${booking.id}"></span>
+                                            <span th:text="${invalidAcceptFunction.apply(booking.id)}"></span>
+                                            <b class="text-info">Name owner: </b>
+                                            <span style="padding-right: 10px"  th:text="${booking.customer.full_name}"></span>
+                                            <span style="padding-right: 10px"  th:text="${booking.customer.userAccount.email}"></span>
+                                            <b class="text-info">Phone number: </b>
+                                            <span style="padding-right: 10px"  th:text="${booking.customer.phone_number}"></span>
+
+                                            <b class="text-info">Checkin: </b>
+                                            <span style="padding-right: 10px"  th:text="${booking.checkin}"></span>
+                                            <b class="text-info">Checkout: </b>
+                                            <span style="padding-right: 10px"  th:text="${booking.checkout}"></span>
+                                            <div th:if="${invalidAcceptFunction.apply(booking.id) > 0}">
+                                                <div th:if="${booking.accept == 0}" >
+                                                    <form th:if="${booking.status == 0}"
+                                                          th:action="@{'/accept-booking/' + ${booking.id}}"
+                                                          method="POST">
+
+                                                        <input type="hidden" th:value="${booking.accept}" name="accept" id="accept"  class="form-control"   >
+                                                        <input type="hidden" th:value="${booking.status}" name="status" id="status"  class="form-control"   >
+                                                        <input type="hidden" th:value="${booking.book_address}"  name="book_address" id="book_address"  class="form-control"  >
+                                                        <input type="hidden" th:value="${booking.city_name}" name="city_name" id="city_name" class="form-control"   >
+                                                        <input type="hidden" th:value="${booking.total_price}" name="total_price" id="total_price" class="form-control"   >
+                                                        <input type="hidden" th:value="${booking.message}" name="message" id="message" class="form-control"   >
+                                                        <input type="hidden" th:value="${booking.checkin}" name="checkin" id="checkin" class="form-control"   >
+                                                        <input type="hidden" th:value="${booking.checkout}" name="checkout" id="checkout" class="form-control"   >
+                                                        <input type="hidden" th:value="${booking.cancel_time}" name="cancel_time" id="cancel_time" class="form-control"   >
+                                                        <input type="hidden" th:value="${booking.jobDetail.id}" name="job_detail_id" id="job_detail_id" class="form-control"   >
+                                                        <input type="hidden" th:value="${booking.customer.id}" name="customer_id" id="customer_id" class="form-control"   >
+                                                        <button class="btn-success" type="submit">Accept now</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <span th:if="${booking.status == 0}">
+                                                <span th:if="${booking.accept != 0}">
+                                                    <i class="text-success fa fa-circle"></i> Accepted
+                                                </span>
+                                            </span>
+                                            <span th:if="${booking.status != 0}">
+                                                <i class="text-danger fa fa-circle"></i> Canceled
+                                            </span>
+                                            <br>
+                                            <p class="text-danger" th:if="${invalidAcceptFunction.apply(booking.id) < 1}">
+                                                <b class="text-black">#Message: </b>
+                                                <span class="text-danger">
+                                                    <span  class="text-black" th:text="${invalidAcceptFunction.apply(booking.id)}"></span>
+                                                    You are not allowed to accept labor booking, the time check-in with the employer had been to pass!!!
+                                                </span>
+                                            </p>
+                                        </p>
+                                        <hr/>
+                                    </div>
+                            </div>
+
+                            <div class="row">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</body>
+</html>

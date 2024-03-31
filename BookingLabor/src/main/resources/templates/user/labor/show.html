@@ -99,7 +99,7 @@
                                 </p>
                                 <h4>
                                     <b class="text">price job:</b>
-                                    <span class="text-warning" th:text="${money}"></span>
+                                    <span class="text-warning"  th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></span>
                                 </h4>
 
                                 <div sec:authorize="isAuthenticated()">

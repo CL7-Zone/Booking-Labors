@@ -36,7 +36,9 @@ public class DisplayBookingCartController {
 
 
     @GetMapping("/your-booking-cart")
-    public String index(@AuthenticationPrincipal UserDetails userDetails, Model model, HttpSession session){
+    public String index(@AuthenticationPrincipal UserDetails userDetails,
+                        Model model, HttpServletRequest request,
+                        HttpSession session){
 
         Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
         List<String> roleUser = authorities.stream().map(GrantedAuthority::getAuthority).toList();

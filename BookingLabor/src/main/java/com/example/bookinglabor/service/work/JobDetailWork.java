@@ -12,7 +12,8 @@ import com.example.bookinglabor.service.JobDetailService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -41,6 +42,14 @@ public class JobDetailWork implements JobDetailService {
                 .map(JobDetailMapper::mapToJobDetail)
                 .collect(Collectors
                 .toList());
+    }
+
+    @Override
+    public Page<JobDetail> findJobDetailsByNameJob(String name_job, Pageable pageable) {
+
+        Page<JobDetail> jobDetails = jobDetailRepo.findByJob_NameJobContaining(name_job, pageable);
+
+        return jobDetails.map(JobDetailMapper::mapToJobDetail);
     }
 
     @Override
@@ -135,7 +144,7 @@ public class JobDetailWork implements JobDetailService {
     }
 
     @Override
-    public boolean updateById(long id, long job_id, long labor_id, JobDetail jobDetail) {
+    public boolean updateById(long job_id, long labor_id, JobDetail jobDetail) {
 
         Optional<Job> jobOptional = jobRepo.findById(job_id);
         Optional<Labor> laborOptional = laborRepo.findById(labor_id);

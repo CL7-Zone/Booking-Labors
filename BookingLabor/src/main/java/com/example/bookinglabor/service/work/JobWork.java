@@ -33,6 +33,14 @@ public class JobWork implements JobService {
     }
 
     @Override
+    public List<Double> findJobPriceDistinct() {
+
+        List<Double> prices = jobRepo.findJobPriceDistinct();
+
+        return prices;
+    }
+
+    @Override
     public Job findById(Long id) {
 
         Optional<Job> optionalJob = jobRepo.findById(id);

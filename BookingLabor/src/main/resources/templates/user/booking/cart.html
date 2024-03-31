@@ -132,7 +132,7 @@
                                 <h4><i class="fa fa-cart-plus text-info"></i> YOUR BOOKING CART INFORMATION</h4>
                             </ul>
                             <h3 class="pb-4">TOTAL MONEY:
-                                <b class="text-info" th:text="${totalMoney}"></b>
+                                <b class="text-info"  th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></b>
                             </h3>
                             <div  style="padding-bottom: 10px; ">
                                 <h5>Attention:</h5>
@@ -249,6 +249,7 @@
                                     <tr th:each="item, I : ${bookingSessions}">
                                         <td>
                                             <span th:text="${item.id}"></span>
+                                            <input type="hidden" th:value="${item.id}" name="job_detail_id" id="job_detail_id">
                                         </td>
                                         <td>
                                             <span th:text="${item.labor_name}"></span>
@@ -257,7 +258,7 @@
                                             <span th:text="${item.nameJob}"></span>
                                         </td>
                                         <td>
-                                            <span th:text="${money}"></span>
+                                            <span  th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></span>
                                         </td>
                                         <td>
                                             <span th:text="${item.categoryName}"></span>
@@ -278,7 +279,7 @@
 
                                 <div class="main-button">
                                     <button th:class="${'btn-save-job-detail'}"
-                                            th:style="${totalPrice < 1.0} ? 'background: #dc3545; border: #dc3545;' : ''"
+                                            th:style="${totalPrice > 1.0} ? '' : ''"
                                             type="submit">
                                         <span th:text="${totalPrice < 1.0} ? 'Choose our labor, Please!' : 'BOOK'"></span>
                                     </button>

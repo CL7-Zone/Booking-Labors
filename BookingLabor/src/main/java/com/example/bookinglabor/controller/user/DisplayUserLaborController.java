@@ -54,7 +54,7 @@ public class DisplayUserLaborController {
         return "user/labor/index";
     }
 
-    @GetMapping("/labors/{labor_id}")
+    @GetMapping(value={"/labors/{labor_id}", "/your-menu/labors/{labor_id}"})
     public String show(Model model,
                        @PathVariable Long labor_id,
                        @AuthenticationPrincipal UserDetails userDetails){
@@ -203,7 +203,6 @@ public class DisplayUserLaborController {
 
         try{
             System.out.println(labor);
-            System.out.println(user.getId());
             laborService.update(user.getId(), city_id, labor);
             flashMessage.addFlashAttribute("success", "Update successfully");
 

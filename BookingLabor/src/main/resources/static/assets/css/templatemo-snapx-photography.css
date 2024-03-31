@@ -41,6 +41,65 @@ figure, header, nav, section, article, aside, footer, figcaption {
   outline: 0;
 }
 
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.back_to_top {
+  display: none;
+  position: fixed;
+  right: 35px; /* Thay đổi từ left thành right */
+  bottom: 30px;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 9999;
+  text-align: center;
+  line-height: 40px;
+  text-decoration: none;
+}
+
+.back_to_top i{
+
+  color: white;
+}
+
 .clearfix:after {
   content: ".";
   display: block;
@@ -184,7 +243,7 @@ body {
 }
 
 section {
-  margin-top: 120px;
+  margin-top: 20px;
 }
 
 .section-heading {
@@ -1476,14 +1535,16 @@ page heading
 */
 
 .page-heading {
-  background-image: url(../images/heading-bg.jpg);
+  /*background-image: url(../images/bookingLaborLogo.png);*/
+  /*background-image: url(https://cdn.chotot.com/admincentre/539kkiJlNUC8893I-50M1AlwZhD2JAx95P4lRkSYosg/preset:raw/plain/ad9ec656186ce906675cdce1c3ccb0b3-2871460891833376322.jpg);*/
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-  padding-top: 200px;
-  padding-bottom: 130px;
+  padding-top: 40px;
+  padding-bottom: 50px;
   text-align: center;
-  background-color: #2a2a2a;
+  background-color: white;
+  border-bottom: 2px solid silver;
 }
 
 .page-heading h2 {

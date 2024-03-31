@@ -46,7 +46,7 @@
                                 <span th:text="${job.description}"></span>
                             </p>
                             <h5>
-                                Price: <span th:text="${money}"></span>
+                                Price: <span  th:text="${#numbers.formatDecimal(job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></span>
                             </h5>
                             <div class="row">
 

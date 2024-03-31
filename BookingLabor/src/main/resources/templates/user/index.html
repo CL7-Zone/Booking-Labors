@@ -99,38 +99,42 @@
                                     </li>
                                 </ul>
                             </div>
-                            <h4>OUR LABORS INFORMATION</h4>
+
+                            <div class="col-lg-6">
+                                <div class="section-heading">
+                                    <h6>Our labor jobs detail</h6>
+                                    <h4><em>Our labor</em> jobs detail information</h4>
+                                </div>
+                            </div>
+
                             <table >
                                 <tr>
+                                    <th>N</th>
                                     <th>FullName</th>
                                     <th>Address</th>
                                     <th>Phone Number</th>
                                     <th>Number experience</th>
-                                    <th>Status</th>
                                     <th>Official work address</th>
-                                    <th>Free time from</th>
-                                    <th>Free time to</th>
                                     <th>Name job</th>
                                     <th>Price job</th>
                                     <th>In city</th>
-                                    <th colspan="2">ACTION</th>
+                                    <th colspan="3">ACTION</th>
                                 </tr>
-                                <tr th:each="jobDetail :${jobDetails}">
+                                <tr id="app" th:each="jobDetail :${jobDetails}">
+                                    <td th:text="${jobDetail.id}"></td>
                                     <td th:text="${jobDetail.labor.full_name}"></td>
                                     <td th:text="${jobDetail.labor.address}"></td>
                                     <td th:text="${jobDetail.labor.phone_number}"></td>
                                     <td th:text="${jobDetail.labor.number_experience + ' Year'}"></td>
-                                    <td th:if="${jobDetail.labor.status==1}">
-                                        <span>Free now</span>
-                                    </td>
-                                    <td th:if="${jobDetail.labor.status==0}">
-                                        <span>Busy now</span>
-                                    </td>
+<!--                                    <td th:if="${jobDetail.labor.status==1}">-->
+<!--                                        <span>Free now</span>-->
+<!--                                    </td>-->
+<!--                                    <td th:if="${jobDetail.labor.status==0}">-->
+<!--                                        <span>Busy now</span>-->
+<!--                                    </td>-->
                                     <td th:text="${jobDetail.labor.address_work_official}"></td>
-                                    <td th:text="${jobDetail.labor.free_time_from}"></td>
-                                    <td th:text="${jobDetail.labor.free_time_to}"></td>
                                     <td th:text="${jobDetail.job.nameJob + ' - ' + jobDetail.job.categoryJob.categoryName}"></td>
-                                    <td class="text" th:text="${moneyJobDetail+ '/day'}"></td>
+                                    <td th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></td>
                                     <td>
                                         <i class="text-info fa fa-city"></i>
                                         <span th:text="${jobDetail.labor.city.city_name}"></span>
@@ -138,6 +142,11 @@
                                     <td>
                                         <a th:href="${'labors/' + jobDetail.labor.id}">DETAIL</a>
                                     </td>
+                                    <td>
+                                        <a class="text-danger comment-skill" th:id="'comment_skill_' + ${jobDetail.id}">COMMENT SKILL</a>
+
+                                    </td>
+
                                     <td th:if="${#lists.contains(userRoles, 'ROLE_CUSTOMER')}">
                                         <form th:action="@{'/save/cart/job-detail/' + ${jobDetail.id}}" method="POST">
                                             <button class="btn btn-primary" type="submit" name="selectedJobId">BOOK NOW</button>
@@ -146,6 +155,15 @@
                                 </tr>
 
                             </table>
+
+                            <nav style="padding-left: 0px" aria-label="Page navigation example">
+                                <ul class="pagination mt-4">
+                                    <li class="page-item" th:each="page, status: ${pages}">
+                                        <a class="page-link" th:href="@{/your-menu/(page=${status.index})}" th:text="${status.index}"></a>
+                                    </li>
+                                </ul>
+                            </nav>
+
                             <br><br>
                             <h4>OUR JOB SERVICE INFORMATION</h4>
 
@@ -166,7 +184,7 @@
                                             <span th:text="${job.nameJob}"></span>
                                         </td>
                                         <td>
-                                            <span th:text="${moneyJob+ '/day'}"></span>
+                                            <span th:text="${#numbers.formatDecimal(job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></span>
                                         </td>
                                         <td>
                                             <span th:text="${job.description}"></span>

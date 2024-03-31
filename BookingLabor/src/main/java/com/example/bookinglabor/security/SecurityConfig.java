@@ -103,21 +103,25 @@ public class SecurityConfig {
 
         http.csrf().disable() // Vô hiệu hóa CSRF protection để cho phép đăng nhập qua form POST mà không cần token CSRF
                 .authorizeRequests() // Bắt đầu cấu hình cho việc xác thực yêu cầu
-                .antMatchers("/","/error","/login", "/admin/work/creates",
-                "/labors/**", "/category-job/**","/jobs/show/**", "/assets/**", "/vendor/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/register/save").permitAll()
+                .antMatchers(HttpMethod.GET,"/","/error","/login",
+                "/labors/**", "/category-job/**","/jobs/show/**",
+                "/assets/**", "/vendor/**", "/send-mail").permitAll()
+                .antMatchers(HttpMethod.POST, "/register/save", "/guest-search").permitAll()
                 // Cho phép mọi người truy cập các đường dẫn này mà không cần xác thực
-                .antMatchers(HttpMethod.GET,"/your-menu", "/labor-create-info", "/customer-create-info")
+                .antMatchers(HttpMethod.GET,"/your-menu/**", "/labor-create-info",
+                "/customer-create-info", "/jobs")
                 .hasAnyRole("USER", "LABOR", "CUSTOMER", "ADMIN")// Cho phép người dùng có role là USER truy cập vào các route trên
-                .antMatchers(HttpMethod.POST, "/labor/info/save", "/customer/info/save")
-                .hasAnyRole("USER", "LABOR", "CUSTOMER")
-                .antMatchers(HttpMethod.GET, "/your-info-labor",  "/your-cart", "/your-job").hasAnyRole("LABOR")
-                .antMatchers(HttpMethod.POST, "/save/cart/job/**", "/save/your-job","/update/job-detail/**",
+                .antMatchers(HttpMethod.POST, "/labor/info/save", "/customer/info/save",
+                "/user/search").hasAnyRole("USER", "LABOR", "CUSTOMER", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/your-info-labor",  "/your-cart", "/your-job"
+                , "/booking-manager-by-labor", "booking-manager-by-labor/{id}").hasAnyRole("LABOR")
+                .antMatchers(HttpMethod.POST, "/save/cart/job/**", "/save/your-job",
+                "/update/job-detail/**","/accept-booking/{id}",
                 "/delete/job-cart/**", "/delete/job-detail/**").hasAnyRole("LABOR")
                 .antMatchers(HttpMethod.GET, "/your-info-customer", "/your-booking-cart",
-                "/your-booking", "/delete/booking-cart/**").hasAnyRole("CUSTOMER")
+                "/your-booking", "/delete/booking-cart/**", "/post/create").hasAnyRole("CUSTOMER")
                 .antMatchers(HttpMethod.POST, "/save/cart/job-detail/**", "/save/cart/booking",
-                 "/save/booking").hasAnyRole("CUSTOMER")
+                 "/save/booking", "/update/booking/**").hasAnyRole("CUSTOMER")
                 .antMatchers(HttpMethod.GET , "/admin/home", "/admin/work/creates")
                 .hasAnyRole("ADMIN").antMatchers().authenticated()// Yêu cầu xác thực (đăng nhập) để truy cập các đường dẫn này
                 .anyRequest().authenticated() // Bất kỳ yêu cầu nào khác cũng yêu cầu xác thực

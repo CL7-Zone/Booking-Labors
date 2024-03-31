@@ -34,13 +34,7 @@ public class DisplayUserJobController {
         UserAccount user =   userService.findByEmail(email);
         List<Role> roles = user.getRoles();
         List<String> currentRoleUser = new ArrayList<>();
-        DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
 
-        for(Job job : jobs){
-
-            String money = decimalFormat.format(job.getPrice());
-            model.addAttribute("money", money);
-        }
         try{
             Long labor_id = laborService.findByUserId(user.getId()).getId();
             model.addAttribute("labor_id", labor_id);

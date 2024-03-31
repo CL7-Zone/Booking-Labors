@@ -100,7 +100,7 @@ public class DisplayJobDetailController{
                           @RequestParam("labor_id") long labor_id,
                           RedirectAttributes flashMessage) {
         try {
-            if(jobDetailService.updateById(id, job_id, labor_id, jobDetail))
+            if(jobDetailService.updateById(job_id, labor_id, jobDetail))
                 flashMessage.addFlashAttribute("success", "Update successfully");
 
             return "redirect:/your-job";

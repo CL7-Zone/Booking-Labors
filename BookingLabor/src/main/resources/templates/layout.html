@@ -38,6 +38,9 @@
 
 <div th:replace="~{components :: header}"></div>
 <body layout:fragment="content"></body>
+<a href="#" class="back_to_top" id="back-to-top-btn">
+    <i class="fas fa-arrow-up"></i>
+</a>
 <div th:replace="~{components :: footer}"></div>
 
 
@@ -45,6 +48,27 @@
 <script th:inline="javascript">
 
     console.log("Hello world");
+
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("back-to-top-btn").style.display = "block";
+        } else {
+            document.getElementById("back-to-top-btn").style.display = "none";
+        }
+    }
+
+    document.getElementById("back-to-top-btn").addEventListener("click", function(e) {
+        e.preventDefault();
+        scrollToTop();
+    });
+
+    function scrollToTop() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+
 
     const selectBoxes = {
         year: document.querySelector('#year'),

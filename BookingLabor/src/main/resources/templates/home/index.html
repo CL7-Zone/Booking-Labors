@@ -6,9 +6,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+        /* CSS styles */
+        @media only screen and (max-width: 1200px) {
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            th, td {
+                padding: 8px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+                display: block;
+            }
+
+            th {
+                background-color: #f2f2f2; /* Màu nền cho cột th */
+            }
+        }
+
+    </style>
 </head>
+
 <body>
+
         <div layout:fragment="content">
+
             <section class="popular-categories">
                 <div class="container-fluid">
                     <div class="row">
@@ -20,10 +59,9 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="main-button">
-                                <a th:href="@{/}">Discover All Categories</a>
+                                <a th:href="@{'/post/create'}" th:text="${#strings.toUpperCase('recruitment posting')}"></a>
                             </div>
                         </div>
-
 
                         <div class="col-lg-12"  >
                             <div class="owl-features owl-carousel" style="position: relative; z-index: 5;">
@@ -47,7 +85,7 @@
                                         </span>
                                     </div>
                                     <div class="border-button">
-                                        <a th:href="@{'/category-job/'+ ${categoryJob.id}}">Xem công việc của danh mục này</a>
+                                        <a th:href="@{'/category-job/'+ ${categoryJob.id}}">View category job</a>
                                     </div>
                                 </div>
 
@@ -59,6 +97,49 @@
                 </div>
             </section>
 
+            <section class="popular-categories">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="section-heading">
+                                <h6>Our jobs detail</h6>
+                                <h4>Our popular<em></em> <em>jobs detail</em></h4>
+                            </div>
+                        </div>
+
+                        <table>
+                            <tr>
+                                <th>FullName</th>
+                                <th>Name job</th>
+                                <th>Price job</th>
+                                <th>In city</th>
+                                <th colspan="2">ACTION</th>
+                            </tr>
+                            <tr th:each="jobDetail :${jobDetailList}">
+                                <td th:text="${jobDetail.labor.full_name}"></td>
+                                <td th:text="${jobDetail.job.nameJob + ' - ' + jobDetail.job.categoryJob.categoryName}"></td>
+                                <td class="text"  th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></td>
+                                <td>
+                                    <i class="text-info fa fa-city"></i>
+                                    <span th:text="${jobDetail.labor.city.city_name}"></span>
+                                </td>
+                                <td>
+                                    <a th:href="${'labors/' + jobDetail.labor.id}">DETAIL</a>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <nav style="padding-left: 0px" aria-label="Page navigation example">
+                            <ul class="pagination mt-4">
+                                <li class="page-item" th:each="page, status: ${pages}">
+                                    <a class="page-link" th:href="@{/(page=${status.index})}" th:text="${status.index}"></a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                    </div>
+                </div>
+            </section>
 
             <section class="featured-contests">
                 <div class="container">
@@ -72,7 +153,7 @@
 
                         <div class="col-lg-12">
                             <div class="row">
-                                <div th:each="labor : ${labors}" class="col-lg-4 item">
+                                <div th:each="labor : ${laborList}" class="col-lg-4 item">
                                     <div class="thumb">
                                         <img th:src="@{/assets/images/featured-image-03.jpg}" alt="">
                                         <div class="hover-effect">
@@ -108,6 +189,15 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <nav style="padding-left: 0px" aria-label="Page navigation example">
+                                    <ul class="pagination mt-4">
+                                        <li class="page-item" th:each="page, status: ${pageLabors}">
+                                            <a class="page-link" th:href="@{/(page=${status.index})}" th:text="${status.index}"></a>
+                                        </li>
+                                    </ul>
+                                </nav>
+
                             </div>
                         </div>
 
@@ -140,7 +230,7 @@
                                             <b th:text="${job.categoryJob.categoryName}"></b>
                                         </li>
                                     </ul>
-                                    <span class="price" th:text="${money}"></span>
+                                    <span class="price"  th:text="${#numbers.formatDecimal(job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></span>
                                     <div class="border-button">
                                         <a th:href="@{'/jobs/show/' + ${job.id}}" th:text="${'DETAIL '+ job.nameJob + ' JOB'}"></a>
                                     </div>

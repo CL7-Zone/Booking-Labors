@@ -23,12 +23,14 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int accept;
+    private int status;
     private double total_price;
     private String book_address;
     private String message;
     private String city_name;
     private Date checkin;
     private Date checkout;
+    private LocalDateTime cancel_time;
     @ManyToOne
     @JoinColumn(name = "job_detail_id", nullable = true)
     private JobDetail jobDetail;
