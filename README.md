@@ -12,7 +12,7 @@
 - Hibernate framework là một giải pháp ORM (Object Relational Mapping) mã nguồn mở, gọn nhẹ. 
 Hibernate giúp đơn giản hoá sự phát triển của ứng dụng java để tương tác với cơ sở dữ liệu.
 - hibernate cung cấp cho chúng ta Tool ORM giúp đơn giản hoá việc tạo ra dữ liệu và
-thao tác với dữ liệu. 
+thao tác với dữ liệu trong cơ sở dữ liệu. 
 
 ```
 #### Example
