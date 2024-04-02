@@ -16,7 +16,7 @@ thao tác với dữ liệu.
 #### Example
 ```java
 - Đây chính là mã nguồn mở về tool ORM mà Hibernate framework cung cấp cho chúng ta 
-- nó có là 1 thư viện đc viết sẵn
+- nó là 1 thư viện đc viết sẵn
 ```
 <img src="image-1.png" width="70%" height="70%" />
 
@@ -72,7 +72,7 @@ List<Booking> bookings = bookingService.findAllBookings();
 - Đây là 1 object relationship là 1 cục dữ liệu thô chưa được duyệt
 
 for(int i=0; i<bookings.size(); i++){
-  
+
    System.out.println(bookings.get(i));
 }
 - Còn đây là cách duyệt object để hiển thị ra dữ liệu tường tận cho người dùng nhìn thấy
