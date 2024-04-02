@@ -218,5 +218,21 @@ invalidAcceptFunction.apply(1L)
 myLambda.run();
 - Đây là cách gọi nó ra và thực thi những gì nó làm
 
+- Đây thư viện về lambda function 
+```
+<img src="image-7.png" width="70%" height="70%" />
+
+```java
+- để thực thi lambda function chúng ta phải gọi ra hàm apply đây
+là 1 hàm được xây dựng sẵn trong thư viện function
+- 1 lambda function chuyền vào 1 tham số và trả về 1 kết quả 
+thì thực hiện như sau
+Function<Long, Integer> Lambda_Func
+- vế trước là tham số đầu vào
+- vế sau là tham số đầu ra
 
 ```
+
+
+
+
