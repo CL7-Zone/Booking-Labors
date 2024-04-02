@@ -28,6 +28,7 @@ hiển thị tường tận dữ liệu ra cho ng dùng nhìn thấy
 - Ví dụ:
   ![alt text](image.png)
 ```
+<img src="image.png" width="100%" height="100%" />
 
 ### Ưu điểm của hibernate là gì?
 
