@@ -13,11 +13,16 @@ Hibernate giúp đơn giản hoá sự phát triển của ứng dụng java đ�
 thao tác với dữ liệu. 
 
 ```
+#### Example
+```java
+- Đây chính là mã nguồn mở về tool ORM mà Hibernate framework cung cấp cho chúng ta 
+- nó có là 1 thư viện đc viết sẵn
+```
+![alt text](image-1.png)
 
 ### ORM là gì?
 
 ```java
-
 - ORM là object relationship mapping : là một kỹ thuật lập trình để ánh xạ tới đối tượng 
 và lấy ra dữ liệu trong cơ sở dữ liệu.
 - Chúng ta có thể hiểu đơn giản là:
@@ -26,7 +31,7 @@ về object chứa dữ liệu đó, và để lấy được dữ liệu đó r
 chúng ta phải mapping qua object đó nghĩa là phải duyệt object đó ra giống như duyệt mảng để 
 hiển thị tường tận dữ liệu ra cho ng dùng nhìn thấy
 - Ví dụ:
-  ![alt text](image.png)
+- 
 ```
 <img src="image.png" width="100%" height="100%" />
 
