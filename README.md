@@ -18,7 +18,7 @@ thao tác với dữ liệu.
 - Đây chính là mã nguồn mở về tool ORM mà Hibernate framework cung cấp cho chúng ta 
 - nó có là 1 thư viện đc viết sẵn
 ```
-![alt text](image-1.png)
+<img src="image1.png" width="50%" height="50%" />
 
 ### ORM là gì?
 
@@ -33,7 +33,7 @@ hiển thị tường tận dữ liệu ra cho ng dùng nhìn thấy
 - Ví dụ:
 - 
 ```
-<img src="image.png" width="100%" height="100%" />
+<img src="image.png" width="50%" height="50%" />
 
 ### Ưu điểm của hibernate là gì?
 
