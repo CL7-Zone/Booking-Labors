@@ -65,11 +65,11 @@ public List<Booking> findAllBookings() {
             .collect(Collectors
             .toList());
 }
-- Đây object relationship mapping là 1 ma trận dữ liệu trong object relationship
+- Đây cách ánh xạ qua các cột (column) trong object relationship và convert về dạng string object relationship
 
 
 List<Booking> bookings = bookingService.findAllBookings();
-- Đây là 1 object relationship là 1 cục dữ liệu thô chưa được duyệt
+- Đây là 1 string object relationship là 1 cục dữ liệu thô chưa được duyệt
 
 for(int i=0; i<bookings.size(); i++){
 
@@ -102,3 +102,25 @@ tác vs csdl
 - MYSQL, PostgreSQL, Oracle, SQL server ...
 
 ```
+#### Example
+
+```java
+- Đây là mã nguồn mở trong hibernate framework
+```
+
+<img src="image-2.png" width="70%" height="70%" />
+
+```java
+@Query(value ="SELECT COUNT(*) FROM bookings " +
+              "WHERE bookings.customer_id = :customer_id",
+            nativeQuery = true)
+int countBookingsByCustomerId(@Param("customer_id") Long customer_id);
+- Đây cách truy vấn sql native
++ truy vấn bằng cách nhúng sql vào trong annotion của framework
+
+Page<JobDetail> findByJob_NameJobContaining(@Param("name_job") String name_job, Pageable pageable);
+- Đây là cách truy vấn sử dụng HQL(hibernate query language)
++ Hàm này được framework xây dựng sẵn để chúng ta lấy dữ liệu theo ý muốn
+- Đây là các hàm đc xây dựng sẵn mà hibernate framework cung cấp cho chúng ta 
+```
+<img src="image-3.png" width="70%" height="70%" />
