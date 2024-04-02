@@ -24,15 +24,25 @@ thao tác với dữ liệu trong cơ sở dữ liệu.
 
 ### JPA là gì?
 ```java
-- JPA là 1 thư viện tập hợp các interface nó là 1 tiêu chuẩn kỹ thuật để lập trình 
+- JPA là 1 thư viện tập hợp các hàm trong interface nó là 1 tiêu chuẩn kỹ thuật để lập trình 
 - Các hàm trong jpa interface được thực hiện (implements) cài đặt trong các class thư viện của
 hibernate   
 ```
+
 #### Example
 ```java
 - Đây chính là thư viện interface JPA
 ```
 <img src="image-9.png" width="70%" height="70%" />
+
+### Sự khác nhau giữa JPA với Hibernate?
+
+```java
+- Hibernate là 1 thư viện gồm các class để thực hiện cài đặt
+- còn JPA là interface để thực hiện (implement) vào các class
+```
+
+#### Example
 
 ```java
 - Đây chính là cách cài đặt cho các interface JPA vào các class của hibernate
@@ -41,6 +51,7 @@ và thực hiện cài đặt
 ```
 <img src="image-10.png" width="70%" height="70%" />
 <img src="image-11.png" width="70%" height="70%" />
+
 
 ### ORM là gì?
 
