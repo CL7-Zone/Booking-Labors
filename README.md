@@ -18,7 +18,7 @@ thao tác với dữ liệu.
 - Đây chính là mã nguồn mở về tool ORM mà Hibernate framework cung cấp cho chúng ta 
 - nó có là 1 thư viện đc viết sẵn
 ```
-<img src="image1.png" width="50%" height="50%" />
+<img src="image-1.png" width="50%" height="50%" />
 
 ### ORM là gì?
 
