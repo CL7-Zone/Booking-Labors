@@ -2,6 +2,8 @@
 
 ## Ask and question, reply about java spring boot
 
+### Hibernate
+
 ### Hibernate là gì?
 
 ```java
@@ -176,3 +178,45 @@ về 1 kết quả gì đó ví dụ như đếm số lượng dữ liệu
 ```
 <img src="image-6.png" width="70%" height="70%" />
 <img src="image-1.png" width="70%" height="70%" />
+
+
+### Lambda function
+
+### Lambda function là gì
+
+```java
+- Lambda function là 1 loại function trong các ngôn ngữ lập trình nó có thể gọi ra lambla_Func mà
+không cần thêm dấu ngoặc () tức là không thực thi những gì nó làm. 
+Nếu muốn truyền vào tham số thì làm như sau lambla_Func.apply(value1,value2)
+* tuy nhiên lúc tạo ra lambla function phải tạo tham số truyền vào cho nó thì mới có thể truyền
+vào đc tham số khi gọi ra 
+
+```
+
+#### Example
+
+```java
+//Lambda function vế trước là tham số đầu vào
+// vế sau là tham số đầu ra
+//truyền tham số ngoài view invalidAcceptFunction.apply(id);
+Function<Long, Integer> invalidAcceptFunction = (id) -> {
+    LocalDateTime accept_time = LocalDateTime.now();
+    return bookingService.invalidAcceptBooking(accept_time, id);
+};
+//lambda void function
+Runnable myLambda = () -> {
+    System.out.println("Hello world");
+};
+- Đây là lambda function
+
+myLambda;
+invalidAcceptFunction;
+System.out.println("Lambda Function: "+invalidAcceptFunction);
+- Đây là cách gọi nó ra mà k cần thêm dấu ngoặc
+
+invalidAcceptFunction.apply(1L)
+myLambda.run();
+- Đây là cách gọi nó ra và thực thi những gì nó làm
+
+
+```
