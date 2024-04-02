@@ -25,7 +25,8 @@ và lấy ra dữ liệu trong cơ sở dữ liệu.
 về object chứa dữ liệu đó, và để lấy được dữ liệu đó ra để hiển thị cho ng dùng nhìn thấy thì
 chúng ta phải mapping qua object đó nghĩa là phải duyệt object đó ra giống như duyệt mảng để 
 hiển thị tường tận dữ liệu ra cho ng dùng nhìn thấy
-
+- Ví dụ:
+  ![alt text](image.png)
 ```
 
 ### Ưu điểm của hibernate là gì?
