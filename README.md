@@ -2,7 +2,7 @@
 
 ## Ask and question, reply about java spring boot
 
-### Hibernate
+## Hibernate
 
 ### Hibernate là gì?
 
@@ -20,12 +20,32 @@ thao tác với dữ liệu.
 - Đây chính là mã nguồn mở về tool ORM mà Hibernate framework cung cấp cho chúng ta 
 - nó là 1 thư viện đc viết sẵn
 ```
-<img src="image-1.png" width="70%" height="70%" />
+<img src="image-8.png" width="70%" height="70%" />
+
+### JPA là gì?
+```java
+- JPA là 1 thư viện tập hợp các interface nó là 1 tiêu chuẩn kỹ thuật để lập trình 
+- Các hàm trong jpa interface được thực hiện (implements) cài đặt trong các class thư viện của
+hibernate   
+```
+#### Example
+```java
+- Đây chính là thư viện interface JPA
+```
+<img src="image-9.png" width="70%" height="70%" />
+
+```java
+- Đây chính là cách cài đặt cho các interface JPA vào các class của hibernate
+- Hiểu đơn giản là các class của thư viện hibernate sẽ implement các interface JPA vào 
+và thực hiện cài đặt
+```
+<img src="image-10.png" width="70%" height="70%" />
+<img src="image-11.png" width="70%" height="70%" />
 
 ### ORM là gì?
 
 ```java
-- ORM là object relationship mapping : là một kỹ thuật lập trình để ánh xạ tới đối tượng 
+- ORM là object relationship mapping : là một kỹ thuật lập trình để ánh xạ tới các bảng 
 và lấy ra dữ liệu trong cơ sở dữ liệu.
 - Chúng ta có thể hiểu đơn giản là:
 - Hibernate sẽ lấy dữ liệu trong csdl ra sau đó lưu dữ liệu đó vào trong 1 bộ nhớ cache và trả
@@ -127,7 +147,7 @@ Page<JobDetail> findByJob_NameJobContaining(@Param("name_job") String name_job, 
 ```
 <img src="image-3.png" width="70%" height="70%" />
 
-### MVC
+## MVC
 
 ### MVC là gì?
 
@@ -177,12 +197,11 @@ về 1 kết quả gì đó ví dụ như đếm số lượng dữ liệu
 - hoặc chứa các hàm để thao tác với dữ liệu (Như thêm sửa xóa)
 ```
 <img src="image-6.png" width="70%" height="70%" />
-<img src="image-1.png" width="70%" height="70%" />
+<img src="image-8.png" width="70%" height="70%" />
 
+## Lambda function
 
-### Lambda function
-
-### Lambda function là gì
+### Lambda function là gì?
 
 ```java
 - Lambda function là 1 loại function trong các ngôn ngữ lập trình nó có thể gọi ra lambla_Func mà
