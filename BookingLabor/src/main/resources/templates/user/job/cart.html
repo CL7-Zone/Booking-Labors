@@ -56,8 +56,8 @@
                         <div class="top-content">
                             <div class="row">
                                 <div class="col-lg-8">
-                                    <span th:if="${roleUser!=null}">
-                                        <span class="open" th:text="${roleUser}"></span>
+                                    <span th:if="${userRoles!=null}">
+                                        <span class="open" th:text="${userRoles}"></span>
                                     </span>
                                     <span class="wish-list">
                                         <i class="fa fa-user"></i>
@@ -174,6 +174,39 @@
                             <div class="row">
                                 <div class="main-button" th:if="${jobDetails!=null}">
                                     <form th:action="@{/save/your-job}" method="POST">
+
+                                        <div class="mb-3">
+                                            <fieldset>
+                                                <label for="official_work_address" class="form-label">Official work address</label>
+                                                <input class="form-control" type="text" name="official_work_address" id="official_work_address" placeholder="Your official work address..."></input>
+                                            </fieldset>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="education" class="form-label">Education</label>
+                                            <select name="education" id="education" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                                <option selected disabled>Select education</option>
+                                                <option value="cấp 1">Cấp 1</option>
+                                                <option value="cấp 2">Cấp 2</option>
+                                                <option value="cấp 3">Cấp 3</option>
+                                                <option value="trung cấp">Trung cấp</option>
+                                                <option value="cao đẳng">Cao đẳng</option>
+                                                <option value="đại học">Đại học</option>
+                                                <option value="khác">Khác</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="experience" class="form-label">Experience</label>
+                                            <select name="experience" id="experience" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                                <option selected disabled>Select experience</option>
+                                                <option value="<1 year">< 1 year</option>
+                                                <option value="1-2 year">1-2 year</option>
+                                                <option value="3-5 year">3-5 year</option>
+                                                <option value="6-10 year">6-10 year</option>
+                                                <option value="> 10 year">> 10 year</option>
+                                            </select>
+                                        </div>
+
                                         <button class="btn-save-job-detail" type="submit" >
                                             SAVED YOUR JOB
                                         </button>

@@ -17,6 +17,7 @@ public class BookingObject implements Serializable {
     private Long id;
     private String nameJob;
     private String imageJob;
+    private String official_work_address;
     private String labor_name;
     private double price;
     private String categoryName;

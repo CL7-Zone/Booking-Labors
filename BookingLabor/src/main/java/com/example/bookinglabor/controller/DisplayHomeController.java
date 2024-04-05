@@ -1,8 +1,6 @@
 package com.example.bookinglabor.controller;
-import com.example.bookinglabor.model.CategoryJob;
-import com.example.bookinglabor.model.Job;
-import com.example.bookinglabor.model.JobDetail;
-import com.example.bookinglabor.model.Labor;
+import com.example.bookinglabor.service.CountService;
+import com.example.bookinglabor.model.*;
 import com.example.bookinglabor.repo.JobDetailRepo;
 import com.example.bookinglabor.repo.LaborRepo;
 import com.example.bookinglabor.service.CategoryJobService;
@@ -12,8 +10,6 @@ import com.example.bookinglabor.service.LaborService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,20 +35,12 @@ public class DisplayHomeController {
     private JobDetailService jobDetailService;
     private JobDetailRepo jobDetailRepo;
     private LaborRepo laborRepo;
-
-//    @Autowired
-//    private int loadCounter;
-//    private int LoadCount(){
-//
-//        loadCounter++;
-//
-//        return loadCounter;
-//    }
+    private CountService countService;
 
     @GetMapping("/")
     private String index(Model model, Pageable pageable,
                          @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
-                         @RequestParam(value = "size", required = false, defaultValue = "3") int size){
+                         @RequestParam(value = "size", required = false, defaultValue = "6") int size){
 
         List<CategoryJob> categoryJobs = categoryJobService.findAllCategoryJobs();
         List<Labor> labors = laborService.findAllLabors();
@@ -63,11 +51,7 @@ public class DisplayHomeController {
         Long countJob = categoryJobService.countJob();
         DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
         Function<Long, Long> countJobsByCategoryJobFunction = categoryJobService::countJobsByCategoryJob;
-
-        for(Job job : jobs){
-            String money = decimalFormat.format(job.getPrice());
-            model.addAttribute("money",money);
-        }
+        System.out.println("Count request: "+countService.LoadCount());
 
         model.addAttribute("countJobsByCategoryJob", countJobsByCategoryJobFunction);
         model.addAttribute("categoryJobs", categoryJobs);
@@ -95,17 +79,16 @@ public class DisplayHomeController {
         return "home/show";
     }
 
-    @PostMapping("/guest-search")
+    @PostMapping("/guest/search/jobByLabor")
     private String search(@RequestParam("nameJob") String nameJob, Model model,
                           @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
-                          @RequestParam(value = "size", required = false, defaultValue = "3") int size){
+                          @RequestParam(value = "size", required = false, defaultValue = "6") int size){
 
         if(nameJob != null){
 
             Page<JobDetail> jobDetailPage = jobDetailService.findJobDetailsByNameJob(nameJob, PageRequest.of(pageNumber, size));
             Page<Labor> laborPage = laborRepo.findAll(PageRequest.of(pageNumber, size));
             Function<Long, Long> countJobsByCategoryJobFunction = categoryJobService::countJobsByCategoryJob;
-
             System.out.println(nameJob);
 
             model.addAttribute("jobDetailList", jobDetailPage.getContent());
@@ -117,6 +100,72 @@ public class DisplayHomeController {
         }
         return "home/index";
     }
+
+
+    @PostMapping("/guest/search-job")
+    private String searchJob(@RequestParam("name_job") String nameJob, Model model,
+                          @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
+                          @RequestParam(value = "size", required = false, defaultValue = "6") int size){
+
+        if(nameJob != null){
+
+            Page<JobDetail> jobDetailPage = jobDetailRepo.findAll(PageRequest.of(pageNumber, size));
+            Page<Labor> laborPage = laborRepo.findAll(PageRequest.of(pageNumber, size));
+            Function<Long, Long> countJobsByCategoryJobFunction = categoryJobService::countJobsByCategoryJob;
+            List<Job> jobs = jobService.findJobsByNameJobContaining(nameJob);
+
+            model.addAttribute("jobs", jobs);
+            model.addAttribute("jobDetailList", jobDetailPage.getContent());
+            model.addAttribute("pages", new int[jobDetailPage.getTotalPages()]);
+            model.addAttribute("currentPage", pageNumber);
+            model.addAttribute("laborList", laborPage.getContent());
+            model.addAttribute("pageLabors", new int[laborPage.getTotalPages()]);
+            model.addAttribute("countJobsByCategoryJob", countJobsByCategoryJobFunction);
+        }
+        return "home/index";
+    }
+
+
+    @PostMapping("/guest/filter-price-asc")
+    private String filterPriceAsc(Model model,
+                          @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
+                          @RequestParam(value = "size", required = false, defaultValue = "6") int size){
+
+        Page<JobDetail> jobDetailPage = jobDetailService.findAllByOrderByJobPriceAsc(PageRequest.of(pageNumber, size));
+        Page<Labor> laborPage = laborRepo.findAll(PageRequest.of(pageNumber, size));
+        Function<Long, Long> countJobsByCategoryJobFunction = categoryJobService::countJobsByCategoryJob;
+
+        model.addAttribute("jobDetailList", jobDetailPage.getContent());
+        model.addAttribute("pages", new int[jobDetailPage.getTotalPages()]);
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("laborList", laborPage.getContent());
+        model.addAttribute("pageLabors", new int[laborPage.getTotalPages()]);
+        model.addAttribute("countJobsByCategoryJob", countJobsByCategoryJobFunction);
+
+        return "home/index";
+    }
+
+
+    @PostMapping("/guest/filter-price-desc")
+    private String filterPriceDesc(Model model,
+                               @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
+                               @RequestParam(value = "size", required = false, defaultValue = "6") int size){
+
+        Page<JobDetail> jobDetailPage = jobDetailService.findAllByOrderByJobPriceDesc(PageRequest.of(pageNumber, size));
+        Page<Labor> laborPage = laborRepo.findAll(PageRequest.of(pageNumber, size));
+        Function<Long, Long> countJobsByCategoryJobFunction = categoryJobService::countJobsByCategoryJob;
+
+        model.addAttribute("jobDetailList", jobDetailPage.getContent());
+        model.addAttribute("pages", new int[jobDetailPage.getTotalPages()]);
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("laborList", laborPage.getContent());
+        model.addAttribute("pageLabors", new int[laborPage.getTotalPages()]);
+        model.addAttribute("countJobsByCategoryJob", countJobsByCategoryJobFunction);
+
+        return "home/index";
+    }
+
+
 
 
 }

@@ -19,11 +19,11 @@
                         <div class="top-content">
                             <div class="row">
                                 <div class="col-lg-8">
-                                    <span class="open" th:if="${roleUser==null}">
+                                    <span class="open" th:if="${userRoles==null}">
                                         <span th:text="${'[GUEST]'}"></span>
                                     </span>
-                                    <span class="open" th:if="${roleUser!=null}">
-                                        <span class="open" th:text="${roleUser}"></span>
+                                    <span class="open" th:if="${userRoles!=null}">
+                                        <span class="open" th:text="${userRoles}"></span>
                                     </span>
                                     <span class="wish-list">
                                         <i class="fa fa-user"></i>
@@ -51,10 +51,7 @@
                                     <b class="text-info">Address:</b>
                                     <span th:text="${labor.address}"></span>
                                 </p>
-                                <p>
-                                    <b class="text-info">Official work address:</b>
-                                    <span th:text="${labor.address_work_official}"></span>
-                                </p>
+
                                 <p>
                                     <b>Phone number:</b>
                                     <span th:text="${labor.phone_number}"></span>
@@ -63,27 +60,7 @@
                                     <b>Birthday:</b>
                                     <span th:text="${labor.birthday}"></span>
                                 </p>
-                                <p>
-                                    <b>Number experience:</b>
-                                    <span th:text="${labor.number_experience+ ' Year'}"></span>
-                                </p>
-                                <p>
-                                    <b>Status:</b>
-                                    <span th:if="${labor.status==1}">
-                                    Free now
-                                </span>
-                                    <span th:if="${labor.status!=1}">
-                                    Busy now
-                                </span>
-                                </p>
-                                <p>
-                                    <b class="text-info">Free time from:</b>
-                                    <span th:text="${labor.free_time_from}"></span>
-                                </p>
-                                <p>
-                                    <b class="text-info">Free time to:</b>
-                                    <span th:text="${labor.free_time_to}"></span>
-                                </p>
+
                             </div>
 
                             <h5  class="second-title">Job information by labor</h5>
@@ -97,6 +74,24 @@
                                     <b>Name job:</b>
                                     <span th:text="${jobDetail.job.nameJob}"></span>
                                 </p>
+                                <p>
+                                    <b>Official work address:</b>
+                                    <span th:text="${jobDetail.official_work_address}"></span>
+                                </p>
+                                <p>
+                                    <b>Experience:</b>
+                                    <span th:text="${jobDetail.experience}"></span>
+                                </p>
+                                <p>
+                                    <b>Education:</b>
+                                    <span th:text="${jobDetail.education}"></span>
+                                </p>
+                                <div>
+                                    <b>Skills: </b>
+                                    <p th:each="commentSkill : ${jobDetail.commentSkills}" class="mr-3" th:text="${commentSkill.content}"></p>
+                                    <br><br>
+                                </div>
+
                                 <h4>
                                     <b class="text">price job:</b>
                                     <span class="text-warning"  th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></span>

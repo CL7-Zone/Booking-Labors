@@ -1,6 +1,7 @@
 package com.example.bookinglabor.model;
 
 
+import com.example.bookinglabor.controller.component.EnumComponent;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -26,6 +27,11 @@ public class UserAccount {
     private Long id;
     private String email;
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "provider")
+    private EnumComponent provider;
+
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp
@@ -42,4 +48,8 @@ public class UserAccount {
     private List<Labor> labors = new ArrayList<>();
     @OneToMany(mappedBy = "userAccount", cascade = CascadeType.REMOVE)
     private List<Customer> customers = new ArrayList<>();
+    @OneToMany(mappedBy = "userAccount", cascade = CascadeType.REMOVE)
+    private List<Post> posts = new ArrayList<>();
+    @OneToMany(mappedBy = "userAccount", cascade = CascadeType.REMOVE)
+    private List<Header> headers = new ArrayList<>();
 }

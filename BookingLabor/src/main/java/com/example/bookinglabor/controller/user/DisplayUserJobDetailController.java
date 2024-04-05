@@ -1,18 +1,15 @@
 package com.example.bookinglabor.controller.user;
 
-import com.example.bookinglabor.controller.component.ConstantComponent;
 import com.example.bookinglabor.model.Job;
 import com.example.bookinglabor.model.JobDetail;
+import com.example.bookinglabor.model.Labor;
 import com.example.bookinglabor.model.sessionObject.JobDetailObject;
-import com.example.bookinglabor.security.SecurityConstants;
 import com.example.bookinglabor.security.SecurityUtil;
 import com.example.bookinglabor.service.JobDetailService;
 import com.example.bookinglabor.service.JobService;
 import com.example.bookinglabor.service.LaborService;
 import com.example.bookinglabor.service.UserService;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +22,7 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-public class DisplayJobDetailController{
+public class DisplayUserJobDetailController {
 
     private JobDetailService jobDetailService;
     private UserService userService;
@@ -43,31 +40,18 @@ public class DisplayJobDetailController{
         List<Job> jobs = jobService.findAllJobs();
         DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
 
-        if(jobDetails!=null){
-            for (JobDetail jobDetail : jobDetails){
-                String moneyJobDetail = decimalFormat.format(jobDetail.getJob().getPrice());
-                System.out.println(jobDetail.getJob().getNameJob());
-                model.addAttribute("money",moneyJobDetail);
-            }
-            model.addAttribute("jobDetails",jobDetails);
-        }
-
-        for(Job job : jobs){
-            String moneyJob = decimalFormat.format(job.getPrice());
-            model.addAttribute("moneyJob",moneyJob);
-        }
-
         model.addAttribute("jobs",jobs);
         model.addAttribute("labor_id",labor_id);
+        model.addAttribute("jobDetails",jobDetails);
 
         return "/user/job/detail";
     }
 
     @PostMapping(value = "/save/your-job")
     private String store(Model model, HttpSession session,
+                         @ModelAttribute("job_detail") JobDetail jobDetail,
                          RedirectAttributes res,
                          HttpServletRequest request){
-
         try{
             List<JobDetailObject> jobDetails = (List<JobDetailObject>) session.getAttribute("jobObjects");
             long user_id = userService.findByEmail(SecurityUtil.getSessionUser()).getId();
@@ -76,11 +60,11 @@ public class DisplayJobDetailController{
             System.out.println("size JobDetailObject: "+jobDetails.size());
             System.out.println("size max JobDetail: "+jobDetailService.countJobDetail());
 
-            if(jobDetails.size() + jobDetailService.countJobDetailByLaborId(labor_id) > MAX_RECORD){
-                res.addFlashAttribute("overLimit", "Your number of jobs over the limited. Your number of jobs must <= 5!!!");
-                return "redirect:/your-cart";
-            }
-            jobDetailService.saveData(session);
+//            if(jobDetails.size() + jobDetailService.countJobDetailByLaborId(labor_id) > MAX_RECORD){
+//                res.addFlashAttribute("overLimit", "Your number of jobs over the limited. Your number of jobs must <= 5!!!");
+//                return "redirect:/your-cart";
+//            }
+            jobDetailService.saveData(session, jobDetail);
             System.out.println("saved to job detail");
             session.removeAttribute("jobObjects");
 
@@ -115,9 +99,12 @@ public class DisplayJobDetailController{
 
         try{
             System.out.println("Delete job detail: "+id);
-            jobDetailService.deleteById(id);
-            flashMessage.addFlashAttribute("success", "Delete successfully");
 
+            if(jobDetailService.deleteById(id)){
+                flashMessage.addFlashAttribute("success", "Delete successfully");
+                return "redirect:/your-job";
+            }
+            flashMessage.addFlashAttribute("failed", "Delete failed");
             return "redirect:/your-job";
         }catch (Exception exception){
             flashMessage.addFlashAttribute("failed", "Error: "+exception);

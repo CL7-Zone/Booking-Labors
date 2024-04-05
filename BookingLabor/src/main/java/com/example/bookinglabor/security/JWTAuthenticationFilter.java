@@ -32,16 +32,22 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
             String email = tokenGenerator.getEmailFromJWT(token);
 
-            System.out.println(email);
+            System.out.println("filter email: "+email);
 
             UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
-            UsernamePasswordAuthenticationToken authenticationToken =
-            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
-            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                    userDetails,
+                    null,
+                    userDetails.getAuthorities());
+            authenticationToken.setDetails(new WebAuthenticationDetailsSource()
+                    .buildDetails(request));
+            SecurityContextHolder
+                    .getContext()
+                    .setAuthentication(authenticationToken);
+
+
         }
-
         filterChain.doFilter(request, response);
     }
 

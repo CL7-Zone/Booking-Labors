@@ -34,5 +34,7 @@ public interface BookingService {
 
     int invalidAcceptBooking(LocalDateTime accept_time, Long id);
 
+    int countByJobDetailId(Long job_detail_id);
+
 
 }

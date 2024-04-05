@@ -26,7 +26,7 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-public class DisplayJobCartController {
+public class DisplayUserJobCartController {
 
     private UserService userService;
     private JobService jobService;
@@ -40,7 +40,6 @@ public class DisplayJobCartController {
         List<JobDetailObject> jobDetails = (List<JobDetailObject>) session.getAttribute("jobObjects");
         String email = SecurityUtil.getSessionUser();
         UserAccount role =   userService.findByEmail(email);
-        List<Role> roles = role.getRoles();
         List<String> currentRoleUser = new ArrayList<>();
         DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
         long user_id = userService.findByEmail(SecurityUtil.getSessionUser()).getId();
@@ -53,9 +52,7 @@ public class DisplayJobCartController {
                 model.addAttribute("money", money);
             }
         }
-        for (Role r : roles) {
-            currentRoleUser.add("ROLE_"+r.getName());
-        }
+
         System.out.println("Number job detail: "+ jobDetailService.countJobDetailByLaborId(labor_id));
         model.addAttribute("roleUser", currentRoleUser);
         model.addAttribute("jobDetails",jobDetails);
@@ -94,9 +91,6 @@ public class DisplayJobCartController {
                         return "redirect:/your-cart";
                     case 2:
                         res.addFlashAttribute("overLimit", "You have had this job!!!");
-                        return "redirect:/your-cart";
-                    case 3:
-                        res.addFlashAttribute("overLimit", "Your number of jobs over the limited. Your number of jobs must <= 5!!!");
                         return "redirect:/your-cart";
                 }
             }

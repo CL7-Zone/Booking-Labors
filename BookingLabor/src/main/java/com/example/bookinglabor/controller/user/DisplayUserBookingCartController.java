@@ -25,7 +25,7 @@ import java.text.DecimalFormat;
 
 @Controller
 @AllArgsConstructor
-public class DisplayBookingCartController {
+public class DisplayUserBookingCartController {
 
     private BookingService bookingService;
     private JobDetailService jobDetailService;

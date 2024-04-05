@@ -1,5 +1,6 @@
 package com.example.bookinglabor.controller;
 
+import com.example.bookinglabor.controller.component.EnumComponent;
 import com.example.bookinglabor.dto.UserDto;
 import com.example.bookinglabor.model.UserAccount;
 import com.example.bookinglabor.repo.RoleRepo;
@@ -55,21 +56,19 @@ public class DisplayAuthController {
         UserAccount existingUserEmail = userService.findByEmail(user.getEmail());
 
         if(existingUserEmail != null && existingUserEmail.getEmail() != null
-                && !existingUserEmail.getEmail().isEmpty()){
-
-            return "redirect:/register?fail";
+                && !existingUserEmail.getEmail().isEmpty()
+        ){
+            return "redirect:/login?register=failed";
         }
-
         if(existingUserEmail != null){
 
-            return "redirect:/register?fail";
+            return "redirect:/login?register=failed";
         }
-
         if(res.hasErrors()){
 
             model.addAttribute("user", user);
 
-            return "auth/register";
+            return "redirect:/login?register=failed";
         }
 
         userService.saveUser(user);

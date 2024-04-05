@@ -39,7 +39,9 @@
                         <div class="top-content">
                             <div class="row">
                                 <div class="col-lg-8">
-                                    <span class="open" th:text="${roleUser}"></span>
+                                    <span th:if="${userRoles != null}">
+                                         <span class="open" th:text="${userRoles}"></span>
+                                    </span>
                                     <span class="wish-list">
                                         <i class="fa fa-user"></i>
                                         <em th:text="${email}"></em>
@@ -66,50 +68,18 @@
                                         <label for="address" class="form-label">Address</label>
                                         <input type="text" class="form-control" th:value="${labor.address}" id="address" name="address" placeholder="Address">
                                     </div>
-                                    <div  class="mb-3">
-                                        <label for="address_work_official" class="form-label">Official work address</label>
-                                        <input type="text" class="form-control" th:value="${labor.address_work_official}" id="address_work_official" name="address_work_official" placeholder="Official work address">
-                                    </div>
                                     <div class="mb-3">
                                         <label for="phone_number" class="form-label">Phone number</label>
                                         <input type="text" class="form-control"  th:value="${labor.phone_number}" id="phone_number" name="phone_number" placeholder="Phone number">
                                     </div>
                                     <div class="mb-3">
                                         <label for="birthday" class="form-label">Birthday</label>
-                                        <input type="text" class="form-control" th:value="${labor.birthday}" id="birthday" name="birthday" placeholder="Birthday">
+                                        <input type="datetime-local" class="form-control" th:value="${labor.birthday}" id="birthday" name="birthday" placeholder="Birthday">
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="number_experience" class="form-label">Number experience</label>
-                                        <select name="number_experience" id="number_experience" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                            <option th:value="${labor.number_experience}" th:text="${labor.number_experience + ' Năm'}"></option>
-                                            <option value="1">1 Năm</option>
-                                            <option value="2">2 Năm</option>
-                                            <option value="3">3 Năm</option>
-                                        </select>
-                                    </div>
+
                                     <div class="col-lg-12">
-                                        <label for="status" class="form-label">Status</label>
-                                        <select name="status" id="status" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                            <span th:if="${labor.status==1}">
-                                                <option th:value="${labor.status}">Free now</option>
-                                            </span>
-                                            <span th:if="${labor.status==0}">
-                                                <option th:value="${labor.status}">Busy now</option>
-                                            </span>
-                                            <option value="0">Busy now</option>
-                                            <option value="1">Free now</option>
-                                        </select>
+                                        <input type="hidden" class="form-control" value="1" id="status" name="status" placeholder="status">
                                     </div>
-
-                                    <div class="mb-3">
-                                        <label for="free_time_from" class="form-label">Free time from</label>
-                                        <input type="text" class="form-control" th:value="${labor.free_time_from}" id="free_time_from" name="free_time_from" placeholder="Free time from">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="free_time_to" class="form-label">Free time to</label>
-                                        <input type="text" class="form-control" th:value="${labor.free_time_to}" id="free_time_to" name="free_time_to" placeholder="Free time to">
-                                    </div>
-
 
                                     <div class="col-lg-12">
                                         <select name="city_id" id="city_id" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">

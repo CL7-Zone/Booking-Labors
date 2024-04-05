@@ -23,6 +23,9 @@ public class JobDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String official_work_address;
+    private String experience;
+    private String education;
     @ManyToOne
     @JoinColumn(name = "job_id", nullable = true)
     private Job job;
@@ -37,4 +40,6 @@ public class JobDetail {
 
     @OneToMany(mappedBy = "jobDetail", cascade = CascadeType.REMOVE)
     private List<Booking> bookings = new ArrayList<>();
+    @OneToMany(mappedBy = "jobDetail", cascade = CascadeType.REMOVE)
+    List<CommentSkill> commentSkills = new ArrayList<>();
 }

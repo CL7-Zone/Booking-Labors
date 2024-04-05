@@ -101,6 +101,7 @@ public class BookingWork implements BookingService {
         BookingObject bookingObject = new BookingObject(
                 jobDetail.getId(), jobDetail.getJob().getNameJob(),
                 jobDetail.getJob().getImageJob(),
+                jobDetail.getOfficial_work_address(),
                 jobDetail.getLabor().getFull_name(),
                 jobDetail.getJob().getPrice(),
                 jobDetail.getJob().getCategoryJob().getCategoryName(),
@@ -121,8 +122,8 @@ public class BookingWork implements BookingService {
                     return false;
                 }
             }
-        }catch (Exception ignored){
-        }
+        }catch (Exception ignored){}
+
         bookingObjects.add(bookingObject);
         request.getSession().setAttribute("bookingObjects", bookingObjects);
 
@@ -212,6 +213,12 @@ public class BookingWork implements BookingService {
     public int invalidAcceptBooking(LocalDateTime accept_time, Long id) {
 
         return  bookingRepo.invalidAcceptBooking(accept_time, id);
+    }
+
+    @Override
+    public int countByJobDetailId(Long job_detail_id) {
+
+        return bookingRepo.countByJobDetailId(job_detail_id);
     }
 
 }

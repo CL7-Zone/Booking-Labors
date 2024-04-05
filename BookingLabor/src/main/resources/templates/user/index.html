@@ -55,8 +55,8 @@
                         <div class="top-content">
                             <div class="row">
                                 <div class="col-lg-8">
-                                    <span th:if="${roleUser!=null}">
-                                        <span class="open" th:text="${roleUser}"></span>
+                                    <span th:if="${userRoles!=null}">
+                                        <span class="open" th:text="${userRoles}"></span>
                                     </span>
                                     <span class="wish-list">
                                         <i class="fa fa-user"></i>
@@ -107,54 +107,45 @@
                                 </div>
                             </div>
 
-                            <table >
-                                <tr>
-                                    <th>N</th>
-                                    <th>FullName</th>
-                                    <th>Address</th>
-                                    <th>Phone Number</th>
-                                    <th>Number experience</th>
-                                    <th>Official work address</th>
-                                    <th>Name job</th>
-                                    <th>Price job</th>
-                                    <th>In city</th>
-                                    <th colspan="3">ACTION</th>
-                                </tr>
-                                <tr id="app" th:each="jobDetail :${jobDetails}">
-                                    <td th:text="${jobDetail.id}"></td>
-                                    <td th:text="${jobDetail.labor.full_name}"></td>
-                                    <td th:text="${jobDetail.labor.address}"></td>
-                                    <td th:text="${jobDetail.labor.phone_number}"></td>
-                                    <td th:text="${jobDetail.labor.number_experience + ' Year'}"></td>
-<!--                                    <td th:if="${jobDetail.labor.status==1}">-->
-<!--                                        <span>Free now</span>-->
-<!--                                    </td>-->
-<!--                                    <td th:if="${jobDetail.labor.status==0}">-->
-<!--                                        <span>Busy now</span>-->
-<!--                                    </td>-->
-                                    <td th:text="${jobDetail.labor.address_work_official}"></td>
-                                    <td th:text="${jobDetail.job.nameJob + ' - ' + jobDetail.job.categoryJob.categoryName}"></td>
-                                    <td th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></td>
-                                    <td>
-                                        <i class="text-info fa fa-city"></i>
-                                        <span th:text="${jobDetail.labor.city.city_name}"></span>
-                                    </td>
-                                    <td>
-                                        <a th:href="${'labors/' + jobDetail.labor.id}">DETAIL</a>
-                                    </td>
-                                    <td>
-                                        <a class="text-danger comment-skill" th:id="'comment_skill_' + ${jobDetail.id}">COMMENT SKILL</a>
+                            <div class="your-job">
+                                <div class="row">
+                                    <div th:each="jobDetail : ${jobDetails}" class="col-md-4">
+                                        <div class="job-item">
+                                            <div class="job-info">
+                                                <a th:href="${'labors/' + jobDetail.labor.id}" class="d-flex">
+                                                    <div class="job-image">
+                                                        <img width="90%" th:src="@{'/assets/images/' + ${jobDetail.job.imageJob}}" alt="">
+                                                    </div>
+                                                    <div class="job-details flex-grow-1 ml-2">
+                                                        <div>
+                                                            <i class="text-danger fa fa-key"></i>
+                                                            <span class="text-danger" th:text="${jobDetail.id}"></span>
+                                                        </div>
+                                                        <div>
+                                                            <i class="text-primary fa fa-user"></i>
+                                                            <span class="text-black" th:text="${jobDetail.labor.full_name}"></span>
+                                                        </div>
+                                                        <div>
+                                                            <i class="text-info fa fa-briefcase"></i>
+                                                            <span class="text-black" th:text="${jobDetail.job.nameJob}"></span>
+                                                        </div>
+                                                        <div>
+                                                            <i class="text-success fa fa-money-bill-alt"></i>
+                                                            <span class="text-success" th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></span>
+                                                        </div>
+                                                        <div>
+                                                            <i class="text-warning fa fa-city"></i>
+                                                            <span class="text-black" th:text="${jobDetail.labor.city.city_name}"></span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
 
-                                    </td>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                                    <td th:if="${#lists.contains(userRoles, 'ROLE_CUSTOMER')}">
-                                        <form th:action="@{'/save/cart/job-detail/' + ${jobDetail.id}}" method="POST">
-                                            <button class="btn btn-primary" type="submit" name="selectedJobId">BOOK NOW</button>
-                                        </form>
-                                    </td>
-                                </tr>
-
-                            </table>
 
                             <nav style="padding-left: 0px" aria-label="Page navigation example">
                                 <ul class="pagination mt-4">
@@ -167,53 +158,41 @@
                             <br><br>
                             <h4>OUR JOB SERVICE INFORMATION</h4>
 
-                                <table>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name job</th>
-                                        <th>Price</th>
-                                        <th>Description</th>
-                                        <th>Image</th>
-                                        <th th:colspan="2">ACTION</th>
-                                    </tr>
-                                    <tr th:each="job :${jobs}">
-                                        <td>
-                                            <span th:text="${job.id}"></span>
-                                        </td>
-                                        <td>
-                                            <span th:text="${job.nameJob}"></span>
-                                        </td>
-                                        <td>
-                                            <span th:text="${#numbers.formatDecimal(job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></span>
-                                        </td>
-                                        <td>
-                                            <span th:text="${job.description}"></span>
-                                        </td>
-                                        <td>
-                                            <img width="100%" th:src="${'/assets/images/' + job.imageJob}" alt="">
-                                        </td>
-                                        <td>
-                                            <a style="color: #00bdfe" th:href="@{'/jobs/show/' + ${job.id}}">DETAIL</a>
-                                        </td>
+                            <div class="your-job">
+                                <div class="row">
+                                    <div th:each="job :${jobs}" class="col-md-4">
+                                        <div class="job-item">
+                                            <div class="job-info">
+                                                <a th:href="@{'/jobs/show/' + ${job.id}}" class="d-flex">
+                                                    <div class="job-image">
+                                                        <img width="90%" th:src="@{'/assets/images/' + ${job.imageJob}}" alt="">
+                                                    </div>
+                                                    <div class="job-details flex-grow-1 ml-2">
+                                                        <div>
+                                                            <i class="text-danger fa fa-key"></i>
+                                                            <span class="text-danger" th:text="${job.id}"></span>
+                                                        </div>
+                                                        <div>
+                                                            <i class="text-info fa fa-briefcase"></i>
+                                                            <span class="text-black" th:text="${job.nameJob}"></span>
+                                                        </div>
+                                                        <div>
+                                                            <i class="text-success fa fa-money-bill-alt"></i>
+                                                            <span class="text-success" th:text="${#numbers.formatDecimal(job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
 
-                                        <td >
-                                            <form th:action="@{'/save/cart/job/' + ${job.id}}" method="POST">
-                                                  <span th:if="${labor_id != null}">
-                                                    <input type="hidden" th:value="${labor_id}" name="labor_id" id="labor_id">
-                                                  </span>
-                                                <input type="hidden" th:value="${job.id}" name="id" th:id="'id_' + ${job.id}">
-                                                <button th:if="${#lists.contains(roleUser, 'ROLE_LABOR')}" class="btn btn-primary" type="submit" name="selectedJobId">CHOOSE JOB</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-
                     </div>
-
                 </div>
             </div>
-
         </div>
 
     </div>

@@ -36,8 +36,8 @@
                         <div class="top-content">
                             <div class="row">
                                 <div class="col-lg-8">
-                                    <span>
-                                        <span class="open">[ROLE_LABOR]</span>
+                                    <span th:if="${userRoles != null}">
+                                        <span class="open" th:text="${userRoles}"></span>
                                     </span>
                                     <span class="wish-list">
                                         <i class="fa fa-user"></i>
@@ -79,6 +79,36 @@
                                 <h4><i class="fa fa-add text-info"></i> YOUR JOB INFORMATION</h4>
                             </ul>
 
+                            <div class="your-job">
+                                <div th:each="jobDetail : ${jobDetails}">
+                                    <b>ID: </b>
+                                    <span class="text-info mr-3" th:text="${jobDetail.id}"></span>
+                                    <b>Full name: </b>
+                                    <span class="text-info mr-3" th:text="${jobDetail.labor.full_name}"></span>
+                                    <b>Name job: </b>
+                                    <span class="text-info mr-3" th:text="${jobDetail.job.nameJob}"></span>
+                                    <b>Price job: </b>
+                                    <span class="text-info mr-3" th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></span>
+                                    <b>In city: </b>
+                                    <span class="text-info mr-3" th:text="${jobDetail.labor.city.city_name}"></span>
+                                    <p th:each="commentSkill : ${jobDetail.commentSkills}">
+                                        <span th:text="${commentSkill.content}"></span>
+                                    </p>
+                                    <br><br>
+                                    <b class="text-success">COMMENT YOUR SKILL</b>
+                                    <br><br>
+                                    <div>
+                                        <form  th:action="@{'/save/comment_skill/' + ${jobDetail.id}}" method="POST">
+                                            <textarea type="text" name="content" id="content" class="form-control" > </textarea>
+                                            <br>
+                                            <button class="btn-success" type="submit" name="selectedJobId">CREATE</button>
+                                        </form>
+                                    </div>
+                                    <br><br>
+                                </div>
+
+                            </div>
+
                             <table th:if="${jobDetails!=null}">
                                 <tr>
                                     <th>ID</th>
@@ -96,7 +126,7 @@
                                     <td>
                                         <span th:text="${jobDetail.labor.full_name}"></span>
                                     </td>
-                                    <td th:text="${jobDetail.job.nameJob}">
+                                    <td th:text="${jobDetail.job.id+ ' '+jobDetail.job.nameJob}">
 
                                     </td>
                                     <td>
@@ -117,10 +147,10 @@
                                     </td>
                                     <td>
                                         <form th:action="@{'/update/job-detail/' + ${jobDetail.id}}" method="POST" th:object="${jobDetail}">
-<!--                                            <select class="form-select" th:id="'job_id_' + ${jobDetail.job.id}" name="job_id" >-->
-<!--                                                <option th:value="${jobDetail.job.id}" th:text="${jobDetail.job.nameJob}"></option>-->
-<!--                                                <option th:each="job : ${jobs}" th:value="${job.id}" th:text="${job.nameJob}"></option>-->
-<!--                                            </select>-->
+                                            <input type="hidden" th:value="${jobDetail.official_work_address}" name="official_work_address" th:id="'job_id_' + ${jobDetail.job.id}">
+                                            <input type="hidden" th:value="${jobDetail.experience}" name="experience" th:id="'job_id_' + ${jobDetail.job.id}">
+                                            <input type="hidden" th:value="${jobDetail.education}" name="education" th:id="'job_id_' + ${jobDetail.job.id}">
+
                                             <input type="hidden" th:value="${jobDetail.job.id}" name="job_id" th:id="'job_id_' + ${jobDetail.job.id}">
                                             <input type="hidden" th:value="${labor_id}" name="labor_id" id="labor_id">
                                             <div class="d-flex justify-content-center pt-2">
@@ -130,7 +160,6 @@
                                             </div>
                                         </form>
                                     </td>
-
                                 </tr>
                             </table>
 

@@ -15,5 +15,7 @@ public interface JobRepo extends JpaRepository<Job, Long> {
     @Query(value ="SELECT DISTINCT price FROM jobs", nativeQuery = true)
     List<Double> findJobPriceDistinct();
 
+    List<Job> findJobsByNameJobContaining(String name_job);
+
 
 }

@@ -17,6 +17,10 @@ public interface JobDetailService {
 
     Page<JobDetail> findJobDetailsByNameJob(String nameJob, Pageable pageable);
 
+    Page<JobDetail> findAllByOrderByJobPriceAsc(Pageable pageable);
+
+    Page<JobDetail> findAllByOrderByJobPriceDesc(Pageable pageable);
+
     JobDetail findById(Long id);
 
     List<JobDetail> findJobDetailByLaborId(Long id);
@@ -30,9 +34,9 @@ public interface JobDetailService {
 
     void saveAllDataFromExcel(MultipartFile file);
 
-    void saveData(HttpSession session);
+    void saveData(HttpSession session, JobDetail jobDetail);
 
-    void deleteById(long id);
+    boolean deleteById(long id);
 
     boolean updateById(long job_id, long labor_id, JobDetail jobDetail);
 

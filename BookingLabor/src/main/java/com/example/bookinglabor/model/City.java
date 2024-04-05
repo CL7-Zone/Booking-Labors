@@ -30,6 +30,7 @@ public class City {
     private LocalDateTime updatedOn;
     @OneToMany(mappedBy = "city", cascade = CascadeType.REMOVE)
     private List<Labor> labors = new ArrayList<>();
-
+    @OneToMany(mappedBy = "city", cascade = CascadeType.REMOVE)
+    private List<Post> posts = new ArrayList<>();
 
 }

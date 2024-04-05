@@ -1,5 +1,6 @@
 package com.example.bookinglabor.controller.user;
 
+import com.example.bookinglabor.controller.component.EnumComponent;
 import com.example.bookinglabor.model.Customer;
 import com.example.bookinglabor.model.Labor;
 import com.example.bookinglabor.model.Role;
@@ -10,8 +11,14 @@ import com.example.bookinglabor.service.CustomerService;
 import com.example.bookinglabor.service.LaborService;
 import com.example.bookinglabor.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -19,9 +26,12 @@ import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -49,7 +59,22 @@ public class DisplayUserCustomerController {
 
         List<Labor> labors = laborService.findAllLabors();
         String sessionEmail = SecurityUtil.getSessionUser();
+        Long simple_user_id = userService.findByEmailAndProvider(sessionEmail, EnumComponent.SIMPLE).getId();
+        List<Customer> simple_user_customer = customerService.findByUserId(simple_user_id);
+        Labor simple_user_labor = laborService.findByUserId(simple_user_id);
 
+        if(simple_user_labor != null){
+            System.out.println(simple_user_labor.getFull_name());
+            model.addAttribute("simple_user_labor", simple_user_labor);
+        }
+
+        if(!simple_user_customer.isEmpty()){
+            System.out.println(simple_user_customer.get(0).getFull_name());
+            model.addAttribute("simple_user_customer", simple_user_customer.get(0));
+        }
+
+        model.addAttribute("isCustomerBirthday",
+                StringUtils.isEmpty(simple_user_customer) && simple_user_labor == null);
         model.addAttribute("email",sessionEmail);
 
         return "user/customer/create";
@@ -68,7 +93,6 @@ public class DisplayUserCustomerController {
 
         System.out.println(birthday_customer);
         System.out.println("CUSTOMER USER ID: " + user.getId());
-
 
         if(sessionEmail == null){
 
@@ -94,6 +118,18 @@ public class DisplayUserCustomerController {
                         System.out.println("Customer object: "+customer);
                         this.customerService.createCustomerByUserId(user.getId(), customer);
                     }
+
+                    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+                    List<GrantedAuthority> updatedAuthorities = new ArrayList<>();
+                    String roleName = "CUSTOMER";
+                    updatedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + roleName));
+                    List<GrantedAuthority> newAuthorities = auth.getAuthorities().stream()
+                    .filter(authority -> !authority.getAuthority().equals("ROLE_USER"))
+                    .collect(Collectors.toList());
+                    newAuthorities.addAll(updatedAuthorities);
+                    Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), newAuthorities);
+                    SecurityContextHolder.getContext().setAuthentication(newAuth);
+                    System.out.println("NEW: " + newAuth);
 
                     return "redirect:/customer-create-info?success";
                 }

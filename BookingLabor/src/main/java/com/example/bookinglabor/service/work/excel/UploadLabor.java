@@ -74,13 +74,6 @@ public class UploadLabor {
                                 System.out.println("Not string phone number");
                             }
                             break;
-                        case 4:
-                            if (cell.getCellType() == CellType.NUMERIC) {
-                                labor.setNumber_experience((int) cell.getNumericCellValue());
-                            } else {
-                                System.out.println("Not number number of experience");
-                            }
-                            break;
                         case 5:
                             if (cell.getCellType() == CellType.NUMERIC) {
                                 labor.setStatus((int) cell.getNumericCellValue());
@@ -88,16 +81,7 @@ public class UploadLabor {
                                 System.out.println("Not number status");
                             }
                             break;
-                        case 6:
-                            if (cell.getCellType() == CellType.STRING) {
-                                labor.setAddress_work_official(cell.getStringCellValue());
-                            } else {
-                                System.out.println("Not string address work official");
-                            }
-                            break;
-
-
-                        case 7 : {
+                        case 6 : {
                             if (cell.getCellType() == CellType.NUMERIC) {
                                 Date birthday = cell.getDateCellValue();
                                 labor.setBirthday(birthday);
@@ -115,47 +99,7 @@ public class UploadLabor {
                         }
                         break;
 
-                        case 8 : {
-                            if (cell.getCellType() == CellType.NUMERIC) {
-
-                                Date time = cell.getDateCellValue();
-                                labor.setFree_time_from(time);
-
-                            } else if (cell.getCellType() == CellType.STRING) {
-                                try {
-                                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                                    Date time = dateFormat.parse(cell.getStringCellValue());
-                                    labor.setFree_time_from(time);
-                                } catch (ParseException e) {
-                                    System.out.println("Not date free time from " + e);
-                                }
-                            } else {
-                                System.out.println("Not date free time from");
-                            }
-                        }
-
-                        break;
-                        case 9 : {
-                            if (cell.getCellType() == CellType.NUMERIC) {
-
-                                Date time = cell.getDateCellValue();
-                                labor.setFree_time_to(time);
-
-                            } else if (cell.getCellType() == CellType.STRING) {
-                                try {
-                                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                                    Date time = dateFormat.parse(cell.getStringCellValue());
-                                    labor.setFree_time_to(time);
-                                } catch (ParseException e) {
-                                    System.out.println("Not date free time to " + e);
-                                }
-                            } else {
-                                System.out.println("Not date free time to");
-                            }
-                        }
-                        break;
-
-                        case 10 : {
+                        case 7 : {
                             if (cell.getCellType() == CellType.NUMERIC) {
                                 int user_id = (int) cell.getNumericCellValue();
                                 UserAccount user = new UserAccount();
@@ -167,7 +111,7 @@ public class UploadLabor {
                         }
                         break;
 
-                        case 11 : {
+                        case 8 : {
                             if (cell.getCellType() == CellType.NUMERIC) {
                                 int city_id = (int) cell.getNumericCellValue();
                                 City city = new City();

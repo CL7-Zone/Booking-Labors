@@ -31,4 +31,6 @@ public class CategoryJob {
 
     @OneToMany(mappedBy = "categoryJob", cascade = CascadeType.REMOVE)
     private List<Job> jobs = new ArrayList<>();
+    @OneToMany(mappedBy = "categoryJob", cascade = CascadeType.REMOVE)
+    private List<Post> posts = new ArrayList<>();
 }

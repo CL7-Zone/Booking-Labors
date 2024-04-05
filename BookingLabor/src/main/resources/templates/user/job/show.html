@@ -19,8 +19,8 @@
                         <div class="top-content">
                             <div class="row">
                                 <div class="col-lg-8">
-                                     <span th:if="${roleUser!=null}">
-                                        <span class="open" th:text="${roleUser}"></span>
+                                     <span th:if="${userRoles!=null}">
+                                        <span class="open" th:text="${userRoles}"></span>
                                     </span>
                                     <span class="wish-list">
                                         <i class="fa fa-user"></i>
@@ -60,7 +60,7 @@
                                         <input type="hidden" th:value="${labor_id}" name="labor_id" id="labor_id">
                                       </span>
                                     <input type="hidden" th:value="${job.id}" name="id" th:id="'id_' + ${job.id}">
-                                    <button th:if="${#lists.contains(roleUser, 'ROLE_LABOR')}" class="btn btn-primary" type="submit" name="selectedJobId">
+                                    <button th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}" class="btn btn-primary" type="submit" name="selectedJobId">
                                         CHOOSE JOB
                                     </button>
                                 </form>

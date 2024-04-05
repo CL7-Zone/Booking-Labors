@@ -11,6 +11,9 @@ public class JobDetailMapper {
 
         JobDetail jopDetailService = JobDetail.builder()
                 .id(jobDetail.getId())
+                .official_work_address(jobDetail.getOfficial_work_address())
+                .education(jobDetail.getEducation())
+                .experience(jobDetail.getExperience())
                 .createdOn(jobDetail.getCreatedOn())
                 .updatedOn(jobDetail.getUpdatedOn())
                 .job(jobDetail.getJob())

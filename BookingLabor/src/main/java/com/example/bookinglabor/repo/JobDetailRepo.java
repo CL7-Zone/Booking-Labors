@@ -34,5 +34,9 @@ public interface JobDetailRepo extends JpaRepository<JobDetail,Long> {
 //            nativeQuery = true)
     Page<JobDetail> findByJob_NameJobContaining(@Param("name_job") String name_job, Pageable pageable);
 
+    Page<JobDetail> findAllByOrderByJobPriceAsc(Pageable pageable);
+
+    Page<JobDetail> findAllByOrderByJobPriceDesc(Pageable pageable);
+
 
 }

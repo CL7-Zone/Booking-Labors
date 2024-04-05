@@ -81,6 +81,7 @@
                                     </li>
                                 </ul>
                             </li>
+
                             <li sec:authorize="!isAuthenticated()"><a th:href="@{/labors}">LABOR</a></li>
                             <li sec:authorize="isAuthenticated()"><a th:href="@{/your-menu}">MENU</a></li>
 
@@ -198,7 +199,7 @@
                             <div class="col-lg-10">
                                 <fieldset>
                                     <label for="nameJob" class="form-label">Enter name job</label>
-                                    <input name="nameJob" id="nameJob" placeholder="Enter name job...">
+                                    <input name="nameJob" id="nameJob" placeholder="Enter name job by labor...">
                                 </fieldset>
                             </div>
 
@@ -210,7 +211,8 @@
                             <br/><br/><br><br>
                             <div class="col-lg-12 pt-2">
                                  <span  style="padding-right: 15px">
-                                    <a class="text-info" id="search-option" th:text="${#strings.toUpperCase('#SEARCH')}"></a>
+
+                                    <a class="text-info" id="search-option" th:text="${#strings.toUpperCase('#FILTER')}"></a>
                                 </span>
                                 <span  style="padding-right: 15px">
                                     <a class="text-black" th:href="${'/your-menu'}" th:text="${#strings.toUpperCase('#MENU')}"></a>
@@ -232,7 +234,7 @@
                         </div>
                     </form>
 
-                    <form sec:authorize="!isAuthenticated()"  th:action="@{'/guest-search'}" id="search-form" name="gs" method="POST" role="search">
+                    <form sec:authorize="!isAuthenticated()"  th:action="@{'/guest/search/jobByLabor'}" id="search-form" name="gs" method="POST" role="search">
                         <div class="row">
                             <div class="col-lg-10">
                                 <fieldset>
@@ -249,34 +251,8 @@
                             <br/><br/><br><br>
                             <div class="col-lg-12 pt-2">
                                  <span  style="padding-right: 15px">
-                                    <a class="text-info" id="search-option" th:text="${#strings.toUpperCase('#SEARCH')}"></a>
+                                    <a class="search-btn" id="search-option" th:text="${#strings.toUpperCase('FILTER')}"></a>
                                 </span>
-                                <div id="myModal" class="modal">
-                                    <div class="modal-content">
-                                        <span class="close">&times;</span>
-                                        <!-- Nội dung của modal -->
-                                        <p>This is your modal content.</p>
-                                    </div>
-                                </div>
-                                <script th:inline="javascript">
-                                    const modal = document.getElementById("myModal");
-                                    const span = document.getElementsByClassName("close")[0];
-
-                                    document.getElementById("search-option").addEventListener("click", function() {
-                                        modal.style.display = "block";
-                                    });
-
-                                    span.onclick = function() {
-                                        modal.style.display = "none";
-                                    };
-
-                                    window.onclick = function(event) {
-                                        if (event.target === modal) {
-                                            modal.style.display = "none";
-                                        }
-                                    };
-
-                                </script>
                                 <span  style="padding-right: 15px">
                                     <a class="text-black" th:href="${'/'}" th:text="${#strings.toUpperCase('#HOME')}"></a>
                                 </span>
@@ -296,6 +272,48 @@
 
                         </div>
                     </form>
+
+                    <div id="myModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <!-- Nội dung của modal -->
+                            <b>Filter job and job by labor.</b>
+                            <form th:action="${'/guest/filter-price-asc'}" method="POST">
+                                <button class="search-btn" type="submit">Filter min price</button>
+                            </form>
+                            <br>
+                            <hr>
+                            <form th:action="${'/guest/filter-price-desc'}" method="POST">
+                                <button class="search-btn" type="submit">Filter max price</button>
+                            </form>
+                            <br>
+                            <hr>
+                            <form th:action="${'/guest/search-job'}" method="POST">
+                                <input class="form-control" name="name_job" id="name_job" placeholder="Enter name job...">
+
+                                <button class="search-btn" type="submit">Search job</button>
+                            </form>
+                        </div>
+                    </div>
+                    <script th:inline="javascript">
+                        const modal = document.getElementById("myModal");
+                        const span = document.getElementsByClassName("close")[0];
+
+                        document.getElementById("search-option").addEventListener("click", function() {
+                            modal.style.display = "block";
+                        });
+
+                        span.onclick = function() {
+                            modal.style.display = "none";
+                        };
+
+                        window.onclick = function(event) {
+                            if (event.target === modal) {
+                                modal.style.display = "none";
+                            }
+                        };
+
+                    </script>
                 </div>
             </div>
         </div>

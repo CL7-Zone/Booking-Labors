@@ -29,7 +29,7 @@ import java.util.function.Function;
 
 @Controller
 @AllArgsConstructor
-public class DisplayBookingManagerController {
+public class DisplayUserBookingManagerController {
 
     private BookingService bookingService;
     private UserService userService;
@@ -42,8 +42,7 @@ public class DisplayBookingManagerController {
     @GetMapping("/booking-manager-by-labor")
     String index(Model model, @AuthenticationPrincipal UserDetails userDetails){
 
-        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
-        List<String> roleUser = authorities.stream().map(GrantedAuthority::getAuthority).toList();
+
         Long user_id = userService.findByEmail(SecurityUtil.getSessionUser()).getId();
         Long labor_id = laborService.findByUserId(user_id).getId();
         List<JobDetail> jobDetails = jobDetailService.findJobDetailByLaborId(labor_id);
@@ -59,7 +58,6 @@ public class DisplayBookingManagerController {
         System.out.println("Type function: "+invalidAcceptFunction.getClass());
 
         model.addAttribute("invalidAcceptFunction", invalidAcceptFunction);
-        model.addAttribute("roleUser",roleUser);
         model.addAttribute("jobDetails",jobDetails);
 
         return "/user/booking/detail";

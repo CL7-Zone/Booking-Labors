@@ -1,17 +1,20 @@
 package com.example.bookinglabor.controller.component;
 
-import com.example.bookinglabor.model.CategoryJob;
-import com.example.bookinglabor.model.City;
-import com.example.bookinglabor.model.Job;
+import com.example.bookinglabor.model.*;
+import com.example.bookinglabor.security.SecurityUtil;
 import com.example.bookinglabor.service.*;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,10 +48,23 @@ public class ModelProvideComponent {
     public void addUserRoleToModel(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails != null) {
             Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
-            List<String> roles = authorities.stream()
-            .map(GrantedAuthority::getAuthority)
-            .collect(Collectors.toList());
-            model.addAttribute("userRoles", roles);
+
+            System.out.println("Authorization: "+authorities);
+
+            UserAccount simple_user = userService.findByEmailAndProvider(SecurityUtil.getSessionUser(), EnumComponent.SIMPLE);
+
+            if(simple_user != null){
+                List<Role> userRoles = simple_user.getRoles();
+                List<String> currentRoleUser = new ArrayList<>();
+
+                for (Role r : userRoles) {
+                    currentRoleUser.add("ROLE_"+r.getName());
+                }
+                model.addAttribute("userRoles", currentRoleUser);
+            }
+
+
         }
+
     }
 }

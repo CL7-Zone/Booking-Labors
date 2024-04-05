@@ -1,18 +1,21 @@
 package com.example.bookinglabor.controller.user;
 
+import com.example.bookinglabor.controller.component.EnumComponent;
 import com.example.bookinglabor.model.*;
 import com.example.bookinglabor.repo.RoleRepo;
 import com.example.bookinglabor.security.SecurityUtil;
-import com.example.bookinglabor.service.CityService;
-import com.example.bookinglabor.service.JobDetailService;
-import com.example.bookinglabor.service.LaborService;
-import com.example.bookinglabor.service.UserService;
+import com.example.bookinglabor.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,12 +28,14 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
 public class DisplayUserLaborController {
 
     private LaborService laborService;
+    private CustomerService customerService;
     private CityService cityService;
     private UserService userService;
     private JobDetailService jobDetailService;
@@ -62,10 +67,15 @@ public class DisplayUserLaborController {
         Labor labor = laborService.findById(labor_id);
         List<JobDetail>  laborDetails =  jobDetailService.findJobDetailByLaborId(labor_id);
         DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
+        int count = 0;
 
         for(JobDetail jobDetail : laborDetails){
             String money = decimalFormat.format(jobDetail.getJob().getPrice());
             model.addAttribute("money",money);
+
+            for(CommentSkill commentSkill : jobDetail.getCommentSkills()){
+                count++;
+            }
         }
         try{
             String sessionEmail = SecurityUtil.getSessionUser();
@@ -83,6 +93,7 @@ public class DisplayUserLaborController {
         }
         model.addAttribute("laborDetails", laborDetails);
         model.addAttribute("labor", labor);
+        model.addAttribute("count", count);
 
         return "user/labor/show";
     }
@@ -95,15 +106,8 @@ public class DisplayUserLaborController {
         try{
             UserAccount user = userService.findByEmail(sessionEmail);
             List<Labor> labor = user.getLabors();
-            List<Role> roles = user.getRoles();
-            List<String> currentRoleUser = new ArrayList<>();
             Long userId = user.getId();
 
-            for (Role r : roles) {
-                currentRoleUser.add("ROLE_"+r.getName());
-            }
-
-            model.addAttribute("roleUser",currentRoleUser);
             model.addAttribute("userID",userId);
             model.addAttribute("email",sessionEmail);
             model.addAttribute("laborInfo",labor);
@@ -124,11 +128,21 @@ public class DisplayUserLaborController {
         List<Labor> labors = laborService.findAllLabors();
         List<City> cities = cityService.findAllCities();
         String sessionEmail = SecurityUtil.getSessionUser();
-        Labor labor = new Labor();
+        Long simple_user_id = userService.findByEmailAndProvider(sessionEmail, EnumComponent.SIMPLE).getId();
+        List<Customer> simple_user_customer = customerService.findByUserId(simple_user_id);
+        Labor simple_user_labor = laborService.findByUserId(simple_user_id);
 
+        if(simple_user_labor != null){
+            System.out.println(simple_user_labor.getFull_name());
+            model.addAttribute("simple_user_labor", simple_user_labor);
+        }
+
+        if(!simple_user_customer.isEmpty()){
+            System.out.println(simple_user_customer.get(0).getFull_name());
+            model.addAttribute("simple_user_customer", simple_user_customer);
+        }
         model.addAttribute("labors",labors);
         model.addAttribute("cities",cities);
-        model.addAttribute("labor", labor);
         model.addAttribute("email", sessionEmail);
 
 
@@ -138,13 +152,14 @@ public class DisplayUserLaborController {
     @PostMapping("/labor/info/save")
     public String save(RedirectAttributes flashMessage, @ModelAttribute("labor") Labor labor,
                         BindingResult res, Model model, @RequestParam("city_id") long city_id,
-                        @RequestParam("birthday") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate birthday,
-                        @RequestParam("free_time_from") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate free_time_from,
-                        @RequestParam("free_time_to") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate free_time_to) {
+                       @RequestParam("year") String year, @RequestParam("month") String month,
+                       @RequestParam("day") String day
+                       ) {
 
         String sessionEmail = SecurityUtil.getSessionUser();
         UserAccount user = userService.findByEmail(sessionEmail);
         List<Labor> labor_current = user.getLabors();
+        LocalDate birthday = LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
 
         if(sessionEmail == null){
 
@@ -156,7 +171,6 @@ public class DisplayUserLaborController {
         System.out.println(birthday);
 
         try{
-
             if(labor_current.isEmpty()){
 
                 for(Role roleUser : user.getRoles()) {
@@ -164,17 +178,25 @@ public class DisplayUserLaborController {
                     if(Objects.equals(roleUser.getName(), "USER")){
                         this.userService.updateUserRole(roleRepo.findByName("LABOR"));
                         labor.setBirthday(java.sql.Date.valueOf(birthday));
-                        labor.setFree_time_from(java.sql.Date.valueOf(free_time_from));
-                        labor.setFree_time_to(java.sql.Date.valueOf(free_time_to));
                         this.laborService.createLaborByUserIdAndCityId(user.getId(),  city_id, labor);
                     }
                     if(Objects.equals(roleUser.getName(), "CUSTOMER")){
                         this.userService.createUserRoleLabor(roleRepo.findByName("LABOR"));
                         labor.setBirthday(java.sql.Date.valueOf(birthday));
-                        labor.setFree_time_from(java.sql.Date.valueOf(free_time_from));
-                        labor.setFree_time_to(java.sql.Date.valueOf(free_time_to));
                         this.laborService.createLaborByUserIdAndCityId(user.getId(), city_id, labor);
                     }
+
+                    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+                    List<GrantedAuthority> updatedAuthorities = new ArrayList<>();
+                    String roleName = "LABOR";
+                    updatedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + roleName));
+                    List<GrantedAuthority> newAuthorities = auth.getAuthorities().stream()
+                    .filter(authority -> !authority.getAuthority().equals("ROLE_USER"))
+                    .collect(Collectors.toList());
+                    newAuthorities.addAll(updatedAuthorities);
+                    Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), newAuthorities);
+                    SecurityContextHolder.getContext().setAuthentication(newAuth);
+                    System.out.println("NEW: " + newAuth);
 
                     return "redirect:/labor-create-info?success";
                 }

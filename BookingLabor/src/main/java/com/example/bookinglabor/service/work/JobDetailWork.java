@@ -3,10 +3,7 @@ package com.example.bookinglabor.service.work;
 import com.example.bookinglabor.mapper.JobDetailMapper;
 import com.example.bookinglabor.model.*;
 import com.example.bookinglabor.model.sessionObject.JobDetailObject;
-import com.example.bookinglabor.repo.JobDetailRepo;
-import com.example.bookinglabor.repo.JobRepo;
-import com.example.bookinglabor.repo.LaborRepo;
-import com.example.bookinglabor.repo.UserRepo;
+import com.example.bookinglabor.repo.*;
 import com.example.bookinglabor.security.SecurityUtil;
 import com.example.bookinglabor.service.JobDetailService;
 import lombok.AllArgsConstructor;
@@ -30,7 +27,7 @@ public class JobDetailWork implements JobDetailService {
     private LaborRepo laborRepo;
     private UserRepo userRepo;
     private JobRepo jobRepo;
-
+    BookingRepo bookingRepo;
 
 
     @Override
@@ -48,6 +45,22 @@ public class JobDetailWork implements JobDetailService {
     public Page<JobDetail> findJobDetailsByNameJob(String name_job, Pageable pageable) {
 
         Page<JobDetail> jobDetails = jobDetailRepo.findByJob_NameJobContaining(name_job, pageable);
+
+        return jobDetails.map(JobDetailMapper::mapToJobDetail);
+    }
+
+    @Override
+    public Page<JobDetail> findAllByOrderByJobPriceAsc(Pageable pageable) {
+
+        Page<JobDetail> jobDetails = jobDetailRepo.findAllByOrderByJobPriceAsc(pageable);
+
+        return jobDetails.map(JobDetailMapper::mapToJobDetail);
+    }
+
+    @Override
+    public Page<JobDetail> findAllByOrderByJobPriceDesc(Pageable pageable) {
+
+        Page<JobDetail> jobDetails = jobDetailRepo.findAllByOrderByJobPriceDesc(pageable);
 
         return jobDetails.map(JobDetailMapper::mapToJobDetail);
     }
@@ -115,9 +128,7 @@ public class JobDetailWork implements JobDetailService {
         if(jobDetailRepo.countJobDetailsByJobId(job.getId(), labor_id) > 0){
             return 2;
         }
-        if(jobDetailList.size() >= 5){
-            return 3;
-        }
+
         jobDetailObjects.add(jobDetailObject);
         request.getSession().setAttribute("jobObjects", jobDetailObjects);
 
@@ -125,7 +136,7 @@ public class JobDetailWork implements JobDetailService {
     }
 
     @Override
-    public void saveData(HttpSession session) {
+    public void saveData(HttpSession session, JobDetail jobDetail) {
 
         List<JobDetailObject> jobDetailObjs = (List<JobDetailObject>) session.getAttribute("jobObjects");
 
@@ -135,6 +146,9 @@ public class JobDetailWork implements JobDetailService {
             Optional<Labor> labor = laborRepo.findById(item.getLabor_id());
             if (job.isPresent() && labor.isPresent()) {
                 JobDetail jobDetail_ = new JobDetail();
+                jobDetail_.setOfficial_work_address(jobDetail.getOfficial_work_address());
+                jobDetail_.setExperience(jobDetail.getExperience());
+                jobDetail_.setEducation(jobDetail.getEducation());
                 jobDetail_.setJob(job.get());
                 jobDetail_.setLabor(labor.get());
                 jobDetailRepo.save(jobDetail_);
@@ -153,6 +167,9 @@ public class JobDetailWork implements JobDetailService {
             Labor labor = laborOptional.get();
             JobDetail jobDetail_update = JobDetailMapper.mapToJobDetail(jobDetail);
             assert jobDetail_update != null;
+            jobDetail_update.setOfficial_work_address(jobDetail_update.getOfficial_work_address());
+            jobDetail_update.setExperience(jobDetail_update.getExperience());
+            jobDetail_update.setEducation(jobDetail_update.getEducation());
             jobDetail_update.setJob(job);
             jobDetail_update.setLabor(labor);
             jobDetailRepo.save(jobDetail_update);
@@ -164,9 +181,17 @@ public class JobDetailWork implements JobDetailService {
     }
 
     @Override
-    public void deleteById(long id) {
+    public boolean deleteById(long id) {
 
+        JobDetail jobDetail = new JobDetail();
+        jobDetail.setId(id);
+
+        if(bookingRepo.countByJobDetailId(id) > 0){
+            return false;
+        }
         jobDetailRepo.deleteById(id);
+
+        return true;
     }
 
     @Override

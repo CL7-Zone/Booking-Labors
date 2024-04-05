@@ -34,6 +34,8 @@ public interface BookingRepo extends JpaRepository<Booking,Long> {
             nativeQuery = true)
     List<Booking> findBookingsByJobDetailId(@Param("job_detail_id") Long job_detail_id);
 
+    int countByJobDetailId(Long job_detail_id);
+
     @Query(value ="SELECT COUNT(*) FROM bookings " +
                   "WHERE :cancel_time >= cancel_time AND id = :id",
             nativeQuery = true)

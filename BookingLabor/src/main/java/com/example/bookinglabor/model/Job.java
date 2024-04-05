@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -35,5 +37,8 @@ public class Job {
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;
+
+    @OneToMany(mappedBy = "job", cascade = CascadeType.REMOVE)
+    private List<Post> posts = new ArrayList<>();
 
 }

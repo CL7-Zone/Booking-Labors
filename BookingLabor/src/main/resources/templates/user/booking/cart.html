@@ -54,8 +54,8 @@
                         <div class="top-content">
                             <div class="row">
                                 <div class="col-lg-8">
-                                    <span th:if="${roleUser!=null}">
-                                        <span class="open" th:text="${roleUser}"></span>
+                                    <span th:if="${userRoles!=null}">
+                                        <span class="open" th:text="${userRoles}"></span>
                                     </span>
                                     <span class="wish-list">
                                         <i class="fa fa-user"></i>
@@ -242,6 +242,7 @@
                                         <th>Job name</th>
                                         <th>price</th>
                                         <th>category name</th>
+                                        <th>official work address</th>
                                         <th>city name</th>
                                         <th>job Image</th>
                                         <th colspan="1">ACTION</th>
@@ -262,6 +263,9 @@
                                         </td>
                                         <td>
                                             <span th:text="${item.categoryName}"></span>
+                                        </td>
+                                        <td>
+                                            <span th:text="${item.official_work_address}"></span>
                                         </td>
                                         <td>
                                             <span th:text="${item.city_name}"></span>

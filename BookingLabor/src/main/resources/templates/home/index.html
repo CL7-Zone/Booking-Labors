@@ -53,6 +53,115 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="section-heading">
+                                <h6>Our jobs detail</h6>
+                                <h4>Our popular<em></em> <em>jobs detail</em></h4>
+                            </div>
+                        </div>
+
+                        <div class="your-job">
+                            <div class="row">
+                                <div th:each="jobDetail : ${jobDetailList}" class="col-md-4">
+                                    <div class="job-item">
+                                        <div class="job-info">
+                                            <a th:href="${'labors/' + jobDetail.labor.id}" class="d-flex">
+                                                <div class="job-image">
+                                                    <img width="90%" th:src="@{'/assets/images/' + ${jobDetail.job.imageJob}}" alt="">
+                                                </div>
+                                                <div class="job-details flex-grow-1 ml-2">
+                                                    <div>
+                                                        <i class="text-danger fa fa-key"></i>
+                                                        <span class="text-danger" th:text="${jobDetail.id}"></span>
+                                                    </div>
+                                                    <div>
+                                                        <i class="text-primary fa fa-user"></i>
+                                                        <span class="text-black" th:text="${jobDetail.labor.full_name}"></span>
+                                                    </div>
+                                                    <div>
+                                                        <i class="text-info fa fa-briefcase"></i>
+                                                        <span class="text-black" th:text="${jobDetail.job.nameJob}"></span>
+                                                    </div>
+                                                    <div>
+                                                        <i class="text-success fa fa-money-bill-alt"></i>
+                                                        <span class="text-success" th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></span>
+                                                    </div>
+                                                    <div>
+                                                        <i class="text-warning fa fa-city"></i>
+                                                        <span class="text-black" th:text="${jobDetail.labor.city.city_name}"></span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <nav style="padding-left: 0px" aria-label="Page navigation example">
+                            <ul class="pagination mt-4">
+                                <li class="page-item" th:each="page, status: ${pages}">
+                                    <a class="page-link" th:href="@{/(page=${status.index})}" th:text="${status.index}"></a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                    </div>
+                </div>
+            </section>
+
+
+
+            <section class="popular-categories">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="section-heading">
+                                <h6>Our Job</h6>
+                                <h4>Check Our <em>Popular </em> <em>Jobs</em></h4>
+                            </div>
+                        </div>
+
+                        <div class="your-job">
+                            <div class="row">
+                                <div th:each="job :${jobs}" class="col-md-4">
+                                    <div class="job-item">
+                                        <div class="job-info">
+                                            <a th:href="@{'/jobs/show/' + ${job.id}}" class="d-flex">
+                                                <div class="job-image">
+                                                    <img width="90%" th:src="@{'/assets/images/' + ${job.imageJob}}" alt="">
+                                                </div>
+                                                <div class="job-details flex-grow-1 ml-2">
+                                                    <div>
+                                                        <i class="text-danger fa fa-key"></i>
+                                                        <span class="text-danger" th:text="${job.id}"></span>
+                                                    </div>
+                                                    <div>
+                                                        <i class="text-info fa fa-briefcase"></i>
+                                                        <span class="text-black" th:text="${job.nameJob}"></span>
+                                                    </div>
+                                                    <div>
+                                                        <i class="text-success fa fa-money-bill-alt"></i>
+                                                        <span class="text-success" th:text="${#numbers.formatDecimal(job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="popular-categories">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="section-heading">
                                 <h6>Our Categories</h6>
                                 <h4>Check Our <em>Popular</em> <em>Categories</em></h4>
                             </div>
@@ -97,49 +206,6 @@
                 </div>
             </section>
 
-            <section class="popular-categories">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="section-heading">
-                                <h6>Our jobs detail</h6>
-                                <h4>Our popular<em></em> <em>jobs detail</em></h4>
-                            </div>
-                        </div>
-
-                        <table>
-                            <tr>
-                                <th>FullName</th>
-                                <th>Name job</th>
-                                <th>Price job</th>
-                                <th>In city</th>
-                                <th colspan="2">ACTION</th>
-                            </tr>
-                            <tr th:each="jobDetail :${jobDetailList}">
-                                <td th:text="${jobDetail.labor.full_name}"></td>
-                                <td th:text="${jobDetail.job.nameJob + ' - ' + jobDetail.job.categoryJob.categoryName}"></td>
-                                <td class="text"  th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></td>
-                                <td>
-                                    <i class="text-info fa fa-city"></i>
-                                    <span th:text="${jobDetail.labor.city.city_name}"></span>
-                                </td>
-                                <td>
-                                    <a th:href="${'labors/' + jobDetail.labor.id}">DETAIL</a>
-                                </td>
-                            </tr>
-                        </table>
-
-                        <nav style="padding-left: 0px" aria-label="Page navigation example">
-                            <ul class="pagination mt-4">
-                                <li class="page-item" th:each="page, status: ${pages}">
-                                    <a class="page-link" th:href="@{/(page=${status.index})}" th:text="${status.index}"></a>
-                                </li>
-                            </ul>
-                        </nav>
-
-                    </div>
-                </div>
-            </section>
 
             <section class="featured-contests">
                 <div class="container">
@@ -160,8 +226,6 @@
                                             <div class="content">
                                                 <div class="top-content">
                                                     <span class="award" th:text="${labor.id}"></span>
-                                                    <span th:if="${labor.status == 1}">
-                                                    <span class="price">Free now</span>
                                                 </span>
                                                 </div>
                                                 <b th:text="${'Full Name: '+labor.full_name}"></b>
@@ -174,12 +238,9 @@
                                             <span class="participants">
                                                 <img th:src="@{/assets/images/icon-03.png}" alt=""><br>
                                                 <span th:text="${'Phone number: '+labor.phone_number}"></span><br>
-                                                <span th:text="${'Free time from: '+labor.free_time_from}"></span>
                                             </span>
                                                     <span class="submittions">
                                                 <img th:src="@{/assets/images/icon-01.png}" alt=""><br>
-                                                <span th:text="${'Number experience: '+labor.number_experience}"></span><br>
-                                                <span th:text="${'Free time to: '+labor.free_time_to}"></span>
                                             </span>
                                                 </div>
                                                 <div class="border-button">

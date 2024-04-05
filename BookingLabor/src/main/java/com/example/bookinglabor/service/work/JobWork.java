@@ -33,6 +33,17 @@ public class JobWork implements JobService {
     }
 
     @Override
+    public List<Job> findJobsByNameJobContaining(String name_job) {
+
+        List<Job> jobs = jobRepo.findJobsByNameJobContaining(name_job);
+
+        return jobs.stream()
+                .map(JobMapper::mapToJob)
+                .collect(Collectors
+                .toList());
+    }
+
+    @Override
     public List<Double> findJobPriceDistinct() {
 
         List<Double> prices = jobRepo.findJobPriceDistinct();

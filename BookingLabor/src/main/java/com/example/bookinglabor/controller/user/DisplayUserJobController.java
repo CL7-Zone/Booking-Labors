@@ -32,8 +32,6 @@ public class DisplayUserJobController {
         List<Job> jobs = jobService.findAllJobs();
         String email = SecurityUtil.getSessionUser();
         UserAccount user =   userService.findByEmail(email);
-        List<Role> roles = user.getRoles();
-        List<String> currentRoleUser = new ArrayList<>();
 
         try{
             Long labor_id = laborService.findByUserId(user.getId()).getId();
@@ -42,11 +40,8 @@ public class DisplayUserJobController {
         }catch (Exception error){
             System.out.println("ERROR: "+ error);
         }
-        for (Role r : roles) {
-            currentRoleUser.add("ROLE_"+r.getName());
-        }
+
         model.addAttribute("jobs", jobs);
-        model.addAttribute("roleUser", currentRoleUser);
 
         return "/user/job/index";
     }
@@ -60,9 +55,7 @@ public class DisplayUserJobController {
         String money = decimalFormat.format(job.getPrice());
 
         if(email!=null){
-            UserAccount role =   userService.findByEmail(email);
-            List<Role> roles = role.getRoles();
-            List<String> currentRoleUser = new ArrayList<>();
+
             Long userID =   userService.findByEmail(email).getId();
 
             try{
@@ -74,10 +67,7 @@ public class DisplayUserJobController {
             }catch (Exception ignored){
                 System.out.println("=>"+ignored);
             }
-            for (Role r : roles) {
-                currentRoleUser.add("ROLE_"+r.getName());
-            }
-            model.addAttribute("roleUser", currentRoleUser);
+
         }
 
         model.addAttribute("job", job);
