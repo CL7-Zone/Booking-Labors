@@ -63,25 +63,25 @@
                         </div>
                         <div class="main-content">
 
-                            <h4>OUR JOB SERVICE INFORMATION</h4>
+                            <h4>CÁC CÔNG VIỆC CỦA CHÚNG TÔI</h4>
                             <table>
                                 <tr>
-                                    <th>Name job</th>
-                                    <th>Price</th>
-                                    <th>Description</th>
-                                    <th>Image</th>
+                                    <th>TÊN CÔNG VIỆC</th>
+                                    <th>GIÁ</th>
+                                    <th>MÔ TẢ</th>
+                                    <th>ẢNH</th>
                                     <th colspan="2">ACTION</th>
                                 </tr>
                                 <tr th:each="job :${jobs}">
                                     <td th:text="${job.nameJob}"></td>
-                                    <td th:text="${#numbers.formatDecimal(job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></td>
+                                    <td th:text="${#numbers.formatDecimal(job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></td>
                                     <td th:text="${job.description}"></td>
                                     <td>
-                                        <img width="100%" th:src="${'/assets/images/'+job.imageJob}" alt="">
+                                        <img width="100%" th:src="${job.imageJob}" alt="">
                                     </td>
                                     <td>
                                         <a style="color: #00bdfe" th:href="@{'/jobs/show/' + ${job.id}}">
-                                            DETAIL
+                                            XEM CHI TIẾT
                                         </a>
                                     </td>
                                     <td>
@@ -90,7 +90,7 @@
                                                 <input type="hidden" th:value="${labor_id}" name="labor_id" id="labor_id">
                                               </span>
                                             <input type="hidden" th:value="${job.id}" name="id" th:id="'id_' + ${job.id}">
-                                            <button th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}" class="btn btn-primary" type="submit" name="selectedJobId">CHOOSE JOB</button>
+                                            <button th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}" class="btn btn-primary" type="submit" name="selectedJobId">CHỌN NGAY</button>
                                         </form>
                                     </td>
                                 </tr>

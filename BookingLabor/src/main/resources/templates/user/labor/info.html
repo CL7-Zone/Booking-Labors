@@ -57,23 +57,23 @@
                     </div>
                     <div class="col-lg-12">
                         <div class="main-content">
-                            <h4>YOUR INFORMATION</h4>
+                            <h4>THÔNG TIN CỦA BẠN</h4>
                             <form th:each="labor : ${laborInfo}" th:action="@{'/update-info/' + ${labor.id}}" method="POST">
                                 <div class="row"  >
                                     <div class="mb-3">
-                                        <label for="full_name" class="form-label">Full name</label>
+                                        <label for="full_name" class="form-label">HỌ VÀ TÊN</label>
                                         <input type="text" class="form-control" th:value="${labor.full_name}" id="full_name" name="full_name" placeholder="Full name">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="address" class="form-label">Address</label>
+                                        <label for="address" class="form-label">DỊA CHỈ</label>
                                         <input type="text" class="form-control" th:value="${labor.address}" id="address" name="address" placeholder="Address">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="phone_number" class="form-label">Phone number</label>
+                                        <label for="phone_number" class="form-label">SỐ ĐIỆN THOẠI</label>
                                         <input type="text" class="form-control"  th:value="${labor.phone_number}" id="phone_number" name="phone_number" placeholder="Phone number">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="birthday" class="form-label">Birthday</label>
+                                        <label for="birthday" class="form-label">NGÀY SINH</label>
                                         <input type="datetime-local" class="form-control" th:value="${labor.birthday}" id="birthday" name="birthday" placeholder="Birthday">
                                     </div>
 
@@ -108,7 +108,7 @@
 
                                 </div>
                                 <div class="main-button">
-                                    <button class="btn-save-job-detail" type="submit">UPDATE</button>
+                                    <button class="btn-save-job-detail" type="submit">SỬA</button>
                                 </div>
                             </form>
                         </div>

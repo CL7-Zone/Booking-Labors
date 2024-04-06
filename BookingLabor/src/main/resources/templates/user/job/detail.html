@@ -76,32 +76,32 @@
                             </div>
 
                             <ul>
-                                <h4><i class="fa fa-add text-info"></i> YOUR JOB INFORMATION</h4>
+                                <h4><i class="fa fa-add text-info"></i> CỘNG VIỆC CỦA BẠN</h4>
                             </ul>
 
                             <div class="your-job">
                                 <div th:each="jobDetail : ${jobDetails}">
                                     <b>ID: </b>
                                     <span class="text-info mr-3" th:text="${jobDetail.id}"></span>
-                                    <b>Full name: </b>
+                                    <b>HỌ VÀ TÊN: </b>
                                     <span class="text-info mr-3" th:text="${jobDetail.labor.full_name}"></span>
-                                    <b>Name job: </b>
+                                    <b>TÊN CÔNG VIỆC: </b>
                                     <span class="text-info mr-3" th:text="${jobDetail.job.nameJob}"></span>
-                                    <b>Price job: </b>
+                                    <b>GIÁ: </b>
                                     <span class="text-info mr-3" th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></span>
-                                    <b>In city: </b>
+                                    <b>TẠI TỈNH/ THÀNH PHỐ: </b>
                                     <span class="text-info mr-3" th:text="${jobDetail.labor.city.city_name}"></span>
                                     <p th:each="commentSkill : ${jobDetail.commentSkills}">
                                         <span th:text="${commentSkill.content}"></span>
                                     </p>
                                     <br><br>
-                                    <b class="text-success">COMMENT YOUR SKILL</b>
+                                    <b class="text-success">TẠO KỸ NĂNG</b>
                                     <br><br>
                                     <div>
                                         <form  th:action="@{'/save/comment_skill/' + ${jobDetail.id}}" method="POST">
                                             <textarea type="text" name="content" id="content" class="form-control" > </textarea>
                                             <br>
-                                            <button class="btn-success" type="submit" name="selectedJobId">CREATE</button>
+                                            <button class="btn-success" type="submit" name="selectedJobId">TẠO</button>
                                         </form>
                                     </div>
                                     <br><br>
@@ -112,11 +112,11 @@
                             <table th:if="${jobDetails!=null}">
                                 <tr>
                                     <th>ID</th>
-                                    <th>Full name</th>
-                                    <th>Name job</th>
-                                    <th>Price</th>
-                                    <th>Image</th>
-                                    <th>In city</th>
+                                    <th>HỌ VÀ TÊN</th>
+                                    <th>TÊN CÔNG VIỆC</th>
+                                    <th>GIÁ</th>
+                                    <th>Ảnh</th>
+                                    <th>TẠI TỈNH/ THÀNH PHỐ</th>
                                     <th colspan="2">ACTION</th>
                                 </tr>
                                 <tr  th:each="jobDetail :${jobDetails}">
@@ -130,10 +130,10 @@
 
                                     </td>
                                     <td>
-                                        <span  th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></span>
+                                        <span  th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></span>
                                     </td>
                                     <td>
-                                        <img width="100%" th:src="${'/assets/images/' + jobDetail.job.imageJob}" alt="">
+                                        <img width="100%" th:src="${jobDetail.job.imageJob}" alt="">
                                     </td>
                                     <td>
                                         <span th:text="${jobDetail.labor.city.city_name}"></span>
@@ -141,7 +141,7 @@
                                     <td>
                                         <form th:action="@{'/delete/job-detail/' + ${jobDetail.id}}" method="POST">
                                             <button class="btn-danger" type="submit" >
-                                                DELETE
+                                                XÓA
                                             </button>
                                         </form>
                                     </td>
@@ -155,7 +155,7 @@
                                             <input type="hidden" th:value="${labor_id}" name="labor_id" id="labor_id">
                                             <div class="d-flex justify-content-center pt-2">
                                                 <button class="btn-warning" type="submit" >
-                                                    UPDATE
+                                                    CẬP NHẬT
                                                 </button>
                                             </div>
                                         </form>

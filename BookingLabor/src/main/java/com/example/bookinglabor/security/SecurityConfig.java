@@ -87,12 +87,13 @@ public class SecurityConfig{
                 .authorizeRequests() // Bắt đầu cấu hình cho việc xác thực yêu cầu
                 .antMatchers(HttpMethod.GET,"/","/error","/login",
                 "/labors/**", "/category-job/**","/jobs/show/**",
-                "/assets/**", "/vendor/**", "/send-mail").permitAll()
+                "/assets/**", "/vendor/**", "/send-mail",
+                        "/post/show/{id}").permitAll()
                 .antMatchers(HttpMethod.POST, "/register/save", "/guest/**").permitAll()
 
                 // Cho phép mọi người truy cập các đường dẫn này mà không cần xác thực
                 .antMatchers(HttpMethod.GET,"/your-menu/**", "/labor-create-info",
-                "/customer-create-info", "/jobs", "/post/create")
+                "/customer-create-info", "/jobs", "/post/create", "/post-manager")
                 .hasAnyRole("USER", "LABOR", "CUSTOMER", "ADMIN")// Cho phép người dùng có role là USER truy cập vào các route trên
 
                 .antMatchers(HttpMethod.POST, "/labor/info/save", "/customer/info/save","/save/post",

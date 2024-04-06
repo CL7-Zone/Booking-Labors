@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}" th:with="currentPage='Posts'">
+<html  lang="en"
+       xmlns:th="http://thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{layout}" th:with="currentPage='Show post'">
 <head>
     <meta charset="UTF-8">
-    <title>Posts</title>
+    <title>Show post</title>
 </head>
 <body>
     <div layout:fragment="content">
@@ -18,7 +18,7 @@
                         <div class="top-content">
                             <div class="row">
                                 <div class="col-lg-8">
-                                    <span th:if="${userRoles!=null}">
+                                     <span th:if="${userRoles!=null}">
                                         <span class="open" th:text="${userRoles}"></span>
                                     </span>
                                     <span class="wish-list">
@@ -34,23 +34,12 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-lg-12">
-                        <div class="col-lg-12">
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${param.unauthorized}">
-                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Failed:"><use xlink:href="#check-circle-fill"/></svg>
-                                <strong>403 Unauthorized!</strong>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        </div>
-
                         <div class="main-content">
-                            <div class="mb-4">
-                                <h2>QUẢN LÝ TIN TUYỂN DỤNG CỦA BẠN</h2>
-                            </div>
+
 
                             <div class="your-job">
-                                <div class="row" th:each="post : ${userPosts}">
+                                <div class="row">
 
                                     <div id="carouselExampleIndicators" class="carousel slide mb-5">
                                         <div class="carousel-indicators">
@@ -78,6 +67,7 @@
                                             <span class="visually-hidden">Next</span>
                                         </button>
                                     </div>
+
                                     <div class="mb-3">
                                         <a th:href="@{'/post/show/' + ${post.id}}">
                                             <h3>
@@ -123,25 +113,32 @@
 
                                         <div>
                                             <i class="text-info fa fa-signal"></i>
+                                            <span  class="text-info">Số lượng tuyển</span>
                                             <span class="text-info" th:text="${post.quantity}"></span>
                                         </div>
                                         <div>
                                             <i class="text-info fa fa-clock"></i>
+                                            <span  class="text-info">Hình thức trả lương theo </span>
                                             <span class="text-info" th:text="${post.pay_form}"></span>
                                         </div>
+
                                         <div>
-                                            <i class="text-info fa fa-phone"></i>
-                                            <span class="text-info" th:text="${post.phone_number}"></span>
+                                            <i class="text-info fa fa-info-circle"></i>
+                                            <span  class="text-info">Hình thức tuyển: </span>
+                                            <span class="text-info" th:text="${post.categoryJob.categoryName}"></span>
                                         </div>
+
                                     </div>
 
                                     <div class="col-lg-2">
                                         <div>
                                             <i class="text-success fa fa-money-bill-alt"></i>
+                                            <span class="text-success">Lương tối đa: </span>
                                             <span class="text-success" th:text="${#numbers.formatDecimal(post.max_payroll, 0, 'COMMA', 0, 'POINT') + ' VNĐ/' + post.pay_form}"></span>
                                         </div>
                                         <div>
                                             <i class="text-danger fa fa-money-bill-alt"></i>
+                                            <span class="text-danger">Lương tối thiểu: </span>
                                             <span class="text-danger" th:text="${#numbers.formatDecimal(post.min_payroll, 0, 'COMMA', 0, 'POINT') + ' VNĐ/' + post.pay_form}"></span>
                                         </div>
                                         <div>
@@ -150,40 +147,42 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-2" th:if="${post.re_image != 0}">
-                                        <div>
-                                            <i class="text-danger fa fa-info-circle"></i>
-                                            <span class="text-danger" th:text="${post.max_age}"></span>
-                                        </div>
-                                        <div>
-                                            <i class="text-danger fa fa-info-circle"></i>
-                                            <span class="text-danger" th:text="${post.min_age}"></span>
-                                        </div>
-                                        <div>
-                                            <i class="text-danger fa fa-info-circle"></i>
-                                            <span class="text-danger" th:text="${post.education}"></span>
-                                        </div>
-                                        <div>
-                                            <i class="text-danger fa fa-info-circle"></i>
-                                            <span class="text-danger" th:text="${post.experience}"></span>
-                                        </div>
+                                    <div class="pt-4"  th:if="${post.re_image != 0}">
+                                        <h5 class="mb-3">YÊU CẦU: </h5>
+                                        <span class="mr-3">
+                                    TUỔI TỐI ĐA: <span class="text-danger" th:text="${post.max_age}"></span>
+                                </span>
+                                        <span class="mr-3">
+                                    TUỔI TỐI THIỂU: <span class="text-danger" th:text="${post.min_age}"></span>
+                                </span>
+                                        <span class="mr-3">
+                                    TRÌNH ĐỘ: <span class="text-danger" th:text="${post.education}"></span>
+                                </span>
+                                        <span class="mr-3">
+                                    KINH NGHIỆM: <span class="text-danger" th:text="${post.experience}"></span>
+                                </span>
 
-                                        <div>
+                                        <div th:if="${post.re_image == 1}" class="pt-2">
                                             <i class="text-success fa fa-circle"></i>
-                                            <span class="text-success" th:text="${post.re_image}"></span>
+                                            <span>YÊU CẦU ỨNG VIÊN CUNG CẤP ẢNH CÁ NHÂN!</span>
                                         </div>
 
-                                    </div>
 
-                                    <div class="pt-3" th:if="${post.re_image != 0}">
-                                        <i class="text-danger fa fa-info-circle"></i>
-                                        <span class="text-danger" th:text="${post.requirement}"></span>
+                                        <div class="pt-3">
+                                            <i class="text-danger fa fa-info-circle"></i>
+                                            <span class="text-danger" th:text="${post.requirement}"></span>
+                                        </div>
                                     </div>
                                     <div>
                                         <i class="text-black fa fa-info-circle pt-3"></i>
                                         <span class="text-black" th:text="${post.description}"></span>
                                     </div>
 
+                                    <div class="pt-3 mb-5">
+                                        <form th:action="@{''}" method="POST">
+                                            <button class="search-btn" type="submit">ỨNG TUYỂN</button>
+                                        </form>
+                                    </div>
 
                                     <br><br><br>
                                     <hr>
@@ -198,6 +197,7 @@
                 </div>
             </div>
         </div>
+
 
     </div>
 

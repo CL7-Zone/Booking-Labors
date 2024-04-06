@@ -26,7 +26,6 @@ public class Labor {
     private String address;
     private String phone_number;
     private int status;
-    private String address_work_official;
     private Date birthday;
     @ManyToOne
     @JoinColumn(name = "city_id", nullable = true)

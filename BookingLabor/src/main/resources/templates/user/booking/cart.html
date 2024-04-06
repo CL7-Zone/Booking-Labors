@@ -129,9 +129,9 @@
                             </div>
 
                             <ul>
-                                <h4><i class="fa fa-cart-plus text-info"></i> YOUR BOOKING CART INFORMATION</h4>
+                                <h4><i class="fa fa-cart-plus text-info"></i> CÔNG VIỆC BẠN VỪA CHỌN</h4>
                             </ul>
-                            <h3 class="pb-4">TOTAL MONEY:
+                            <h3 class="pb-4">TỔNG TIỀN:
                                 <b class="text-info"  th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></b>
                             </h3>
                             <div  style="padding-bottom: 10px; ">
@@ -142,7 +142,7 @@
                                     <li style="list-style: disc;">
                                         <h6 class="text-danger" >
                                             <a class="text-danger" th:href="${'/your-menu'}">
-                                                Choose our labor, Please!
+                                                VUI LÒNG CHỌN LAO ĐỘNG TRƯỚC KHI TUYỂN!
                                             </a>
                                         </h6>
                                     </li>
@@ -152,7 +152,7 @@
                                 <ul style="list-style: disc; padding: 0px 20px" >
                                     <li style="list-style: disc; padding-bottom: 10px">
                                         <h6 class="text-danger" >
-                                            You are not allowed to select the same labor!
+                                            BẠN KHÔNG ĐUỢC PHÉP CHỌN CÔNG VIỆC CỦA LAO ĐỘNG GIỐNG NHAU!
                                         </h6>
                                     </li>
                                 </ul>
@@ -165,13 +165,13 @@
                                         <input type="hidden" th:value="${customer_id}" name="customer_id" id="customer_id">
                                         <li style="list-style: disc;">
                                             <div class="mb-2">
-                                                <label for="total_price" class="form-label">Total money</label>
+                                                <label for="total_price" class="form-label">Tổng tiền</label>
                                                 <input type="text" readonly th:value="${totalPrice}" name="total_price" id="total_price"  class="form-control">
                                             </div>
                                         </li>
                                         <li style="list-style: disc;">
                                             <div class="mb-2">
-                                                <label for="book_address" class="form-label">Book address</label>
+                                                <label for="book_address" class="form-label">ĐỊA CHỈ LÀM VIỆC</label>
                                                 <input type="text"  name="book_address" id="book_address"  class="form-control">
                                             </div>
                                         </li>
@@ -183,7 +183,7 @@
 <!--                                        </li>-->
                                         <li style="list-style: disc;">
                                             <div class="mb-2">
-                                                <label for="city_name" class="form-label">In city name</label>
+                                                <label for="city_name" class="form-label">TẠI TỈNH THÀNH/ THÀNH PHỐ</label>
                                                 <select id="city_name" name="city_name" class="form-select">
                                                     <option th:value="${cityName}" th:text="${cityName}"></option>
                                                     <option th:each="city : ${cities}" th:value="${city.city_name}"
@@ -194,21 +194,20 @@
                                         </li>
                                         <li style="list-style: disc;">
                                             <div class="mb-2">
-                                                <label for="checkin" class="form-label">Checkin</label>
+                                                <label for="checkin" class="form-label">THỜI GIAN NHẬN VIỆC</label>
                                                 <input type="date"   name="checkin" id="checkin" min="" class="form-control">
                                             </div>
                                         </li>
                                         <li style="list-style: disc;">
                                             <div class="mb-2">
-                                                <label for="checkout" class="form-label">Checkout</label>
+                                                <label for="checkout" class="form-label">THỜI GIAN HẾT LÀM</label>
                                                 <input type="date"  name="checkout" id="checkout" min="" class="form-control">
                                             </div>
                                         </li>
                                         <li style="list-style: disc;">
                                             <div class="mb-2">
-                                                <label for="message" class="form-label">Message</label>
+                                                <label for="message" class="form-label">THÔNG ĐIỆP CHO LAO ĐỘNG</label>
                                                 <textarea type="text"  name="message" id="message"  class="form-control"></textarea>
-                                                <div class="form-text mt-2">We'll share your information booking with anyone else.</div>
                                             </div>
                                         </li>
                                     </ul>
@@ -238,13 +237,13 @@
                                 <table th:if="${bookingSessions!=null}">
                                     <tr>
                                         <th>ID</th>
-                                        <th>Labor name</th>
-                                        <th>Job name</th>
-                                        <th>price</th>
-                                        <th>category name</th>
-                                        <th>official work address</th>
-                                        <th>city name</th>
-                                        <th>job Image</th>
+                                        <th>TÊN LAO ĐỘNG</th>
+                                        <th>TÊN CÔNG VIỆC</th>
+                                        <th>GIÁ</th>
+                                        <th>TÊN DANH MỤC</th>
+                                        <th>ĐỊA CHỈ LÀM VIỆC CHÍNH THỨC</th>
+                                        <th>TÊN THÀNH PHỐ</th>
+                                        <th>Ảnh</th>
                                         <th colspan="1">ACTION</th>
                                     </tr>
                                     <tr th:each="item, I : ${bookingSessions}">
@@ -271,11 +270,11 @@
                                             <span th:text="${item.city_name}"></span>
                                         </td>
                                         <td>
-                                            <img width="100%" th:src="${'/assets/images/' + item.imageJob}" alt="">
+                                            <img width="100%" th:src="${item.imageJob}" alt="">
                                         </td>
                                         <td>
                                             <a th:href="@{'/delete/booking-cart/'+ ${I.index}}" class="btn-danger">
-                                                DELETE
+                                                XÓA
                                             </a>
                                         </td>
                                     </tr>
@@ -285,7 +284,7 @@
                                     <button th:class="${'btn-save-job-detail'}"
                                             th:style="${totalPrice > 1.0} ? '' : ''"
                                             type="submit">
-                                        <span th:text="${totalPrice < 1.0} ? 'Choose our labor, Please!' : 'BOOK'"></span>
+                                        <span th:text="${totalPrice < 1.0} ? 'VUI LÒNG CHỌN LAO ĐỘNG BẠN MUỐN TUYỂN!' : 'TUYỂN'"></span>
                                     </button>
                                 </div>
 

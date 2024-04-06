@@ -20,12 +20,12 @@ import java.util.List;
 @Setter
 public class Post {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String you_are;
     private String business_name;
+    private String phone_number;
     private String official_address;
     private String image_workplace;
     private String title;

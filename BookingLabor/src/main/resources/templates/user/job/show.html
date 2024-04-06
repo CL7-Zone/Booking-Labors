@@ -37,22 +37,22 @@
                     </div>
                     <div class="col-lg-12">
                         <div class="main-content">
-                            <h4>Job detail</h4>
-                            <h6>Name job:
+                            <h4>CHI TIẾT CÔNG VIỆC</h4>
+                            <h6>TÊN CÔNG VIỆC:
                                 <span th:text="${job.nameJob}"></span>
                             </h6>
                             <p>
-                                <b>Job description: </b>
+                                <b>MÔ TẢ CÔNG VIỆC: </b>
                                 <span th:text="${job.description}"></span>
                             </p>
                             <h5>
-                                Price: <span  th:text="${#numbers.formatDecimal(job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></span>
+                                GIÁ: <span  th:text="${#numbers.formatDecimal(job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></span>
                             </h5>
                             <div class="row">
 
                             </div>
                             <div class="main-button" sec:authorize="!isAuthenticated()">
-                                <a th:href="@{/login?please}">CHOOSE JOB</a>
+                                <a th:href="@{/login?please}">CHỌN NGAY</a>
                             </div>
                             <div class="main-button" th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}" sec:authorize="isAuthenticated()">
                                 <form th:action="@{'/save/cart/job/' + ${job.id}}" method="POST">
@@ -61,7 +61,7 @@
                                       </span>
                                     <input type="hidden" th:value="${job.id}" name="id" th:id="'id_' + ${job.id}">
                                     <button th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}" class="btn btn-primary" type="submit" name="selectedJobId">
-                                        CHOOSE JOB
+                                        CHỌN NGAY
                                     </button>
                                 </form>
                             </div>

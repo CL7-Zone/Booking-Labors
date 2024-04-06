@@ -10,6 +10,7 @@ public class PostMapper {
         return Post.builder()
                 .id(post.getId())
                 .business_name(post.getBusiness_name())
+                .phone_number(post.getPhone_number())
                 .description(post.getDescription())
                 .image_workplace(post.getImage_workplace())
                 .experience(post.getExperience())

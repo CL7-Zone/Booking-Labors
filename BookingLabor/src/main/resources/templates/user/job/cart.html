@@ -119,13 +119,13 @@
                             </div>
 
                             <ul>
-                                <h4><i class="fa fa-cart-plus text-info"></i> YOUR JOB CART INFORMATION</h4>
+                                <h4><i class="fa fa-cart-plus text-info"></i> CHI TIẾT CÔNG VIỆC BẠN CHỌN</h4>
                             </ul>
                             <b>ATTENTION:</b>
                             <div style="padding-bottom: 40px">
                                 <ul style="list-style: disc; padding: 0px 20px">
                                     <li style="list-style: disc;">
-                                        <b class="text-danger">Your number job must <= 5</b>
+                                        <b class="text-danger">CHỈ ĐƯỢC CHỌN TỐI ĐA 5 CÔNG VIỆC</b>
                                     </li>
                                     <li style="list-style: disc;">
 
@@ -139,10 +139,10 @@
                             <table th:if="${jobDetails!=null}">
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name job</th>
-                                    <th>Price</th>
-                                    <th>Description</th>
-                                    <th>Image</th>
+                                    <th>TÊN CÔNG VIỆC</th>
+                                    <th>GIÁ</th>
+                                    <th>MÔ TẢ</th>
+                                    <th>ẢNH</th>
                                     <th colspan="1">ACTION</th>
                                 </tr>
                                 <tr th:each="item, I : ${jobDetails}">
@@ -159,12 +159,12 @@
                                         <span th:text="${item.description}"></span>
                                     </td>
                                     <td>
-                                        <img width="100%" th:src="${'/assets/images/' + item.imageJob}" alt="">
+                                        <img width="100%" th:src="${item.imageJob}" alt="">
                                     </td>
                                     <td>
                                         <form th:action="@{'/delete/job-cart/' + ${I.index}}" method="POST">
                                             <button class="btn-danger" type="submit" >
-                                                DELETE
+                                                XÓA
                                             </button>
                                         </form>
                                     </td>
@@ -177,15 +177,15 @@
 
                                         <div class="mb-3">
                                             <fieldset>
-                                                <label for="official_work_address" class="form-label">Official work address</label>
-                                                <input class="form-control" type="text" name="official_work_address" id="official_work_address" placeholder="Your official work address..."></input>
+                                                <label for="official_work_address" class="form-label">ĐỊA CHỈ LÀM VIỆC CHÍNH THỨC</label>
+                                                <input class="form-control" type="text" name="official_work_address" id="official_work_address" placeholder="NHẬP VÀO ĐỊA CHỈ LÀM VIỆC CHÍNH THỨC..."></input>
                                             </fieldset>
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="education" class="form-label">Education</label>
+                                            <label for="education" class="form-label">TRÌNH ĐỘ</label>
                                             <select name="education" id="education" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                                <option selected disabled>Select education</option>
+                                                <option selected disabled>CHỌN TRÌNH ĐỘ</option>
                                                 <option value="cấp 1">Cấp 1</option>
                                                 <option value="cấp 2">Cấp 2</option>
                                                 <option value="cấp 3">Cấp 3</option>
@@ -196,9 +196,9 @@
                                             </select>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="experience" class="form-label">Experience</label>
+                                            <label for="experience" class="form-label">KINH NGHIỆM</label>
                                             <select name="experience" id="experience" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                                <option selected disabled>Select experience</option>
+                                                <option selected disabled>CHỌN KINH NGHIỆM</option>
                                                 <option value="<1 year">< 1 year</option>
                                                 <option value="1-2 year">1-2 year</option>
                                                 <option value="3-5 year">3-5 year</option>
@@ -208,7 +208,7 @@
                                         </div>
 
                                         <button class="btn-save-job-detail" type="submit" >
-                                            SAVED YOUR JOB
+                                           LƯU
                                         </button>
                                     </form>
                                 </div>

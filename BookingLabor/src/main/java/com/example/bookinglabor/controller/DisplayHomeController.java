@@ -1,15 +1,14 @@
 package com.example.bookinglabor.controller;
-import com.example.bookinglabor.service.CountService;
+import com.example.bookinglabor.repo.PostRepo;
+import com.example.bookinglabor.service.*;
 import com.example.bookinglabor.model.*;
 import com.example.bookinglabor.repo.JobDetailRepo;
 import com.example.bookinglabor.repo.LaborRepo;
-import com.example.bookinglabor.service.CategoryJobService;
-import com.example.bookinglabor.service.JobDetailService;
-import com.example.bookinglabor.service.JobService;
-import com.example.bookinglabor.service.LaborService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +25,6 @@ import org.springframework.data.domain.Pageable;
 @Getter
 @Setter
 @Controller
-@AllArgsConstructor
 public class DisplayHomeController {
 
     private CategoryJobService categoryJobService;
@@ -35,7 +33,31 @@ public class DisplayHomeController {
     private JobDetailService jobDetailService;
     private JobDetailRepo jobDetailRepo;
     private LaborRepo laborRepo;
+    private PostService postService;
+
+    //interface này có bean là countComponent, countComponent2, countComponent3
+    // tương dương new countComponent();, countComponent2();, countComponent3();
+    @Qualifier("load")
     private CountService countService;
+    @Qualifier("load2")
+    private CountService countService2;
+    @Qualifier("load3")
+    private CountService countService3;
+
+    @Autowired//inject
+    public DisplayHomeController(CategoryJobService categoryJobService, LaborService laborService, JobService jobService, JobDetailService jobDetailService, JobDetailRepo jobDetailRepo, LaborRepo laborRepo, CountService countService, CountService countService2, CountService countService3, PostService postService) {
+        this.categoryJobService = categoryJobService;
+        this.laborService = laborService;
+        this.jobService = jobService;
+        this.jobDetailService = jobDetailService;
+        this.jobDetailRepo = jobDetailRepo;
+        this.laborRepo = laborRepo;
+        this.countService = countService;
+        this.countService2 = countService2;
+        this.countService3 = countService3;
+        this.postService = postService;
+    }
+
 
     @GetMapping("/")
     private String index(Model model, Pageable pageable,
@@ -51,8 +73,9 @@ public class DisplayHomeController {
         Long countJob = categoryJobService.countJob();
         DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
         Function<Long, Long> countJobsByCategoryJobFunction = categoryJobService::countJobsByCategoryJob;
-        System.out.println("Count request: "+countService.LoadCount());
+        List<Post> posts = postService.findAllPosts();
 
+        model.addAttribute("posts",posts);
         model.addAttribute("countJobsByCategoryJob", countJobsByCategoryJobFunction);
         model.addAttribute("categoryJobs", categoryJobs);
         model.addAttribute("jobDetails", jobDetails);
@@ -89,8 +112,9 @@ public class DisplayHomeController {
             Page<JobDetail> jobDetailPage = jobDetailService.findJobDetailsByNameJob(nameJob, PageRequest.of(pageNumber, size));
             Page<Labor> laborPage = laborRepo.findAll(PageRequest.of(pageNumber, size));
             Function<Long, Long> countJobsByCategoryJobFunction = categoryJobService::countJobsByCategoryJob;
-            System.out.println(nameJob);
+            List<Post> posts = postService.findAllPosts();
 
+            model.addAttribute("posts",posts);
             model.addAttribute("jobDetailList", jobDetailPage.getContent());
             model.addAttribute("pages", new int[jobDetailPage.getTotalPages()]);
             model.addAttribute("currentPage", pageNumber);
@@ -113,7 +137,9 @@ public class DisplayHomeController {
             Page<Labor> laborPage = laborRepo.findAll(PageRequest.of(pageNumber, size));
             Function<Long, Long> countJobsByCategoryJobFunction = categoryJobService::countJobsByCategoryJob;
             List<Job> jobs = jobService.findJobsByNameJobContaining(nameJob);
+            List<Post> posts = postService.findAllPosts();
 
+            model.addAttribute("posts",posts);
             model.addAttribute("jobs", jobs);
             model.addAttribute("jobDetailList", jobDetailPage.getContent());
             model.addAttribute("pages", new int[jobDetailPage.getTotalPages()]);
@@ -134,7 +160,9 @@ public class DisplayHomeController {
         Page<JobDetail> jobDetailPage = jobDetailService.findAllByOrderByJobPriceAsc(PageRequest.of(pageNumber, size));
         Page<Labor> laborPage = laborRepo.findAll(PageRequest.of(pageNumber, size));
         Function<Long, Long> countJobsByCategoryJobFunction = categoryJobService::countJobsByCategoryJob;
+        List<Post> posts = postService.findAllPosts();
 
+        model.addAttribute("posts",posts);
         model.addAttribute("jobDetailList", jobDetailPage.getContent());
         model.addAttribute("pages", new int[jobDetailPage.getTotalPages()]);
         model.addAttribute("currentPage", pageNumber);
@@ -154,7 +182,9 @@ public class DisplayHomeController {
         Page<JobDetail> jobDetailPage = jobDetailService.findAllByOrderByJobPriceDesc(PageRequest.of(pageNumber, size));
         Page<Labor> laborPage = laborRepo.findAll(PageRequest.of(pageNumber, size));
         Function<Long, Long> countJobsByCategoryJobFunction = categoryJobService::countJobsByCategoryJob;
+        List<Post> posts = postService.findAllPosts();
 
+        model.addAttribute("posts",posts);
         model.addAttribute("jobDetailList", jobDetailPage.getContent());
         model.addAttribute("pages", new int[jobDetailPage.getTotalPages()]);
         model.addAttribute("currentPage", pageNumber);

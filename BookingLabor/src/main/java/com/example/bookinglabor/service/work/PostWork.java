@@ -37,15 +37,17 @@ public class PostWork implements PostService {
     }
 
     @Override
-    public Optional<Post> findByPostId(Long id) {
+    public Optional<Post> findById(Long id) {
 
-        return postRepo.findById(id);
+        Optional<Post> posts = postRepo.findById(id);
+
+        return posts.map(PostMapper::mapToPost);
     }
 
     @Override
-    public List<Post> findPostByUserId(Long user_id) {
+    public List<Post> findPostByUserAccountId(Long user_id) {
 
-        List<Post> posts = postRepo.findPostByUserAccount(user_id);
+        List<Post> posts = postRepo.findPostByUserAccountId(user_id);
 
         return posts.stream()
                 .map(PostMapper::mapToPost)

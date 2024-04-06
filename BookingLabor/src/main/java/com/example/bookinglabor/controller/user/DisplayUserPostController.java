@@ -1,5 +1,6 @@
 package com.example.bookinglabor.controller.user;
 
+import com.example.bookinglabor.controller.component.EnumComponent;
 import com.example.bookinglabor.model.*;
 import com.example.bookinglabor.repo.JobDetailRepo;
 import com.example.bookinglabor.repo.LaborRepo;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
@@ -27,6 +29,28 @@ public class DisplayUserPostController {
     private LaborRepo laborRepo;
     private JobDetailRepo jobDetailRepo;
     private PostService postService;
+
+    @GetMapping(value = {"/post-manager"})
+    private String index(Model model){
+
+        Long user_id = userService.findByEmailAndProvider(SecurityUtil.getSessionUser(), EnumComponent.SIMPLE).getId();
+        List<Post> userPosts = postService.findPostByUserAccountId(user_id);
+
+        System.out.println("post size: "+userPosts.size());
+
+        model.addAttribute("userPosts", userPosts);
+        return "user/post/index";
+    }
+
+    @GetMapping(value = {"/post/show/{id}"})
+    private String show(Model model, @PathVariable Long id){
+
+        Optional<Post> post = postService.findById(id);
+
+        model.addAttribute("post", post.get());
+
+        return "user/post/show";
+    }
 
     @GetMapping(value = {"/post/create"})
     private String create(Model model){

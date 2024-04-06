@@ -11,9 +11,9 @@ public interface PostService {
 
     List<Post> findAllPosts();
 
-    Optional<Post> findByPostId(Long id);
+    Optional<Post> findById(Long id);
 
-    List<Post> findPostByUserId(Long user_id);
+    List<Post> findPostByUserAccountId(Long user_id);
 
     void saveData(Post post, Long city_id, Long category_id, Long job_id);
 

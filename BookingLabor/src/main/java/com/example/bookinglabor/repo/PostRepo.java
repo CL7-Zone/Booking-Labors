@@ -8,7 +8,7 @@ import java.util.List;
 public interface PostRepo  extends JpaRepository<Post,Long> {
 
 
-    List<Post> findPostByUserAccount(Long user_id);
+    List<Post> findPostByUserAccountId(Long user_id);
 
 
 }

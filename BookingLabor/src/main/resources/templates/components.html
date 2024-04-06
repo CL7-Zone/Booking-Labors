@@ -21,10 +21,10 @@
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li  sec:authorize="!isAuthenticated()" ><a th:href="@{/}" class="active">Home</a></li>
+                            <li  sec:authorize="!isAuthenticated()" ><a th:href="@{/}" class="active">TRANG CHỦ</a></li>
 
                             <li class="has-sub" >
-                                <a href="javascript:void(0)">CATEGORY</a>
+                                <a href="javascript:void(0)">DANH MỤC</a>
                                 <ul class="sub-menu" style="width: 300px">
                                     <li th:each="categoryJob : ${categoryJobs}">
                                         <a th:href="@{'/category-job/' + ${categoryJob.id}}" th:text="${categoryJob.categoryName}"></a>
@@ -34,56 +34,56 @@
 
 
                             <li class="has-sub" >
-                                <a href="javascript:void(0)">post</a>
+                                <a href="javascript:void(0)">TIN</a>
                                 <ul class="sub-menu">
-                                    <li> <a th:href="@{/post/create}">create post</a></li>
-                                    <li> <a th:href="@{/blog}">blog</a></li>
+                                    <li> <a th:href="@{/post/create}">TẠO TIN TUYỂN DỤNG</a></li>
+                                    <li sec:authorize="isAuthenticated()"> <a th:href="@{/post-manager}">QUẢN LÝ TIN TUYỂN DỤNG</a></li>
                                 </ul>
                             </li>
 
                             <li class="has-sub" >
-                                <a href="javascript:void(0)">CONTACT</a>
+                                <a href="javascript:void(0)">LIÊN HỆ</a>
                                 <ul class="sub-menu">
-                                    <li> <a th:href="@{/}">contact now</a></li>
-                                    <li> <a th:href="@{/}">report</a></li>
+                                    <li> <a th:href="@{/}">LIÊN HỆ NGAY</a></li>
+                                    <li> <a th:href="@{/}">TỐ CÁO</a></li>
                                 </ul>
                             </li>
 
                             <li class="has-sub" sec:authorize="isAuthenticated()" >
-                                <a href="javascript:void(0)">JOB</a>
+                                <a href="javascript:void(0)">CÔNG VIỆC</a>
                                 <ul class="sub-menu">
-                                    <li> <a th:href="@{/jobs}">jobs</a></li>
-                                    <li><a th:href="@{/your-info-labor}">INFO</a></li>
-                                    <li><a th:href="@{/labors}">Labors</a></li>
-                                    <li><a th:href="@{/labor-create-info}">CREATE Info</a></li>
+                                    <li> <a th:href="@{/jobs}">CÁC CÔNG VIỆC</a></li>
+                                    <li><a th:href="@{/your-info-labor}">THÔNG TIN CỦA LAO ĐỘNG</a></li>
+                                    <li><a th:href="@{/labors}">LAO ĐỘNG</a></li>
+                                    <li><a th:href="@{/labor-create-info}">TẠO THÔNG TIN LAO ĐỘNG</a></li>
                                     <li th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}">
-                                        <a th:href="@{/your-cart}">job cart</a>
+                                        <a th:href="@{/your-cart}">CHI TIẾT CÔNG VIÊC</a>
                                     </li>
                                     <li th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}">
-                                        <a th:href="@{/your-job}">your job</a>
+                                        <a th:href="@{/your-job}">CÔNG VIỆC CỦA BẠN</a>
                                     </li>
                                     <li th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}">
-                                        <a th:href="@{/booking-manager-by-labor}">booking</a>
+                                        <a th:href="@{/booking-manager-by-labor}">ĐƠN TUYỂN DÀNH CHO BẠN</a>
                                     </li>
                                 </ul>
                             </li>
 
                             <li class="has-sub"  sec:authorize="isAuthenticated()">
-                                <a href="javascript:void(0)">CUSTOMER</a>
+                                <a href="javascript:void(0)">NGƯỜI TUYỂN</a>
                                 <ul class="sub-menu">
-                                    <li><a th:href="@{/your-info-customer}">INFO</a></li>
-                                    <li ><a th:href="@{/customer-create-info}">CREATE Info</a></li>
+                                    <li><a th:href="@{/your-info-customer}">THÔNG TIN NGƯỜI TUYỂN DỤNG</a></li>
+                                    <li ><a th:href="@{/customer-create-info}">TẠO THÔNG TIN NGƯỜI TUYỂN</a></li>
                                     <li th:if="${#lists.contains(userRoles, 'ROLE_CUSTOMER')}">
-                                        <a th:href="@{/your-booking-cart}">BOOKING CART</a>
+                                        <a th:href="@{/your-booking-cart}">CHI TIẾT TUYỂN DỤNG</a>
                                     </li>
                                     <li th:if="${#lists.contains(userRoles, 'ROLE_CUSTOMER')}">
-                                        <a th:href="@{/your-booking}">YOUR BOOKING</a>
+                                        <a th:href="@{/your-booking}">ĐƠN TUYỂN DỤNG CỦA BẠN</a>
                                     </li>
                                 </ul>
                             </li>
 
-                            <li sec:authorize="!isAuthenticated()"><a th:href="@{/labors}">LABOR</a></li>
-                            <li sec:authorize="isAuthenticated()"><a th:href="@{/your-menu}">MENU</a></li>
+                            <li sec:authorize="!isAuthenticated()"><a th:href="@{/}">BLOG</a></li>
+                            <li sec:authorize="isAuthenticated()"><a th:href="@{/your-menu}">TRANG CHỦ</a></li>
 
 
                         </ul>
@@ -194,79 +194,40 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <form sec:authorize="isAuthenticated()"  th:action="@{'/user/search'}" id="search-form" name="gs" method="POST" role="search">
+
+                    <form  th:action="@{'/guest/search/jobByLabor'}" id="search-form" name="gs" method="POST" role="search">
                         <div class="row">
                             <div class="col-lg-10">
                                 <fieldset>
-                                    <label for="nameJob" class="form-label">Enter name job</label>
-                                    <input name="nameJob" id="nameJob" placeholder="Enter name job by labor...">
+                                    <label for="nameJob" class="form-label">NHẬP VÀO CÔNG VIỆC CỦA LAO ĐỘNG BẠN MUỐN TUYỂN</label>
+                                    <input name="nameJob" id="nameJob" placeholder="NHẬP VÀO CÔNG VIỆC CỦA LAO ĐỘNG BẠN MUỐN TUYỂN...">
                                 </fieldset>
                             </div>
 
                             <div class="col-lg-2">
                                 <fieldset>
-                                    <button type="submit" class="main-button">Search</button>
+                                    <button style="font-size: 15px" type="submit" class="main-button">TÌM KIẾM</button>
                                 </fieldset>
                             </div>
                             <br/><br/><br><br>
                             <div class="col-lg-12 pt-2">
                                  <span  style="padding-right: 15px">
-
-                                    <a class="text-info" id="search-option" th:text="${#strings.toUpperCase('#FILTER')}"></a>
+                                    <a class="filter-btn" id="search-option" th:text="${#strings.toUpperCase('LỌC')}"></a>
                                 </span>
                                 <span  style="padding-right: 15px">
-                                    <a class="text-black" th:href="${'/your-menu'}" th:text="${#strings.toUpperCase('#MENU')}"></a>
+                                    <a class="text-black" th:href="${'/'}" th:text="${#strings.toUpperCase('#TRANG CHỦ')}"></a>
                                 </span>
                                 <span  style="padding-right: 15px">
-                                    <a class="text-success" th:href="@{'/post/create'}" th:text="${#strings.toUpperCase('#recruitment posting')}"></a>
+                                    <a class="text-success" th:href="${'/'}" th:text="${#strings.toUpperCase('#TẠO TIN TUYỂN DỤNG')}"></a>
                                 </span>
                                 <span style="padding-right: 15px">
-                                    <a class="text-info" th:href="${'/'}" th:text="${#strings.toUpperCase('#Contact with our')}"></a>
+                                    <a class="text-info" th:href="${'/'}" th:text="${#strings.toUpperCase('#LIÊN HỆ CHÚNG TÔI')}"></a>
                                 </span>
                                 <span style="padding-right: 15px">
-                                    <a class="text-danger" th:href="${'/'}" th:text="${#strings.toUpperCase('#Report')}"></a>
+                                    <a class="text-danger" th:href="${'/'}" th:text="${#strings.toUpperCase('#TỐ CÁO')}"></a>
                                 </span>
                                 <span style="padding-right: 15px">
-                                    <a class="text-info" th:href="${'/login'}" th:text="${#strings.toUpperCase('#Login')}"></a>
-                                </span>
-                            </div>
-
-                        </div>
-                    </form>
-
-                    <form sec:authorize="!isAuthenticated()"  th:action="@{'/guest/search/jobByLabor'}" id="search-form" name="gs" method="POST" role="search">
-                        <div class="row">
-                            <div class="col-lg-10">
-                                <fieldset>
-                                    <label for="nameJob" class="form-label">Enter name job</label>
-                                    <input name="nameJob" id="nameJob" placeholder="Enter name job...">
-                                </fieldset>
-                            </div>
-
-                            <div class="col-lg-2">
-                                <fieldset>
-                                    <button type="submit" class="main-button">Search</button>
-                                </fieldset>
-                            </div>
-                            <br/><br/><br><br>
-                            <div class="col-lg-12 pt-2">
-                                 <span  style="padding-right: 15px">
-                                    <a class="search-btn" id="search-option" th:text="${#strings.toUpperCase('FILTER')}"></a>
-                                </span>
-                                <span  style="padding-right: 15px">
-                                    <a class="text-black" th:href="${'/'}" th:text="${#strings.toUpperCase('#HOME')}"></a>
-                                </span>
-                                <span  style="padding-right: 15px">
-                                    <a class="text-success" th:href="${'/'}" th:text="${#strings.toUpperCase('#recruitment posting')}"></a>
-                                </span>
-                                <span style="padding-right: 15px">
-                                    <a class="text-info" th:href="${'/'}" th:text="${#strings.toUpperCase('#Contact with our')}"></a>
-                                </span>
-                                <span style="padding-right: 15px">
-                                    <a class="text-danger" th:href="${'/'}" th:text="${#strings.toUpperCase('#Report')}"></a>
-                                </span>
-                                <span style="padding-right: 15px">
-                                    <a class="text-info" th:href="${'/login'}" th:text="${#strings.toUpperCase('#Login')}"></a>
+                                    <a class="text-info" th:href="${'/login'}" th:text="${#strings.toUpperCase('#ĐĂNG NHẬP')}"></a>
                                 </span>
                             </div>
 
@@ -277,21 +238,21 @@
                         <div class="modal-content">
                             <span class="close">&times;</span>
                             <!-- Nội dung của modal -->
-                            <b>Filter job and job by labor.</b>
+                            <b>BỘ LỌC.</b>
                             <form th:action="${'/guest/filter-price-asc'}" method="POST">
-                                <button class="search-btn" type="submit">Filter min price</button>
+                                <button class="search-btn" type="submit">LỌC GIÁ THẤP NHẤT</button>
                             </form>
                             <br>
                             <hr>
                             <form th:action="${'/guest/filter-price-desc'}" method="POST">
-                                <button class="search-btn" type="submit">Filter max price</button>
+                                <button class="search-btn" type="submit">LỌC GIÁ CAO NHẤT</button>
                             </form>
                             <br>
                             <hr>
                             <form th:action="${'/guest/search-job'}" method="POST">
-                                <input class="form-control" name="name_job" id="name_job" placeholder="Enter name job...">
+                                <input class="form-control" name="name_job" id="name_job" placeholder="TÌM KIẾM CÔNG VIỆC...">
 
-                                <button class="search-btn" type="submit">Search job</button>
+                                <button class="search-btn" type="submit">TÌM CÔNG VIỆC BẠN MUỐN LÀM</button>
                             </form>
                         </div>
                     </div>

@@ -59,24 +59,16 @@ public class DisplayUserLaborController {
         return "user/labor/index";
     }
 
-    @GetMapping(value={"/labors/{labor_id}", "/your-menu/labors/{labor_id}"})
+    @GetMapping(value={"/labors/job-detail/{job_detail_id}", "/your-menu/labors/{job_detail_id}"})
     public String show(Model model,
-                       @PathVariable Long labor_id,
+                       @PathVariable Long job_detail_id,
                        @AuthenticationPrincipal UserDetails userDetails){
 
-        Labor labor = laborService.findById(labor_id);
-        List<JobDetail>  laborDetails =  jobDetailService.findJobDetailByLaborId(labor_id);
-        DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
+//        Labor labor = laborService.findById(labor_id);
+//        List<JobDetail>  laborDetails =  jobDetailService.findJobDetailByLaborId(labor_id);
+        JobDetail  jobDetail =  jobDetailService.findById(job_detail_id);
+
         int count = 0;
-
-        for(JobDetail jobDetail : laborDetails){
-            String money = decimalFormat.format(jobDetail.getJob().getPrice());
-            model.addAttribute("money",money);
-
-            for(CommentSkill commentSkill : jobDetail.getCommentSkills()){
-                count++;
-            }
-        }
         try{
             String sessionEmail = SecurityUtil.getSessionUser();
             if(sessionEmail!=null){
@@ -84,15 +76,7 @@ public class DisplayUserLaborController {
             }
         }catch (Exception ignored){}
 
-        if (userDetails != null){
-            Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
-            List<String> roleUser = authorities.stream()
-            .map(GrantedAuthority::getAuthority)
-            .toList();
-            model.addAttribute("roleUser", roleUser);
-        }
-        model.addAttribute("laborDetails", laborDetails);
-        model.addAttribute("labor", labor);
+        model.addAttribute("jobDetail", jobDetail);
         model.addAttribute("count", count);
 
         return "user/labor/show";

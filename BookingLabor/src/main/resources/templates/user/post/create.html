@@ -45,28 +45,10 @@
                     </div>
 
                     <div class="main-content">
-                        <div style="padding-bottom: 40px" th:if="${#lists.contains(userRoles, 'ROLE_USER')}">
-                            <h4 style="margin-bottom: 10px">ATTENTION:</h4>
-                            <script th:inline="javascript">
-                                alert("Create info to create jobs and book labor, Please!");
-                            </script>
-                            <ul style="list-style: disc; padding: 0px 20px">
-                                <li style="list-style: disc;">
-                                    <span class="text-danger">Create info to create jobs and book labor, Please!</span>
-                                </li>
-                                <li style="list-style: disc;">
-                                    <span class="text-danger">For create info labor, go to path /LABOR/CREATE INFO</span>
-                                </li>
-                                <li style="list-style: disc;">
-                                    <span class="text-danger">For create info customer, go to path /CUSTOMER/CREATE INFO</span>
-                                </li>
-                            </ul>
-                        </div>
 
                         <div class="col-lg-6">
                             <div class="section-heading mb-4 mt-0">
-                                <h6>POST JOB</h6>
-                                <h4 ><em>CREATE</em> YOUR RECRUITMENT</h4>
+                                <h4 ><em>ĐĂNG</em> TIN TUYỂN DỤNG</h4>
                             </div>
                         </div>
 
@@ -99,25 +81,29 @@
                                 <br><br>
                                 <form th:action="@{'/save/post'}" method="POST">
                                     <div class="mb-3">
-                                        <label for="you_are" class="form-label">You are</label>
+                                        <label for="you_are" class="form-label">BẠN LÀ</label>
                                         <select name="you_are" id="you_are" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                            <option selected disabled>What are you?</option>
-                                            <option value="personal">Personal</option>
-                                            <option value="company">Company</option>
+                                            <option selected disabled>BẠN LÀ?</option>
+                                            <option value="personal">CÁ NHÂN</option>
+                                            <option value="company">CÔNG TY</option>
                                         </select>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="business_name" class="form-label">Business name</label>
+                                        <label for="business_name" class="form-label">TÊN HỘ KINH DOANH</label>
                                         <input type="text" class="form-control" name="business_name" id="business_name" >
                                     </div>
                                     <div class="mb-3">
-                                        <label for="official_address" class="form-label">Official Address</label>
+                                        <label for="phone_number" class="form-label">SỐ ĐIỆN THOẠI</label>
+                                        <input type="text" class="form-control" name="phone_number" id="phone_number" >
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="official_address" class="form-label">ĐỊA CHỈ CHÍNH THỨC</label>
                                         <input type="text" class="form-control" name="official_address" id="official_address" >
                                     </div>
                                     <div class="mb-3">
-                                        <label for="city_id" class="form-label">In City</label>
+                                        <label for="city_id" class="form-label">TẠI TỈNH/ THÀNH PHỐ</label>
                                         <select name="city_id" id="city_id" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                            <option selected disabled>Select city</option>
+                                            <option selected disabled>CHỌN TỈNH THÀNH PHỐ</option>
                                             <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.city_name}"></option>
                                         </select>
                                     </div>
@@ -129,46 +115,46 @@
                                         <input type="file" class="form-control" name="image_workplace" id="image_workplace" >
                                     </div>
                                     <div class="mb-3">
-                                        <label for="title" class="form-label">Title</label>
+                                        <label for="title" class="form-label">TIÊU ĐỀ TUYỂN DỤNG</label>
                                         <input type="text" class="form-control" name="title" id="title" >
                                     </div>
                                     <div class="mb-3">
-                                        <label for="quantity" class="form-label">Quantity</label>
+                                        <label for="quantity" class="form-label">SỐ LUỢNG TUYỂN</label>
                                         <input type="number" class="form-control" name="quantity" id="quantity" >
                                     </div>
                                     <div class="mb-3">
-                                        <label for="job_id" class="form-label">Career</label>
+                                        <label for="job_id" class="form-label">CÔNG VIỆC/ NGÀNH NGHỀ</label>
                                         <select name="job_id" id="job_id" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                            <option selected disabled>Select career</option>
+                                            <option selected disabled>CHỌN CÔNG VIỆC/ NGÀNH NGHỀ</option>
                                             <option th:each="job : ${jobs}" th:value="${job.id}" th:text="${job.nameJob}"></option>
                                         </select>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="category_id" class="form-label">Type job</label>
+                                        <label for="category_id" class="form-label">LOẠI CÔNG VIỆC</label>
                                         <select name="category_id" id="category_id" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                            <option selected disabled>Select type job</option>
+                                            <option selected disabled>LOẠI CÔNG VIỆC</option>
                                             <option th:each="categoryJob : ${categoryJobs}" th:value="${categoryJob.id}" th:text="${categoryJob.categoryName}"></option>
                                         </select>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="pay_form" class="form-label">Pay form</label>
+                                        <label for="pay_form" class="form-label">HÌNH THỨC TRẢ LƯƠNG</label>
                                         <select name="pay_form" id="pay_form" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                            <option selected disabled>Select pay form</option>
-                                            <option value="hour">By hour</option>
-                                            <option value="day">By date</option>
-                                            <option value="month">By month</option>
-                                            <option value="year">By your</option>
+                                            <option selected disabled>CHỌN HÌNH THỨC</option>
+                                            <option value="GIỜ">THEO GIỜ</option>
+                                            <option value="NGÀY">THEO NGÀY</option>
+                                            <option value="THÁNG">THEO THÁNG</option>
+                                            <option value="NĂM">THEO NĂM</option>
                                         </select>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <label for="max_payroll" class="form-label">Maximum payroll</label>
+                                            <label for="max_payroll" class="form-label">LƯƠNG TỐI ĐA</label>
                                             <input type="text" class="form-control" required
                                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                                                    name="max_payroll" id="max_payroll" >
                                         </div>
                                         <div class="col-lg-6">
-                                            <label for="min_payroll" class="form-label">Minimum payroll</label>
+                                            <label for="min_payroll" class="form-label">LƯƠNG TỐI THIỂU</label>
                                             <input type="text" class="form-control" required
                                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                                                    name="min_payroll" id="min_payroll" >
@@ -176,7 +162,7 @@
                                     </div>
                                     <br>
                                     <div class="mb-3">
-                                        <label for="description" class="form-label">Job Description</label>
+                                        <label for="description" class="form-label">MÔ TẢ CÔNG VIỆC</label>
                                         <textarea type="text" class="form-control" name="description" id="description" >
                                         </textarea>
                                     </div>
@@ -186,27 +172,27 @@
 
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox" role="switch" id="switch_re">
-                                        <label class="form-check-label" for="switch_re">Requirement with candidate</label>
+                                        <label class="form-check-label" for="switch_re">YÊU CẦU DÀNH CHO ỨNG VIÊN</label>
                                     </div>
                                     <br>
                                     <div id="re_block">
                                         <div class="row">
                                             <div class="col-lg-6">
-                                                <label for="max_age" class="form-label">Maximum age</label>
+                                                <label for="max_age" class="form-label">TUỔI TỐI ĐA</label>
                                                 <input type="number" class="form-control"
                                                        name="max_age" id="max_age" >
                                             </div>
                                             <div class="col-lg-6">
-                                                <label for="min_age" class="form-label">Minimum age</label>
+                                                <label for="min_age" class="form-label">TUỔI TỐI THIỂU</label>
                                                 <input type="number" class="form-control"
                                                        name="min_age" id="min_age" >
                                             </div>
                                         </div>
                                         <br>
                                         <div class="mb-3">
-                                            <label for="education" class="form-label">Education</label>
+                                            <label for="education" class="form-label">TRÌNH ĐỘ</label>
                                             <select name="education" id="education" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                                <option selected disabled>Select education</option>
+                                                <option selected disabled>CHỌN TRÌNH ĐỘ</option>
                                                 <option value="cấp 1">Cấp 1</option>
                                                 <option value="cấp 2">Cấp 2</option>
                                                 <option value="cấp 3">Cấp 3</option>
@@ -217,9 +203,9 @@
                                             </select>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="experience" class="form-label">Experience</label>
+                                            <label for="experience" class="form-label">KINH NGHIỆM</label>
                                             <select name="experience" id="experience" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                                <option selected disabled>Select experience</option>
+                                                <option selected disabled>CHỌN KINH NGHIỆM</option>
                                                 <option value="<1 year">< 1 year</option>
                                                 <option value="1-2 year">1-2 year</option>
                                                 <option value="3-5 year">3-5 year</option>
@@ -228,19 +214,19 @@
                                             </select>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="requirement" class="form-label">Skill, character, certificate, degree</label>
+                                            <label for="requirement" class="form-label">KỸ NĂNG, SỞ THÍCH...</label>
                                             <textarea type="text" class="form-control" name="requirement" id="requirement" >
                                         </textarea>
                                         </div>
 
                                         <div class="mb-3">
                                             <label class="form-check-label" for="re_image">
-                                                requirement image
+                                                YÊU CẦU ẢNH CỦA ỨNG VIÊN
                                             </label>
                                             <select name="re_image" id="re_image" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                                <option selected disabled>Select</option>
-                                                <option value="0">Not requirement image</option>
-                                                <option value="1">Requirement upload image</option>
+                                                <option selected disabled>CHỌN</option>
+                                                <option value="0">KHÔNG YÊU CẦU</option>
+                                                <option value="1">CÓ YÊU CẦU</option>
                                             </select>
                                         </div>
                                     </div>
@@ -259,7 +245,7 @@
 
                                     <br>
 
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-primary">ĐĂNG TIN</button>
                                 </form>
                             </div>
 
