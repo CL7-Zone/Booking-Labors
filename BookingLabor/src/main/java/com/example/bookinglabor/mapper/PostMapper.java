@@ -32,6 +32,7 @@ public class PostMapper {
                 .categoryJob(post.getCategoryJob())
                 .job(post.getJob())
                 .userAccount(post.getUserAccount())
+                .applies(post.getApplies())
                 .build();
     }
 }

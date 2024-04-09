@@ -10,5 +10,9 @@ public interface PostRepo  extends JpaRepository<Post,Long> {
 
     List<Post> findPostByUserAccountId(Long user_id);
 
+    int countPostByUserAccount_Email(String email);
+
+    int countPostsByUserAccountId(Long id);
+
 
 }

@@ -42,8 +42,6 @@ public class DisplayUserBookingLaborController implements HttpSessionListener {
     private JobDetailService jobDetailService;
     private SessionService sessionService;
     private CookieService cookieService;
-
-    @Autowired
     private SendMailService sendMailService;
 
     @GetMapping("/your-booking")

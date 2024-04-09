@@ -29,6 +29,7 @@ public class ModelProvideComponent {
     private UserService userService;
     private JobDetailService jobDetailService;
     private CityService cityService;
+    HeaderService headerService;
 
     @ModelAttribute
     private void provideModel(Model model){
@@ -37,7 +38,13 @@ public class ModelProvideComponent {
         List<Job> jobs = jobService.findAllJobs();
         List<City> cities = cityService.findAllCities();
         List<Double> prices = jobService.findJobPriceDistinct();
+        List<Header> New = headerService.findHeadersByType("new");
+        List<Header> contact = headerService.findHeadersByType("contact");
+        List<Header> jobTitle = headerService.findHeadersByType("job");
+        List<Header> customer = headerService.findHeadersByType("customer");
+        List<Header> hashtag = headerService.findHeadersByType("hashtag");
 
+        model.addAttribute("hashtag", hashtag);
         model.addAttribute("cities", cities);
         model.addAttribute("jobs", jobs);
         model.addAttribute("prices", prices);

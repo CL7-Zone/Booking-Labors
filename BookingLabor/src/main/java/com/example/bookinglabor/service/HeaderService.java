@@ -9,6 +9,8 @@ public interface HeaderService {
 
     List<Header> findAllHeaders();
 
+    List<Header> findHeadersByType(String type);
+
     void saveAllDataFromExcel(MultipartFile file);
 
 

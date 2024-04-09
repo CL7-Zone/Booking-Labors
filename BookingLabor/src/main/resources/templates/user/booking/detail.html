@@ -79,7 +79,8 @@
                                         <p>
                                             <b class="text-info">Booking ID: </b>
                                             <span style="padding-right: 10px" th:text="${booking.id}"></span>
-                                            <span th:text="${invalidAcceptFunction.apply(booking.id)}"></span>
+                                            <b class="text-info">MÃ NGƯỜI TUYỂN DỤNG: </b>
+                                            <span style="padding-right: 10px" th:text="${booking.customer.id}"></span>
                                             <b class="text-info">TÊN NGƯỜI TUYỂN DỤNG: </b>
                                             <span style="padding-right: 10px"  th:text="${booking.customer.full_name}"></span>
                                             <span style="padding-right: 10px"  th:text="${booking.customer.userAccount.email}"></span>

@@ -59,7 +59,7 @@
 
                         <div class="col-lg-6">
                             <div class="main-button">
-                                <a th:href="@{'/post/create'}" th:text="${#strings.toUpperCase('recruitment posting')}"></a>
+                                <a th:href="@{'/post/create'}" th:text="${#strings.toUpperCase('ĐĂNG TIN TUYỂN DỤNG')}"></a>
                             </div>
                         </div>
 
@@ -70,7 +70,7 @@
                                         <div class="job-info">
                                             <a th:href="${'post/show/' + post.id}" class="d-flex">
                                                 <div class="job-image">
-                                                    <img width="90%" th:src="@{'/assets/images/pricing-01.jpg'}" alt="">
+                                                    <img width="90%" th:src="@{'/assets/images/' + ${post.image_workplace}}" alt="">
                                                 </div>
                                                 <div class="job-details flex-grow-1 ml-2">
                                                     <div>
@@ -160,7 +160,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="section-heading">
-                                <h4>CHỌN NHÂN VIÊN <em></em> <em>BẠN MUỐN TUYỂN</em></h4>
+                                <h4>CHỌN NGƯỜI LAO ĐỘNG <em></em> <em>BẠN MUỐN TUYỂN</em></h4>
                             </div>
                         </div>
 
@@ -169,7 +169,7 @@
                                 <div th:each="jobDetail : ${jobDetailList}" class="col-md-4">
                                     <div class="job-item">
                                         <div class="job-info">
-                                            <a th:href="${'labors/job-detail/' + jobDetail.id}" class="d-flex">
+                                            <a th:href="@{'/labors/job-detail/' + ${jobDetail.id}}" class="d-flex">
                                                 <div class="job-image">
                                                     <img width="90%" th:src="${jobDetail.job.imageJob}" alt="">
                                                 </div>
@@ -188,7 +188,7 @@
                                                     </div>
                                                     <div>
                                                         <i class="text-success fa fa-money-bill-alt"></i>
-                                                        <span class="text-success" th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></span>
+                                                        <span class="text-success" th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></span>
                                                     </div>
                                                     <div>
                                                         <i class="text-warning fa fa-city"></i>
@@ -246,7 +246,7 @@
                                                     </div>
                                                     <div>
                                                         <i class="text-success fa fa-money-bill-alt"></i>
-                                                        <span class="text-success" th:text="${#numbers.formatDecimal(job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></span>
+                                                        <span class="text-success" th:text="${#numbers.formatDecimal(job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></span>
                                                     </div>
                                                 </div>
                                             </a>

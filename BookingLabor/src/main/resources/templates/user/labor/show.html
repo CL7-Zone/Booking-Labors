@@ -138,6 +138,14 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div sec:authorize="isAuthenticated()">
+                                        <div th:if="${#lists.contains(userRoles, 'ROLE_USER')}" >
+                                            <div class="col-lg-12 main-button">
+                                                <a th:href="@{/customer-create-info}">TẠO THÔNG TIN CÁ NHÂN CỦA BẠN ĐỂ TUYỂN DỤNG</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <hr>
                                 </div>
 

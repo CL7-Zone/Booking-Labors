@@ -49,7 +49,7 @@ public class DisplayUserLaborController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
-    @GetMapping("/labors")
+//    @GetMapping("/labors")
     public String index(Model model){
 
         List<Labor> labors = laborService.findAllLabors();
@@ -64,11 +64,12 @@ public class DisplayUserLaborController {
                        @PathVariable Long job_detail_id,
                        @AuthenticationPrincipal UserDetails userDetails){
 
-//        Labor labor = laborService.findById(labor_id);
-//        List<JobDetail>  laborDetails =  jobDetailService.findJobDetailByLaborId(labor_id);
         JobDetail  jobDetail =  jobDetailService.findById(job_detail_id);
 
         int count = 0;
+
+        System.out.println("size skill: ");
+
         try{
             String sessionEmail = SecurityUtil.getSessionUser();
             if(sessionEmail!=null){

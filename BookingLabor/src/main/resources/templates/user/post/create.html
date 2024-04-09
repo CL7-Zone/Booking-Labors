@@ -79,7 +79,7 @@
                             <div class="col-6">
                                 <b class="mb-4" th:text="${#strings.toUpperCase('employer information')}"></b>
                                 <br><br>
-                                <form th:action="@{'/save/post'}" method="POST">
+                                <form th:action="@{'/save/post'}" method="POST" enctype="multipart/form-data">
                                     <div class="mb-3">
                                         <label for="you_are" class="form-label">BẠN LÀ</label>
                                         <select name="you_are" id="you_are" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
@@ -111,8 +111,8 @@
                                     <b class="mb-4" th:text="${#strings.toUpperCase('content RECRUITMENT')}"></b>
                                     <br><br>
                                     <div class="mb-3">
-                                        <label for="image_workplace" class="form-label">Image workplace</label>
-                                        <input type="file" class="form-control" name="image_workplace" id="image_workplace" >
+                                        <label for="image" class="form-label">Image workplace</label>
+                                        <input type="file" class="form-control" value="" name="image" id="image" >
                                     </div>
                                     <div class="mb-3">
                                         <label for="title" class="form-label">TIÊU ĐỀ TUYỂN DỤNG</label>

@@ -15,7 +15,9 @@ import javax.persistence.*;
 public class Header {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String type;
     private String name;
     private String content;
     @ManyToOne

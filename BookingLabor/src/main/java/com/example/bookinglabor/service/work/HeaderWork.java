@@ -34,6 +34,16 @@ public class HeaderWork implements HeaderService {
     }
 
     @Override
+    public List<Header> findHeadersByType(String type) {
+
+        List<Header> headers = headerRepo.findHeadersByType(type);
+
+        return headers.stream()
+                .map(HeaderMapper::mapToHeader)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public void saveAllDataFromExcel(MultipartFile file) {
         if(UploadHeader.isValidExcelFile(file)){
             try {

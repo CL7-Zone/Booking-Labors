@@ -56,6 +56,22 @@ public class PostWork implements PostService {
     }
 
     @Override
+    public int countPostByUserAccount_Email(String email) {
+        return postRepo.countPostByUserAccount_Email(email);
+    }
+
+    @Override
+    public int countPostsByUserAccountId(Long id) {
+        return postRepo.countPostsByUserAccountId(id);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+
+        postRepo.deleteById(id);
+    }
+
+    @Override
     public void saveData(Post post, Long city_id, Long category_id, Long job_id) {
 
         Optional<City> cityOptional = cityRepo.findById(city_id);

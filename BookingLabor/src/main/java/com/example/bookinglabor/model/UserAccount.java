@@ -52,4 +52,8 @@ public class UserAccount {
     private List<Post> posts = new ArrayList<>();
     @OneToMany(mappedBy = "userAccount", cascade = CascadeType.REMOVE)
     private List<Header> headers = new ArrayList<>();
+    @OneToMany(mappedBy = "userAccount", cascade = CascadeType.REMOVE)
+    private List<Apply> applies = new ArrayList<>();
+    @OneToMany(mappedBy = "userAccount", cascade = CascadeType.REMOVE)
+    private List<Report> reports = new ArrayList<>();
 }

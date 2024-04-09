@@ -49,13 +49,13 @@
                                         </div>
                                         <div class="carousel-inner">
                                             <div class="carousel-item active">
-                                                <img th:src="${'/assets/images/pricing-01.jpg'}" class="d-block w-100" alt="...">
+                                                <img th:src="${'/assets/images/' + post.image_workplace}" class="d-block w-100" alt="...">
                                             </div>
                                             <div class="carousel-item">
-                                                <img th:src="${'/assets/images/pricing-01.jpg'}" class="d-block w-100" alt="...">
+                                                <img th:src="${'/assets/images/' + post.image_workplace}" class="d-block w-100" alt="...">
                                             </div>
                                             <div class="carousel-item">
-                                                <img th:src="${'/assets/images/pricing-01.jpg'}" class="d-block w-100" alt="...">
+                                                <img th:src="${'/assets/images/' + post.image_workplace}" class="d-block w-100" alt="...">
                                             </div>
                                         </div>
                                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -108,7 +108,7 @@
                                     <div class="col-lg-2">
                                         <div>
                                             <i class="text-info fa fa-map-location"></i>
-                                            <span class="text-info" th:text="${post.official_address}"></span>
+                                            <span class="text-info" th:text="${'ĐỊA CHỈ: '+post.official_address}"></span>
                                         </div>
 
                                         <div>
@@ -147,7 +147,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="pt-4"  th:if="${post.re_image != 0}">
+                                    <div class="pt-4"  >
                                         <h5 class="mb-3">YÊU CẦU: </h5>
                                         <span class="mr-3">
                                     TUỔI TỐI ĐA: <span class="text-danger" th:text="${post.max_age}"></span>
@@ -167,7 +167,6 @@
                                             <span>YÊU CẦU ỨNG VIÊN CUNG CẤP ẢNH CÁ NHÂN!</span>
                                         </div>
 
-
                                         <div class="pt-3">
                                             <i class="text-danger fa fa-info-circle"></i>
                                             <span class="text-danger" th:text="${post.requirement}"></span>
@@ -177,12 +176,159 @@
                                         <i class="text-black fa fa-info-circle pt-3"></i>
                                         <span class="text-black" th:text="${post.description}"></span>
                                     </div>
-
-                                    <div class="pt-3 mb-5">
-                                        <form th:action="@{''}" method="POST">
-                                            <button class="search-btn" type="submit">ỨNG TUYỂN</button>
-                                        </form>
+                                    <div>
+                                        <i class="text-success fa fa-info-circle pt-3"></i>
+                                        <span>SỐ SLOT CÒN DƯ: </span>
+                                        <span class="text-black" th:text="${post.quantity - countApply}"></span>
                                     </div>
+
+                                    <div class="col-lg-12 pt-3">
+                                        <!--/*@thymesVar id="success" type="text"*/-->
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success}">
+                                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                                            <strong th:text="${success}"></strong>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 pt-3">
+                                        <!--/*@thymesVar id="failed" type="text"*/-->
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${failed}">
+                                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Failed:"><use xlink:href="#check-circle-fill"/></svg>
+                                            <strong th:text="${failed}"></strong>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    </div>
+                                    <div class="pt-3 mb-5">
+                                        <div class="form-check form-switch pb-4">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="switch_re">
+                                            <label class="form-check-label" for="switch_re">
+                                                <b>ỨNG TUYỂN NGAY</b>
+                                            </label>
+                                        </div>
+
+                                        <div id="re_block">
+
+                                            <div sec:authorize="!isAuthenticated()" class="main-button">
+                                                <a href="/login?please">VUI LÒNG ĐĂNG NHẬP VÀO ĐỂ ỨNG TUYỂN</a>
+                                            </div>
+
+                                            <div sec:authorize="isAuthenticated()" class="main-button">
+                                                <a th:if="${simple_user_labor == null}" th:href="@{'/labor-create-info'}">VUI LÒNG TẠO THÔNG TIN CỦA BẠN ĐỂ ỨNG TUYỂN</a>
+                                            </div>
+
+                                            <div sec:authorize="isAuthenticated()" class="col-lg-12 pt-3" >
+                                                <div th:if="${countApply >= post.quantity}" class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Failed:"><use xlink:href="#check-circle-fill"/></svg>
+                                                    <strong >
+                                                        <a class="text-black" th:href="@{/}"> HẾT SLOT!</a>
+                                                    </strong>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                </div>
+                                            </div>
+
+                                            <div sec:authorize="isAuthenticated()" class="col-lg-12 pt-3" >
+                                                <div th:if="${countApplyByUser > 0}" class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Failed:"><use xlink:href="#check-circle-fill"/></svg>
+                                                    <strong>
+                                                        <a class="text-black" th:href="@{/}">
+                                                            BẠN ĐÃ ỨNG TUYỂN ĐƠN TUYỂN DỤNG NÀY!
+                                                        </a>
+                                                    </strong>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                </div>
+                                            </div>
+
+                                            <div  th:if="${simple_user_labor != null}">
+                                                <div th:if="${countApply < post.quantity}">
+                                                    <div th:if="${countApplyByUser < 1}">
+                                                        <form sec:authorize="isAuthenticated()" th:action="@{'/apply/post/' + ${post.id}}"
+                                                              method="POST" enctype="multipart/form-data">
+
+                                                            <div class="col-lg-12">
+                                                                <label class="form-label" for="full_name">HỌ VÀ TÊN</label>
+                                                                <input type="text" class="form-control"
+                                                                       th:value="${simple_user_labor.full_name}"
+                                                                       id="full_name" placeholder="Your full name..." autocomplete="on" required="">
+                                                            </div>
+
+                                                            <div class="col-lg-12 pt-3">
+                                                                <label for="phone_number">SỐ ĐIỆN THOẠI</label>
+                                                                <fieldset>
+                                                                    <input type="text" class="form-control"
+                                                                           th:value="${simple_user_labor.phone_number}" id="phone_number" placeholder="Your phone number..." required="">
+                                                                </fieldset>
+                                                            </div>
+
+                                                            <div >
+                                                                <div class="col-lg-12 pt-3">
+                                                                    <label for="age" class="form-label">TUỔI CỦA BẠN</label>
+                                                                    <input type="number" class="form-control"
+                                                                           th:value="${age_labor}" id="age" >
+                                                                </div>
+
+                                                                <br>
+                                                                <div class="mb-3">
+                                                                    <label for="education" class="form-label">TRÌNH ĐỘ</label>
+                                                                    <select name="education" id="education" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                                                        <option selected disabled>CHỌN TRÌNH ĐỘ</option>
+                                                                        <option value="cấp 1">Cấp 1</option>
+                                                                        <option value="cấp 2">Cấp 2</option>
+                                                                        <option value="cấp 3">Cấp 3</option>
+                                                                        <option value="trung cấp">Trung cấp</option>
+                                                                        <option value="cao đẳng">Cao đẳng</option>
+                                                                        <option value="đại học">Đại học</option>
+                                                                        <option value="khác">Khác</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="experience" class="form-label">KINH NGHIỆM</label>
+                                                                    <select name="experience" id="experience" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                                                        <option selected disabled>CHỌN KINH NGHIỆM</option>
+                                                                        <option value="<1 year">< 1 year</option>
+                                                                        <option value="1-2 year">1-2 year</option>
+                                                                        <option value="3-5 year">3-5 year</option>
+                                                                        <option value="6-10 year">6-10 year</option>
+                                                                        <option value="> 10 year">> 10 year</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="about" class="form-label">GIỚI THIỆU, CHỨNG CHỈ, KỸ NĂNG, SỞ THÍCH...</label>
+                                                                    <textarea type="text" class="form-control" name="about" id="about" >
+                                                                     </textarea>
+                                                                </div>
+
+                                                                <div class="mb-3" th:if="${post.re_image != 0}">
+                                                                    <label for="image" class="form-label">YÊU CẦU ẢNH CỦA ỨNG VIÊN</label>
+                                                                    <input type="file" class="form-control" value="" name="image" id="image" >
+                                                                </div>
+
+                                                            </div>
+
+                                                            <input type="file" style="display: none" class="form-control" value="" name="image" id="image" >
+
+
+                                                            <button class="search-btn" type="submit">ỨNG TUYỂN</button>
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function () {
+                                            const switchRe = document.getElementById('switch_re');
+                                            const reBlock = document.getElementById('re_block');
+
+                                            reBlock.style.display = switchRe.checked ? 'block' : 'none';
+
+                                            switchRe.addEventListener('change', function () {
+                                                reBlock.style.display = this.checked ? 'block' : 'none';
+                                            });
+                                        });
+                                    </script>
 
                                     <br><br><br>
                                     <hr>

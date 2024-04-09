@@ -88,21 +88,24 @@
                                     alert("Hãy tạo thông tin để tạo việc làm và tuyển lao động!");
                                 </script>
                                 <ul style="list-style: disc; padding: 0px 20px">
-                                    <li style="list-style: disc;">
-                                        <span class="text-danger">Hãy tạo thông tin để tạo việc làm và tuyển lao động!</span>
+                                    <li class="mb-4" style="list-style: disc;">
+                                        <a class="text-danger" th:href="@{/customer-create-info}">
+                                            <h3 >Hãy tạo thông tin cá nhân để tạo tuyển lao động!</h3>
+                                            <h3 class="text-primary">TẠO NGAY</h3>
+                                        </a>
                                     </li>
                                     <li style="list-style: disc;">
-                                        <span class="text-danger">Để tạo thông tin lao động, hãy vào đường dẫn /labor-create-info</span>
-                                    </li>
-                                    <li style="list-style: disc;">
-                                        <span class="text-danger">Để tạo thông tin lao động, hãy vào đường dẫn /customer-create-info</span>
+                                        <a class="text-danger" th:href="@{/labor-create-info}">
+                                            <h3 >Hãy tạo thông tin cá nhân để chọn công việc!</h3>
+                                            <h3  class="text-primary">TẠO NGAY</h3>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
 
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <div class="section-heading">
-                                    <h4><em>CHỌN LAO ĐỘNG</em> BẠN MUỐN TUYỂN</h4>
+                                    <h4><em>CHỌN NGƯỜI LAO ĐỘNG</em> BẠN MUỐN TUYỂN</h4>
                                 </div>
                             </div>
 
@@ -130,7 +133,7 @@
                                                         </div>
                                                         <div>
                                                             <i class="text-success fa fa-money-bill-alt"></i>
-                                                            <span class="text-success" th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></span>
+                                                            <span class="text-success" th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></span>
                                                         </div>
                                                         <div>
                                                             <i class="text-warning fa fa-city"></i>

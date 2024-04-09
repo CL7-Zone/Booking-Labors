@@ -58,22 +58,22 @@ public class DisplayAuthController {
         if(existingUserEmail != null && existingUserEmail.getEmail() != null
                 && !existingUserEmail.getEmail().isEmpty()
         ){
-            return "redirect:/login?register=failed";
+            return "redirect:/login?registerFailed=true";
         }
         if(existingUserEmail != null){
 
-            return "redirect:/login?register=failed";
+            return "redirect:/login?registerFailed=true";
         }
         if(res.hasErrors()){
 
             model.addAttribute("user", user);
 
-            return "redirect:/login?register=failed";
+            return "redirect:/login?registerFailed=true";
         }
 
         userService.saveUser(user);
 
-        return "redirect:/login";
+        return "redirect:/login?registerSuccess=true";
     }
 
 }

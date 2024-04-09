@@ -65,6 +65,13 @@
                                     </button>
                                 </form>
                             </div>
+                            <div sec:authorize="isAuthenticated()">
+                                <div th:if="${#lists.contains(userRoles, 'ROLE_USER')}" >
+                                    <div class="col-lg-12 main-button">
+                                        <a th:href="@{/labor-create-info}">TẠO THÔNG TIN CÁ NHÂN CỦA BẠN ĐỂ CHỌN CÔNG VIỆC</a>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                     </div>

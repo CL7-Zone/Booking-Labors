@@ -58,7 +58,6 @@ public class DisplayHomeController {
         this.postService = postService;
     }
 
-
     @GetMapping("/")
     private String index(Model model, Pageable pageable,
                          @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
@@ -102,7 +101,7 @@ public class DisplayHomeController {
         return "home/show";
     }
 
-    @PostMapping("/guest/search/jobByLabor")
+    @GetMapping("/guest/search/jobByLabor")
     private String search(@RequestParam("nameJob") String nameJob, Model model,
                           @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
                           @RequestParam(value = "size", required = false, defaultValue = "6") int size){
@@ -126,7 +125,7 @@ public class DisplayHomeController {
     }
 
 
-    @PostMapping("/guest/search-job")
+    @GetMapping("/guest/search-job")
     private String searchJob(@RequestParam("name_job") String nameJob, Model model,
                           @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
                           @RequestParam(value = "size", required = false, defaultValue = "6") int size){
@@ -152,7 +151,7 @@ public class DisplayHomeController {
     }
 
 
-    @PostMapping("/guest/filter-price-asc")
+    @GetMapping("/guest/filter-price-asc")
     private String filterPriceAsc(Model model,
                           @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
                           @RequestParam(value = "size", required = false, defaultValue = "6") int size){
@@ -174,7 +173,7 @@ public class DisplayHomeController {
     }
 
 
-    @PostMapping("/guest/filter-price-desc")
+    @GetMapping("/guest/filter-price-desc")
     private String filterPriceDesc(Model model,
                                @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
                                @RequestParam(value = "size", required = false, defaultValue = "6") int size){

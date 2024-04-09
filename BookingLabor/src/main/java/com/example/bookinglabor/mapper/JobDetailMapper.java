@@ -19,6 +19,7 @@ public class JobDetailMapper {
                 .job(jobDetail.getJob())
                 .labor(jobDetail.getLabor())
                 .bookings(jobDetail.getBookings())
+                .commentSkills(jobDetail.getCommentSkills())
                 .build();
 
         if (jopDetailService != null) {

@@ -15,6 +15,12 @@ public interface PostService {
 
     List<Post> findPostByUserAccountId(Long user_id);
 
+    int countPostByUserAccount_Email(String email);
+
+    int countPostsByUserAccountId(Long id);
+
+    void deleteById(Long id);
+
     void saveData(Post post, Long city_id, Long category_id, Long job_id);
 
 

@@ -86,18 +86,20 @@ public class SecurityConfig{
         http.csrf().disable() // Vô hiệu hóa CSRF protection để cho phép đăng nhập qua form POST mà không cần token CSRF
                 .authorizeRequests() // Bắt đầu cấu hình cho việc xác thực yêu cầu
                 .antMatchers(HttpMethod.GET,"/","/error","/login",
-                "/labors/**", "/category-job/**","/jobs/show/**",
-                "/assets/**", "/vendor/**", "/send-mail",
-                        "/post/show/{id}").permitAll()
+                "/labors/**", "/category-job/**","/jobs/show/**","/blog",
+                "/assets/**", "/vendor/**", "/send-mail","/contact",
+                "/post/show/{id}", "/guest/**", "/send-sms").permitAll()
                 .antMatchers(HttpMethod.POST, "/register/save", "/guest/**").permitAll()
 
                 // Cho phép mọi người truy cập các đường dẫn này mà không cần xác thực
                 .antMatchers(HttpMethod.GET,"/your-menu/**", "/labor-create-info",
-                "/customer-create-info", "/jobs", "/post/create", "/post-manager")
+                "/contact/report", "/customer-create-info", "/jobs",
+                "/post/create", "/post-manager")
                 .hasAnyRole("USER", "LABOR", "CUSTOMER", "ADMIN")// Cho phép người dùng có role là USER truy cập vào các route trên
 
                 .antMatchers(HttpMethod.POST, "/labor/info/save", "/customer/info/save","/save/post",
-                "/user/search").hasAnyRole("USER", "LABOR", "CUSTOMER", "ADMIN")
+                "/user/search", "/apply/post/{id}", "/delete/post/{id}", "/send/report")
+                .hasAnyRole("USER", "LABOR", "CUSTOMER", "ADMIN")
 
                 .antMatchers(HttpMethod.GET, "/your-info-labor",  "/your-cart", "/your-job"
                 , "/booking-manager-by-labor", "booking-manager-by-labor/{id}").hasAnyRole("LABOR")
@@ -112,7 +114,8 @@ public class SecurityConfig{
                 .antMatchers(HttpMethod.POST, "/save/cart/job-detail/**", "/save/cart/booking",
                  "/save/booking", "/update/booking/**").hasAnyRole("CUSTOMER")
 
-                .antMatchers(HttpMethod.GET , "/admin/home", "/admin/work/creates", "/login/oauth2/**")
+                .antMatchers(HttpMethod.GET , "/admin/home", "/admin/work/creates",
+                "/login/oauth2/**")
                 .hasAnyRole("ADMIN").antMatchers().authenticated()// Yêu cầu xác thực (đăng nhập) để truy cập các đường dẫn này
 
                 .anyRequest().authenticated() // Bất kỳ yêu cầu nào khác cũng yêu cầu xác thực

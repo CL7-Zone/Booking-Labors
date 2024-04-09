@@ -40,12 +40,12 @@
                                     </div>
                                     <div class="right">
                                         <h4 th:text="${job.nameJob}"></h4>
-                                        <span><em th:text="${countJobsByCategoryJob.apply(job.categoryJob.id)}"></em></span>
+                                        <span><em th:text="${'Số công việc của danh mục: ' + countJobsByCategoryJob.apply(job.categoryJob.id)}"></em></span>
                                     </div>
                                 </div>
                                 <div class="thumb">
                                     <img th:src="${job.imageJob}" alt="">
-                                    <span class="category">TOP CÔNG VIỆC</span>
+                                    <span class="category">DANH MỤC CÔNG VIỆC</span>
                                     <span class="likes">
                                         <i class="fa fa-heart"></i>
                                         <b th:text="${job.id}"></b>
@@ -68,23 +68,23 @@
                                             <img th:src="@{/assets/images/icon-01.png}" alt="">
                                         </div>
                                         <div class="right">
-                                            <h4 >Not job</h4>
-                                            <span><em>0 </em> Job</span>
+                                            <h4 >KHÔNG CÓ CÔNG VỊÊC</h4>
+                                            <span><em>SỐ CÔNG VIỆC </em> 0</span>
                                         </div>
                                     </div>
                                     <div class="thumb">
                                         <img th:src="@{/assets/images/pricing-01.jpg}" alt="">
-                                        <span class="category">Top Work</span>
+                                        <span class="category">DANH MỤC CÔNG VIỆC</span>
                                         <span class="likes">
                                         <i class="fa fa-heart"></i>
-                                        <b>Not Job</b>
+                                        <b></b>
                                     </span>
                                     </div>
                                     <div class="border-button" sec:authorize="!isAuthenticated()">
-                                        <a th:href="@{/login?please}">CHOOSE JOB</a>
+                                        <a th:href="@{/login?please}">CHỌN NGAY</a>
                                     </div>
                                     <div class="border-button" sec:authorize="isAuthenticated()">
-                                        <a th:href="@{/your-job-detail}">CHOOSE JOB</a>
+                                        <a th:href="@{/your-menu}">QUAY VỀ TRANG CHỦ</a>
                                     </div>
                                 </div>
                             </div>
