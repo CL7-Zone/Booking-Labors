@@ -26,17 +26,19 @@ public class CustomUserDetailsService  implements UserDetailsService, CustomUser
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        System.out.println("Detail email: "+email);
-
         UserAccount user = userRepository.findByEmailAndProvider(email, EnumComponent.SIMPLE);
 
         if(user != null) {
 
-            return new User(
-                        user.getEmail(),
-                        user.getPassword(),
-                        RoleMapper.mapRolesToAuthorities(user.getRoles())
+            User userDetail = new User(
+                    user.getEmail(),
+                    user.getPassword(),
+                    RoleMapper.mapRolesToAuthorities(user.getRoles())
             );
+
+            System.out.println("User detail: "+userDetail);
+
+            return userDetail;
 
         } else {
 

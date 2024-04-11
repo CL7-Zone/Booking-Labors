@@ -1,5 +1,6 @@
 package com.example.bookinglabor.service.work;
 import com.example.bookinglabor.config.TwilioConfig;
+import com.example.bookinglabor.controller.component.ConstantComponent;
 import com.example.bookinglabor.controller.component.Tcomponent;
 import com.example.bookinglabor.service.VonageSendSmsService;
 import com.twilio.rest.api.v2010.account.Message;
@@ -20,8 +21,8 @@ public class SmsWork implements VonageSendSmsService {
     @Override
     public void sendSms(String phoneNumber, String messageBody) {
 
-        VonageClient client = VonageClient.builder().apiKey("91e2e292")
-        .apiSecret("r9joEfQT0fRiGulE").build();
+        VonageClient client = VonageClient.builder().apiKey(ConstantComponent.vonageApiKey)
+        .apiSecret(ConstantComponent.vonageApiSecret).build();
         TextMessage message = new TextMessage("Vonage APIs",
         phoneNumber, messageBody);
         SmsSubmissionResponse response = client.getSmsClient().submitMessage(message);

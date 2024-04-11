@@ -1,17 +1,21 @@
 package com.example.bookinglabor.controller.api;
-import com.example.bookinglabor.service.TwilioSendSmsService;
-import com.example.bookinglabor.service.VonageSendSmsService;
+import com.example.bookinglabor.model.Booking;
+import com.example.bookinglabor.model.CategoryJob;
+import com.example.bookinglabor.model.Header;
+import com.example.bookinglabor.model.Job;
+import com.example.bookinglabor.model.sessionObject.AuthObject;
+import com.example.bookinglabor.service.*;
 import com.example.bookinglabor.service.test.SendMailTestService;
 import lombok.AllArgsConstructor;
+import net.minidev.json.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @AllArgsConstructor
@@ -19,6 +23,29 @@ public class TestApiController {
 
     private SendMailTestService senderService;
     private VonageSendSmsService vonageSendSmsService;
+    private JobService jobService;
+    CategoryJobService categoryJobService;
+    HeaderService headerService;
+    BookingService bookingService;
+
+    @GetMapping("/booking-api")
+    public List<Booking> booking() {
+
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            List<Job> jobs = jobService.findAllJobs();
+
+            return bookingService.findAllBookings();
+
+        }catch (Exception exception){
+
+            System.out.println("ERROR job: "+exception.getMessage());
+
+            return null;
+        }
+    }
+
+
 
     @GetMapping("date")
     public String get(Date date) {

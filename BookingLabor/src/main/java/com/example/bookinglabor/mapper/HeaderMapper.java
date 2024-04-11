@@ -12,6 +12,7 @@ public class HeaderMapper {
                 .id(header.getId())
                 .name(header.getName())
                 .content(header.getContent())
+                .type(header.getType())
                 .build();
     }
 }

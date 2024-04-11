@@ -1,5 +1,6 @@
 package com.example.bookinglabor.controller.api;
 
+import com.example.bookinglabor.controller.component.EnumComponent;
 import com.example.bookinglabor.dto.AuthResponseDto;
 import com.example.bookinglabor.dto.UserDto;
 import com.example.bookinglabor.mapper.RootMapper;
@@ -17,7 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -90,10 +93,9 @@ public class AuthApiController {
 //    }
 
 
+    @CrossOrigin
     @PostMapping("/auth-login")
     public ResponseEntity<AuthResponseDto> login(@RequestBody UserDto userDto){
-
-        System.out.println(userDto.getEmail());
 
         Authentication authentication = authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(
@@ -101,8 +103,14 @@ public class AuthApiController {
         userDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = JWTGeneratorToken.generateToken(authentication);
+        System.out.println(authentication);
+        System.out.println("Principal: "+authentication.getPrincipal());
+        Object principal = authentication.getPrincipal();
+        Long userId = userService.findByEmailAndProvider(authentication.getName(), EnumComponent.SIMPLE).getId();
 
-        return new ResponseEntity<>(new AuthResponseDto(token), HttpStatus.OK);
+        return new ResponseEntity<>(new AuthResponseDto(
+                   userId, token, principal
+        ), HttpStatus.OK);
     }
 
 }

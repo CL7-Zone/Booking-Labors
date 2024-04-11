@@ -21,16 +21,20 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 import java.io.IOException;
@@ -53,7 +57,8 @@ public class SecurityConfig{
     private CustomerOauth2UserService oauth2UserService;
     @Autowired
     private Oauth2LoginSuccessHandler oauth2LoginSuccessHandler;
-
+    @Autowired
+    private CustomAccessDeniedHandler customAccessDeniedHandler;
     @Autowired
     public SecurityConfig(CustomUserDetailsService userDetailsService, JwtAuthEntryPoint authEntryPoint, UserService userService) {
         this.userDetailsService = userDetailsService;
@@ -88,8 +93,13 @@ public class SecurityConfig{
                 .antMatchers(HttpMethod.GET,"/","/error","/login",
                 "/labors/**", "/category-job/**","/jobs/show/**","/blog",
                 "/assets/**", "/vendor/**", "/send-mail","/contact",
-                "/post/show/{id}", "/guest/**", "/send-sms").permitAll()
-                .antMatchers(HttpMethod.POST, "/register/save", "/guest/**").permitAll()
+                "/verify", "/post/show/{id}", "/guest/**", "/send-sms",
+                "/auth")
+                .permitAll()
+
+                .antMatchers(HttpMethod.POST, "/register/save","/verify/account",
+                "/auth/save", "/auth/account","/guest/**", "/auth-login")
+                .permitAll()
 
                 // Cho phép mọi người truy cập các đường dẫn này mà không cần xác thực
                 .antMatchers(HttpMethod.GET,"/your-menu/**", "/labor-create-info",
@@ -115,7 +125,7 @@ public class SecurityConfig{
                  "/save/booking", "/update/booking/**").hasAnyRole("CUSTOMER")
 
                 .antMatchers(HttpMethod.GET , "/admin/home", "/admin/work/creates",
-                "/login/oauth2/**")
+                "/login/oauth2/**", "/booking-api", "/admin/profile")
                 .hasAnyRole("ADMIN").antMatchers().authenticated()// Yêu cầu xác thực (đăng nhập) để truy cập các đường dẫn này
 
                 .anyRequest().authenticated() // Bất kỳ yêu cầu nào khác cũng yêu cầu xác thực
@@ -137,22 +147,9 @@ public class SecurityConfig{
                 .permitAll())
                 .exceptionHandling()
                 .authenticationEntryPoint(
-                    new LoginUrlAuthenticationEntryPoint("/login?login=false"))
-                .accessDeniedPage("/your-menu?unauthorized");
-//                .formLogin(form -> form // Cấu hình đăng nhập thông qua form
-//                .loginPage("/login") // Đường dẫn đến trang đăng nhập
-//                .defaultSuccessUrl("/your-menu") // Đường dẫn mặc định sau khi đăng nhập thành công
-//                .loginProcessingUrl("/login") // Đường dẫn xử lý quá trình đăng nhập
-//                .failureUrl("/login?error=true") // Đường dẫn sau khi đăng nhập thất bại
-//                .permitAll() // Cho phép mọi người truy cập trang đăng nhập
-//                )
-//                .logout(logout -> logout
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))// Gửi yêu cầu logout
-//                .permitAll()// Cho phép mọi người truy cập trang logout
-//                ).exceptionHandling()
-//                .authenticationEntryPoint((request, response, authException) -> response
-//                .sendRedirect("/login?login=false"))
-//                .accessDeniedPage("/your-menu?unauthorized");// block user ra nếu k có quyền
+                new LoginUrlAuthenticationEntryPoint("/login?login=false"))
+                .accessDeniedHandler(customAccessDeniedHandler);
+
 
         return http.build();
     }

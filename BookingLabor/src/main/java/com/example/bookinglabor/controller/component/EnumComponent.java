@@ -1,7 +1,7 @@
 package com.example.bookinglabor.controller.component;
 
 public enum EnumComponent {
-    SIMPLE, GOOGLE
+    SIMPLE, GOOGLE, AUTH
 
 
 }
