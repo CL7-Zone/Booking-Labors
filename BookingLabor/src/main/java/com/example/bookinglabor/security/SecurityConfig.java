@@ -6,6 +6,7 @@ import com.example.bookinglabor.model.UserAccount;
 import com.example.bookinglabor.security.oauth2.Oauth2LoginSuccessHandler;
 import com.example.bookinglabor.service.UserService;
 import com.example.bookinglabor.service.oAuth2.CustomerOauth2UserService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,15 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpRequest;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,6 +36,7 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequest
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.ServletException;
@@ -44,26 +50,29 @@ import java.util.stream.Collectors;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
+@RequiredArgsConstructor
 public class SecurityConfig{
 
 
     private final JwtAuthEntryPoint authEntryPoint;
     private final CustomUserDetailsService userDetailsService;
     private final UserService userService;
+    private ClientRegistrationRepository clientRegistrationRepository;
+
+    private CustomerOauth2UserService oauth2UserService;
+    private Oauth2LoginSuccessHandler oauth2LoginSuccessHandler;
+    private CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @Autowired
-    private ClientRegistrationRepository clientRegistrationRepository;
-    @Autowired
-    private CustomerOauth2UserService oauth2UserService;
-    @Autowired
-    private Oauth2LoginSuccessHandler oauth2LoginSuccessHandler;
-    @Autowired
-    private CustomAccessDeniedHandler customAccessDeniedHandler;
-    @Autowired
-    public SecurityConfig(CustomUserDetailsService userDetailsService, JwtAuthEntryPoint authEntryPoint, UserService userService) {
-        this.userDetailsService = userDetailsService;
+    public SecurityConfig(JwtAuthEntryPoint authEntryPoint, CustomUserDetailsService userDetailsService, UserService userService, ClientRegistrationRepository clientRegistrationRepository, CustomerOauth2UserService oauth2UserService, Oauth2LoginSuccessHandler oauth2LoginSuccessHandler, CustomAccessDeniedHandler customAccessDeniedHandler) {
         this.authEntryPoint = authEntryPoint;
+        this.userDetailsService = userDetailsService;
         this.userService = userService;
+        this.clientRegistrationRepository = clientRegistrationRepository;
+        this.oauth2UserService = oauth2UserService;
+        this.oauth2LoginSuccessHandler = oauth2LoginSuccessHandler;
+        this.customAccessDeniedHandler = customAccessDeniedHandler;
     }
     @Bean
     public static PasswordEncoder passwordEncoder(){
@@ -84,6 +93,14 @@ public class SecurityConfig{
         return new JWTAuthenticationFilter();
     }
 
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        var authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -94,11 +111,11 @@ public class SecurityConfig{
                 "/labors/**", "/category-job/**","/jobs/show/**","/blog",
                 "/assets/**", "/vendor/**", "/send-mail","/contact",
                 "/verify", "/post/show/{id}", "/guest/**", "/send-sms",
-                "/auth")
+                "/auth", "/header-api", "/logout")
                 .permitAll()
 
                 .antMatchers(HttpMethod.POST, "/register/save","/verify/account",
-                "/auth/save", "/auth/account","/guest/**", "/auth-login")
+                "/auth/save", "/auth/account","/guest/**", "/auth-login", "/logout")
                 .permitAll()
 
                 // Cho phép mọi người truy cập các đường dẫn này mà không cần xác thực
@@ -126,8 +143,9 @@ public class SecurityConfig{
 
                 .antMatchers(HttpMethod.GET , "/admin/home", "/admin/work/creates",
                 "/login/oauth2/**", "/booking-api", "/admin/profile")
-                .hasAnyRole("ADMIN").antMatchers().authenticated()// Yêu cầu xác thực (đăng nhập) để truy cập các đường dẫn này
-
+                .hasAnyRole("ADMIN")
+                .antMatchers()
+                .authenticated()// Yêu cầu xác thực (đăng nhập) để truy cập các đường dẫn này
                 .anyRequest().authenticated() // Bất kỳ yêu cầu nào khác cũng yêu cầu xác thực
                 .and() // Kết thúc phần cấu hình cho authorizeRequests(), bắt đầu một cấu hình mới
 //                .oauth2Login()//cấu hình oAuth2 google login
@@ -138,21 +156,28 @@ public class SecurityConfig{
 //                .and()
                 .formLogin(form -> form
                 .loginPage("/login")
-                .defaultSuccessUrl("/your-menu")
+                .defaultSuccessUrl("/your-menu")//login thành công
                 .loginProcessingUrl("/login")
-                .failureUrl("/login?error=true")
-                .permitAll())
-                .logout(logout -> logout
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .failureUrl("/login?error=true")//sai mật khẩu
                 .permitAll())
                 .exceptionHandling()
                 .authenticationEntryPoint(
                 new LoginUrlAuthenticationEntryPoint("/login?login=false"))
-                .accessDeniedHandler(customAccessDeniedHandler);
+                .accessDeniedHandler(customAccessDeniedHandler);//Unauthorized
 
+        http.authenticationProvider(authenticationProvider());
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
+
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http.csrf(AbstractHttpConfigurer :: disable)
+//                .exceptionHandling(
+//                        exception -> exception.authenticationEntryPoint(authEntryPoint))
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authorizeHttpRequests(auth -> auth
 
 
     @Bean

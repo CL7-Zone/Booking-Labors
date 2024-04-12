@@ -1,5 +1,13 @@
 package com.example.bookinglabor.controller.api;
 
+import com.example.bookinglabor.controller.component.EnumComponent;
+import com.example.bookinglabor.dto.AuthResponseDto;
+import com.example.bookinglabor.dto.UserDto;
+import com.example.bookinglabor.model.UserAccount;
+import com.example.bookinglabor.model.sessionObject.UserObject;
+import com.example.bookinglabor.service.UserService;
+import lombok.AllArgsConstructor;
+import net.minidev.json.JSONObject;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,17 +16,36 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @RestController
+@AllArgsConstructor
 public class UserApiController {
 
+    private UserService userService;
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/admin/profile")
-    UserDetails index(@AuthenticationPrincipal UserDetails userDetails){
+    public JSONObject index(@AuthenticationPrincipal UserDetails userDetails,
+                                 HttpServletRequest request) {
+        try {
 
-        System.out.println(userDetails);
+            Long userId = userService.findByEmailAndProvider(userDetails.getUsername(), EnumComponent.SIMPLE).getId();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("account", userDetails);
+            jsonObject.put("userId", userId);
+            System.out.println("User login: "+jsonObject);
 
-        return userDetails;
+            return jsonObject;
+        } catch (Exception exception) {
+            System.out.println("ERROR admin profile: " + exception.getMessage());
+            return null;
+        }
     }
+
 
 }

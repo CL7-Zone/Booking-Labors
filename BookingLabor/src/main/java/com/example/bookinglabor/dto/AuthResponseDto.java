@@ -3,9 +3,14 @@ package com.example.bookinglabor.dto;
 import lombok.Data;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@Data
-public class AuthResponseDto {
+import java.io.Serial;
+import java.io.Serializable;
 
+@Data
+public class AuthResponseDto implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
     Long id;
     String accessToken;
     String tokenType = "Bearer ";
@@ -17,9 +22,5 @@ public class AuthResponseDto {
         this.object = object;
     }
 
-    //    public AuthResponseDto(Long id, String accessToken, UserDetails userDetails) {
-//        this.id = id;
-//        this.accessToken = accessToken;
-//        this.userDetails = userDetails;
-//    }
+
 }

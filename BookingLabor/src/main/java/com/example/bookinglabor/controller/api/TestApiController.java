@@ -28,6 +28,22 @@ public class TestApiController {
     HeaderService headerService;
     BookingService bookingService;
 
+    @GetMapping("/header-api")
+    public List<Header> header() {
+
+        try {
+            HashMap<String, String> map = new HashMap<>();
+
+            return headerService.findAllHeaders();
+
+        }catch (Exception exception){
+
+            System.out.println("ERROR: "+exception.getMessage());
+
+            return null;
+        }
+    }
+
     @GetMapping("/booking-api")
     public List<Booking> booking() {
 

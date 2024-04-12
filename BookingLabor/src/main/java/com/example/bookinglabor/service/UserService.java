@@ -1,6 +1,7 @@
 package com.example.bookinglabor.service;
 
 import com.example.bookinglabor.controller.component.EnumComponent;
+import com.example.bookinglabor.dto.AuthResponseDto;
 import com.example.bookinglabor.dto.UserDto;
 import com.example.bookinglabor.model.Role;
 import com.example.bookinglabor.model.UserAccount;
@@ -36,9 +37,10 @@ public interface UserService {
 
     void saveDataToSessionStore(List<UserObject> userObject, UserDto user, HttpServletRequest request, HttpSession session);
 
-    void saveDataToSessionStore(List<AuthObject> authObject,
-         UserDto userDto
-        , HttpServletRequest request, HttpSession session, String NONE);
+    void saveDataToSessionStore(HttpServletRequest request, AuthResponseDto auth);
+
+    void saveDataToSessionStore(List<AuthObject> authObject, UserDto userDto
+        ,HttpServletRequest request, HttpSession session, String NONE);
 
 
     Collection<? extends GrantedAuthority> getUpdatedAuthorities(Authentication authentication);

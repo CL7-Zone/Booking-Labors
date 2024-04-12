@@ -5,6 +5,7 @@ import com.example.bookinglabor.dto.AuthResponseDto;
 import com.example.bookinglabor.dto.UserDto;
 import com.example.bookinglabor.mapper.RootMapper;
 import com.example.bookinglabor.model.UserAccount;
+import com.example.bookinglabor.model.sessionObject.AuthObject;
 import com.example.bookinglabor.repo.RoleRepo;
 import com.example.bookinglabor.repo.UserRepo;
 import com.example.bookinglabor.security.CustomUserDetailsService;
@@ -22,10 +23,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 
@@ -33,6 +36,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 @RestController
@@ -92,25 +96,40 @@ public class AuthApiController {
 //        }
 //    }
 
+    @PostMapping("/logout")
+    String logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication){
+
+        SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+
+        logoutHandler.logout(request, response, authentication);
+
+        return "redirect:/login?logout";
+    }
 
     @CrossOrigin
     @PostMapping("/auth-login")
-    public ResponseEntity<AuthResponseDto> login(@RequestBody UserDto userDto){
+    public ResponseEntity<AuthResponseDto> login(@RequestBody UserDto userDto,
+                                                 HttpServletRequest request,
+                                                 HttpSession session){
 
         Authentication authentication = authenticationManager.authenticate(
-        new UsernamePasswordAuthenticationToken(
-        userDto.getEmail(),
-        userDto.getPassword()));
+        new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = JWTGeneratorToken.generateToken(authentication);
-        System.out.println(authentication);
-        System.out.println("Principal: "+authentication.getPrincipal());
         Object principal = authentication.getPrincipal();
         Long userId = userService.findByEmailAndProvider(authentication.getName(), EnumComponent.SIMPLE).getId();
+        @SuppressWarnings("unchecked")
+        List<AuthResponseDto> authResponse = (List<AuthResponseDto>) request.getSession().getAttribute("authResponse");
+        AuthResponseDto auth = new AuthResponseDto(userId, token, principal);
 
-        return new ResponseEntity<>(new AuthResponseDto(
-                   userId, token, principal
-        ), HttpStatus.OK);
+        try{
+//            userService.saveDataToSessionStore(request, auth);
+            System.out.println(authentication);
+            System.out.println("Principal: "+authentication.getPrincipal());
+        }catch (Exception error){
+            System.out.println("ERROR LOGIN API: "+error.getMessage());
+        }
+        return new ResponseEntity<>(auth, HttpStatus.OK);
     }
 
 }

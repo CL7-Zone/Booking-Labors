@@ -1,8 +1,11 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {loginUser} from "../../../api/apiFunction";
 import {useNavigate} from "react-router-dom";
+import Cookies from "js-cookie";
+
 import {jwtDecode} from "jwt-decode";
 import {post} from "axios";
+import {useDispatch, useSelector} from "react-redux";
 const Login = ()=>{
 
     const [errorMessage, setErrorMessage] = useState("");
@@ -11,6 +14,12 @@ const Login = ()=>{
         password: ""
     });
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const show = useSelector(state => state.showElement);
+
+    useEffect(() => {
+        dispatch({ type: 'HIDDEN' });
+    }, []);
 
     const handleInputChange = (e) =>{
 
@@ -21,18 +30,9 @@ const Login = ()=>{
 
         e.preventDefault();
         const success = await loginUser(login);
-        console.log(success);
-
         if(success){
-            const token = success.accessToken;
-            console.log(token)
-            const decodedToken = jwtDecode(token);
-            localStorage.setItem("token",token);
-            console.log(decodedToken);
-            localStorage.setItem("username",decodedToken.sub);
-            localStorage.setItem("userId",success.id);
-            localStorage.setItem("userRole",success.object.authorities[0].authority);
-            navigate("/");
+            Cookies.set("token", success.accessToken, { expires: Date.now() + 3000000, path: "/" });
+            navigate("/admin/profile");
             window.location.reload();
         }else {
             setErrorMessage("Invalid username or password!");

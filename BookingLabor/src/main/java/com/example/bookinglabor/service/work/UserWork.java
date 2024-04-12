@@ -1,6 +1,7 @@
 package com.example.bookinglabor.service.work;
 
 import com.example.bookinglabor.controller.component.EnumComponent;
+import com.example.bookinglabor.dto.AuthResponseDto;
 import com.example.bookinglabor.dto.UserDto;
 import com.example.bookinglabor.model.Role;
 import com.example.bookinglabor.model.UserAccount;
@@ -116,6 +117,13 @@ public class UserWork implements UserService {
         userObject.add(userObjectSave);
         request.getSession().setAttribute("userObject",userObject);
     }
+
+    @Override
+    public void saveDataToSessionStore(HttpServletRequest request, AuthResponseDto auth) {
+        HttpSession session = request.getSession(true);
+        session.setAttribute("auth", auth);
+    }
+
 
     @Override
     public void saveDataToSessionStore(List<AuthObject> authObject, UserDto user,

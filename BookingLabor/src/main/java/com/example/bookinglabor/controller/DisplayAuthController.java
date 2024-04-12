@@ -17,6 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
@@ -56,6 +58,16 @@ public class DisplayAuthController {
     public String index(){
 
         return "auth/login";
+    }
+
+    @GetMapping("/logout")
+    String logoutGet(HttpServletRequest request, HttpServletResponse response, Authentication authentication){
+
+        SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+
+        logoutHandler.logout(request, response, authentication);
+
+        return "redirect:/login?logout";
     }
 
     @GetMapping("/verify")
