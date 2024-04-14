@@ -39,6 +39,17 @@ public class LaborWork implements LaborService {
     }
 
     @Override
+    public List<Labor> getAllLaborApi() {
+
+        List<Labor> labors = laborRepo.findAll();
+
+        return labors.stream()
+                .map(LaborMapper::mapToLaborApi)
+                .collect(Collectors
+                .toList());
+    }
+
+    @Override
     public Labor findJobById(Long id) {
 
         Optional<Labor> laborOptional = laborRepo.findById(id);

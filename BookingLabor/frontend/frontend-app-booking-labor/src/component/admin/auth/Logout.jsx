@@ -10,24 +10,23 @@ const Logout =()=>{
     const dispatch = useDispatch();
     const show = useSelector(state => state.showElement);
 
-    useEffect(() => {
-        console.log(show);
-    }, []);
-
     const handleLogout = async (e)=>{
 
         e.preventDefault();
         const success = await logoutUser();
         if(success){
+            document.cookie.split(";").forEach(function(c) {
+                document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+            });
             console.log("Logout successfully");
             navigate("/login");
+            window.location.reload();
         }
     }
-
     return (
-        <span>
-             <Link to="#" onClick={handleLogout}>Logout</Link>
-        </span>
+        <>
+           <Link className="dropdown-item" to="#" onClick={handleLogout}>Logout</Link>
+        </>
     );
 }
 

@@ -9,6 +9,8 @@ import java.util.List;
 public interface CustomerService {
 
     List<Customer> findAllCustomers();
+
+    List<Customer> getAllCustomersApi();
     Customer findById(Long id);
 
     List <Customer> findByUserId(Long user_id);

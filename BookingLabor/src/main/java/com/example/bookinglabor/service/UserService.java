@@ -23,6 +23,7 @@ import java.util.List;
 public interface UserService {
 
 
+    List<UserAccount> getAllUsersApi();
     void saveUser(UserDto userDto);
 
     void saveOtherUser(String  email, EnumComponent provider);

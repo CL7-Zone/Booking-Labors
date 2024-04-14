@@ -18,6 +18,14 @@ public class RoleMapper {
                 .toList());
     }
 
+    public static Role mapToRole(Role role) {
+
+        return Role.builder()
+                .id(role.getId())
+                .name(role.getName())
+                .build();
+    }
+
 
 
 }

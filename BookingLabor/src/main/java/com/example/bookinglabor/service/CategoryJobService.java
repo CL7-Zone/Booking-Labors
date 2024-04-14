@@ -10,6 +10,9 @@ public interface CategoryJobService {
 
     Long countJob();
     List<CategoryJob> findAllCategoryJobs();
+
+    List<CategoryJob> findAllCategoryJobsApi();
+
     void saveAllDataFromExcel(MultipartFile file);
 
     Long countJobsByCategoryJob(Long id);

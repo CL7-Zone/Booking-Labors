@@ -31,6 +31,16 @@ public class JobDetailWork implements JobDetailService {
 
 
     @Override
+    public List<JobDetail> getAllJobDetailsApi() {
+        List<JobDetail> jobDetails = jobDetailRepo.findAll();
+
+        return jobDetails.stream()
+                .map(JobDetailMapper::mapToJobDetailApi)
+                .collect(Collectors
+                .toList());
+    }
+
+    @Override
     public List<JobDetail> findAllJobDetails() {
 
         List<JobDetail> jobDetails = jobDetailRepo.findAll();

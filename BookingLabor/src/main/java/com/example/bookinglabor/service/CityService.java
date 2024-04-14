@@ -9,6 +9,9 @@ public interface CityService {
 
 
     List<City> findAllCities();
+
+    List<City> getAllCitiesApi();
+
     void saveAllDataFromExcel(MultipartFile file);
 
 }

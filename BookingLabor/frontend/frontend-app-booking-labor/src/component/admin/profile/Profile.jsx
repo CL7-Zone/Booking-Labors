@@ -4,13 +4,23 @@ import {useNavigate} from "react-router-dom";
 import {post} from "axios";
 import Cookies from "js-cookie";
 import {useDispatch, useSelector} from "react-redux";
+import Header from "../../element/Header";
+import Footer from "../../element/Footer";
+import Sidebar from "../../element/Sidebar";
+import Booking from "../booking/Booking";
+import {Link} from "react-router-dom";
+import styles from "../../element/element.module.css";
+import NotFound from "../../element/NotFound";
+import { SetUser } from '../../../redux/action/SetUser';
+import User from "../user/User";
+import Statistical from "../../element/Statistical";
 
 const Profile = () =>{
 
-    const [user, setUser] = useState({});
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const show = useSelector(state => state.showElement);
+    const user = useSelector(state => state.userProfile);
 
     useEffect(() => {
         const fetchUser = async ()=>{
@@ -19,11 +29,11 @@ const Profile = () =>{
                 if(user){
                     dispatch({ type: 'SHOW' });
                 }
-                setUser(user);
+                dispatch(SetUser(user));
 
             }catch (e) {
-                dispatch({ type: 'HIDDEN' });
-                console.log(e);
+
+                console.log("ERROR: ",e);
             }
         }
 
@@ -32,59 +42,34 @@ const Profile = () =>{
     }, []);
 
     useEffect(() => {
-        console.log('User login:', user);
+        console.log("user: ", user);
     }, [user]);
-
-
-    useEffect(() => {
-        const fetchHeader = async ()=>{
-            try{
-                const header = await getHeaders();
-
-            }catch (e) {
-
-                console.log(e);
-            }
-        }
-
-        fetchHeader().then(r => r);
-
-    }, []);
 
     useEffect(() => {
         setTimeout(()=>{
-            if(!show){
-                console.log("not user!!!")
-                navigate("/login")
-            }
+
         },3000);
-    }, [show]);
+    }, [user]);
 
-    if(!show){
+    if (Array.isArray(user) && user.length === 0) {
 
-        return (
-            <div>
-                <h1>Not user</h1>
-            </div>
-        );
     }
+    return (
+        <div>
+            {Array.isArray(user) && user.length === 0 ? (<NotFound />) : (
+                <>
+                    <Sidebar/>
+                    <div className="content">
+                        <Header/>
+                        <Booking></Booking>
+                        <User></User>
+                        <Footer/>
 
-    if(show){
-        return (
-            <div className="container">
-                <div>
-                    {user && user.account && (<span>{user.account.username}</span>)}
-                </div>
-                <div>
-                    {user && <span>{user.userId}</span>}
-                </div>
-                <div>
-                    {user && user.account && user.account.authorities[0] &&
-                        (<span>{user.account.authorities[0].authority}</span>)}
-                </div>
-            </div>
-        );
-    }
+                    </div>
+                </>
+            )}
+        </div>
+    );
 
 
 }

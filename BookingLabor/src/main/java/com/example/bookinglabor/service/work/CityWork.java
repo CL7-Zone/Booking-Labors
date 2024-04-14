@@ -1,14 +1,11 @@
 package com.example.bookinglabor.service.work;
 
 import com.example.bookinglabor.mapper.CityMapper;
-import com.example.bookinglabor.mapper.JobMapper;
 import com.example.bookinglabor.model.City;
 
-import com.example.bookinglabor.model.Job;
 import com.example.bookinglabor.repo.CityRepo;
 import com.example.bookinglabor.service.CityService;
 import com.example.bookinglabor.service.work.excel.UploadCity;
-import com.example.bookinglabor.service.work.excel.UploadJob;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +26,17 @@ public class CityWork implements CityService {
 
         return cities.stream()
                 .map(CityMapper::mapToCity)
+                .collect(Collectors
+                .toList());
+    }
+
+    @Override
+    public List<City> getAllCitiesApi() {
+
+        List<City> cities = cityRepo.findAll();
+
+        return cities.stream()
+                .map(CityMapper::mapToCityApi)
                 .collect(Collectors
                 .toList());
     }

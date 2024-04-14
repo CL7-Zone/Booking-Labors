@@ -11,14 +11,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "posts")
 @Getter
 @Setter
+@Data
+@Table(name = "posts")
 public class Post {
 
     @Id

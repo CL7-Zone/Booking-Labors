@@ -4,6 +4,8 @@ import com.example.bookinglabor.controller.component.EnumComponent;
 import com.example.bookinglabor.model.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface UserRepo  extends JpaRepository<UserAccount, Long>{
 
     UserAccount findByEmail(String email);

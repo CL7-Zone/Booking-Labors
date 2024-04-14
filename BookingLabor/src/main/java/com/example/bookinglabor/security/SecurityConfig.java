@@ -141,9 +141,12 @@ public class SecurityConfig{
                 .antMatchers(HttpMethod.POST, "/save/cart/job-detail/**", "/save/cart/booking",
                  "/save/booking", "/update/booking/**").hasAnyRole("CUSTOMER")
 
-                .antMatchers(HttpMethod.GET , "/admin/home", "/admin/work/creates",
-                "/login/oauth2/**", "/booking-api", "/admin/profile")
+                .antMatchers(HttpMethod.GET , "/admin/**", "/admin/api/role")
                 .hasAnyRole("ADMIN")
+
+                .antMatchers(HttpMethod.POST , "/admin/**")
+                .hasAnyRole("ADMIN")
+
                 .antMatchers()
                 .authenticated()// Yêu cầu xác thực (đăng nhập) để truy cập các đường dẫn này
                 .anyRequest().authenticated() // Bất kỳ yêu cầu nào khác cũng yêu cầu xác thực

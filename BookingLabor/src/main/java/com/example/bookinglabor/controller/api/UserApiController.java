@@ -32,10 +32,10 @@ public class UserApiController {
     @GetMapping("/admin/profile")
     public JSONObject index(@AuthenticationPrincipal UserDetails userDetails,
                                  HttpServletRequest request) {
+        JSONObject jsonObject = new JSONObject();
         try {
 
             Long userId = userService.findByEmailAndProvider(userDetails.getUsername(), EnumComponent.SIMPLE).getId();
-            JSONObject jsonObject = new JSONObject();
             jsonObject.put("account", userDetails);
             jsonObject.put("userId", userId);
             System.out.println("User login: "+jsonObject);
@@ -43,7 +43,8 @@ public class UserApiController {
             return jsonObject;
         } catch (Exception exception) {
             System.out.println("ERROR admin profile: " + exception.getMessage());
-            return null;
+            jsonObject.put("message", exception);
+            return jsonObject;
         }
     }
 

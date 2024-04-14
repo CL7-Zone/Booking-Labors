@@ -37,6 +37,15 @@ public class PostWork implements PostService {
     }
 
     @Override
+    public List<Post> getApiPosts() {
+        List<Post> posts = postRepo.findAll();
+        return posts.stream()
+                .map(PostMapper::mapToPostApi)
+                .collect(Collectors
+                .toList());
+    }
+
+    @Override
     public Optional<Post> findById(Long id) {
 
         Optional<Post> posts = postRepo.findById(id);

@@ -3,6 +3,7 @@ package com.example.bookinglabor.service.work;
 import com.example.bookinglabor.controller.component.EnumComponent;
 import com.example.bookinglabor.dto.AuthResponseDto;
 import com.example.bookinglabor.dto.UserDto;
+import com.example.bookinglabor.mapper.UserMapper;
 import com.example.bookinglabor.model.Role;
 import com.example.bookinglabor.model.UserAccount;
 import com.example.bookinglabor.model.sessionObject.AuthObject;
@@ -37,6 +38,14 @@ public class UserWork implements UserService {
     private final RoleRepo roleRepo;
 
     PasswordEncoder passwordEncoder;
+
+    @Override
+    public List<UserAccount> getAllUsersApi() {
+        return userRepository
+                .findAll().stream()
+                .map(UserMapper::mapToUserApi)
+                .toList();
+    }
 
     @Override
     public void saveUser(UserDto userDto) {

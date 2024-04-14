@@ -13,6 +13,14 @@ public class CommentSkillMapper {
                 .build();
     }
 
+    public static CommentSkill mapToCommentSkillApi(CommentSkill commentSkill){
+
+        return CommentSkill.builder()
+                .id(commentSkill.getId())
+                .content(commentSkill.getContent())
+                .build();
+    }
+
 
 
 }

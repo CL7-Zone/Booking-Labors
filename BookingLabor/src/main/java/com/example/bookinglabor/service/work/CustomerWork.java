@@ -34,6 +34,16 @@ public class CustomerWork implements CustomerService {
     }
 
     @Override
+    public List<Customer> getAllCustomersApi() {
+        List<Customer>  customers = customerRepo.findAll();
+
+        return customers.stream()
+                .map(CustomerMapper::mapToCustomerApi)
+                .collect(Collectors
+                        .toList());
+    }
+
+    @Override
     public Customer findById(Long id) {
 
         Optional<Customer> customer = customerRepo.findById(id);

@@ -13,6 +13,8 @@ import java.util.List;
 
 public interface JobDetailService {
 
+    List<JobDetail> getAllJobDetailsApi();
+
     List<JobDetail> findAllJobDetails();
 
     Page<JobDetail> findJobDetailsByNameJob(String nameJob, Pageable pageable);

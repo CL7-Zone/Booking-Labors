@@ -15,11 +15,12 @@ public class CategoryJobMapper {
                 .categoryImage(category.getCategoryImage())
                 .createdOn(category.getCreatedOn())
                 .updatedOn(category.getUpdatedOn())
-                .jobs(category.getJobs()
-                .stream()
-                .map(JobMapper::mapToJob)
-                .collect(Collectors
-                .toList()))
+                .jobs(category.getJobs().stream()
+                .map(JobMapper::mapToJobApi)
+                .collect(Collectors.toList()))
+                .posts(category.getPosts().stream()
+                .map(PostMapper::mapToPostApi)
+                .collect(Collectors.toList()))
                 .build();
 
         if (categoryJob != null) {

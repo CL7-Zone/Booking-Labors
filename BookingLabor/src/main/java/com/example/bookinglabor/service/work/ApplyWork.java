@@ -48,6 +48,7 @@ public class ApplyWork implements ApplyService {
             .collect(Collectors.toList());
     }
 
+
     @Override
     public int countAppliesByPostId(Long postId) {
         return applyRepo.countAppliesByPostId(postId);
@@ -66,9 +67,14 @@ public class ApplyWork implements ApplyService {
                 .collect(Collectors.toList());
     }
 
+
     @Override
     public List<Apply> findAll(Sort sort) {
-        return null;
+
+        List<Apply> applies = applyRepo.findAll();
+        return applies.stream().map(
+                        ApplyMapper::mapToApply)
+                .collect(Collectors.toList());
     }
 
     @Override

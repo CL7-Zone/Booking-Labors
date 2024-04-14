@@ -10,6 +10,8 @@ public interface JobService {
 
     List<Job> findAllJobs();
 
+    List<Job> getAllJobsApi();
+
     List<Job> findJobsByNameJobContaining(String name_job);
 
     List<Double> findJobPriceDistinct();

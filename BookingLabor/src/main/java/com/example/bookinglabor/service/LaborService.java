@@ -10,6 +10,8 @@ public interface LaborService {
 
     List<Labor> findAllLabors();
 
+    List<Labor> getAllLaborApi();
+
     Labor findJobById(Long id);
 
     Labor findById(Long id);

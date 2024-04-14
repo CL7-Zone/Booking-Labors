@@ -34,6 +34,18 @@ public class CategoryJobWork implements CategoryJobService {
     }
 
     @Override
+    public List<CategoryJob> findAllCategoryJobsApi() {
+
+        List<CategoryJob> categoryJobs = categoryJobRepo.findAll();
+
+        return categoryJobs.stream()
+                .map(CategoryJobMapper::mapToCategoryJob)
+                .collect(Collectors
+                .toList());
+
+    }
+
+    @Override
     public void saveAllDataFromExcel(MultipartFile file) {
 
         if(UploadCategoryJob.isValidExcelFile(file)){

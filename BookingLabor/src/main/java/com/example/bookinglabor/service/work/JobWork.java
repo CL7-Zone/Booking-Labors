@@ -33,6 +33,16 @@ public class JobWork implements JobService {
     }
 
     @Override
+    public List<Job> getAllJobsApi() {
+        List<Job> jobs = jobRepo.findAll();
+
+        return jobs.stream()
+                .map(JobMapper::mapToJobApi)
+                .collect(Collectors
+                        .toList());
+    }
+
+    @Override
     public List<Job> findJobsByNameJobContaining(String name_job) {
 
         List<Job> jobs = jobRepo.findJobsByNameJobContaining(name_job);

@@ -13,11 +13,9 @@ export async function loginUser(login){
         const res = await api.post("/auth-login", login)
         if(res.status >= 200 && res.status < 300){
             return res.data;
-        }else{
-            return null;
         }
     }catch (error) {
-        console.log(error);
+        console.log("error: "+error);
         return null;
     }
 
@@ -26,6 +24,18 @@ export async function loginUser(login){
 export async function getHeaders() {
     try{
         const res = await api.get(`/header-api`);
+
+        return res.data;
+    }catch (error) {
+        throw error;
+    }
+}
+
+
+export async function getApi(url) {
+    try{
+        const res = await api.get(url,
+            {headers: getHeader()});
 
         return res.data;
     }catch (error) {
