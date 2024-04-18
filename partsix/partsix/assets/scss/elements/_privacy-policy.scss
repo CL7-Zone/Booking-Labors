@@ -1,0 +1,44 @@
+/* 
+    19. Privacy policy css 
+*/
+.privacy__policy--content{
+    margin-bottom: 2rem;
+    &:last-child{
+        margin-bottom: 0;
+    }
+    &__title{
+        font-size: 2rem;
+        line-height: 2.5rem;
+        margin-bottom: 1rem;
+        font-weight: 500;
+        @media only screen and (min-width: 768px){
+            font-size: 2.2rem;
+            line-height: 2.5rem;
+        }
+        @media only screen and (min-width: 1600px){
+            font-size: 2.5rem;
+            line-height: 2.8rem;
+            margin-bottom: 1.2rem;
+        }
+    }
+    &__subtitle{
+        font-size: 1.8rem;
+        line-height: 2.5rem;
+        margin-bottom: 0.8rem;
+        font-weight: 500;
+        @media only screen and (min-width: 1600px){
+            font-size: 2.2rem;
+            line-height: 2.5rem;
+            margin-bottom: 1rem;
+        }
+    }
+    &__desc{
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        line-height: 2.6rem;
+        @media only screen and (min-width: 1200px){
+            font-size: 1.6rem;
+            line-height: 2.8rem;
+        }
+    }
+}

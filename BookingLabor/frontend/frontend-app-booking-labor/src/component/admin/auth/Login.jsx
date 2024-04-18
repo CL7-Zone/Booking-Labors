@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from "react";
-import {loginUser} from "../../../api/apiFunction";
+import {loginUser, notify} from "../../../api/apiFunction";
 import {Link, useNavigate} from "react-router-dom";
 import Cookies from "js-cookie";
 import Header from "../../element/Header";
 import logo from '../../../logo.svg';
-
 import {jwtDecode} from "jwt-decode";
 import {post} from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import Logout from "./Logout";
+import {toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 const Login = ()=>{
 
     const [errorMessage, setErrorMessage] = useState("");
@@ -34,19 +36,17 @@ const Login = ()=>{
         const success = await loginUser(login);
 
         if(success){
-
+            console.log(success);
             dispatch({ type: 'SHOW' });
             await new Promise(resolve => setTimeout(resolve, 1000));
             dispatch({ type: 'HIDDEN' });
             Cookies.set("token", success.accessToken, { expires: Date.now() + 3000000, path: "/" });
             navigate("/");
+            window.location.reload();
         }else {
+            await notify("Login failed!!!", 3000);
             console.log("Invalid username or password!");
-            setErrorMessage("Invalid username or password!");
         }
-        setTimeout(()=>{
-            setErrorMessage("");
-        }, 3000)
     }
 
     return (
@@ -96,19 +96,19 @@ const Login = ()=>{
                                 <label htmlFor="password">Password</label>
                             </div>
                             <div className="d-flex align-items-center justify-content-between mb-4">
-                                <div className="form-check">
-                                    <input
-                                        type="checkbox"
-                                        className="form-check-input"
-                                        id="exampleCheck1"
-                                    />
-                                    <label className="form-check-label" htmlFor="exampleCheck1">
-                                        Check me out
-                                    </label>
-                                </div>
-                                <a href="">Forgot Password</a>
+                                {/*<div>*/}
+
+                                {/*    <Link className="form-check-label" htmlFor="exampleCheck1">*/}
+                                {/*        {login.email}*/}
+                                {/*    </Link>*/}
+                                {/*</div>*/}
+                                {/*<div >*/}
+                                {/*    <Link to="/login" className="form-check-label">*/}
+                                {/*        {login.password}*/}
+                                {/*    </Link>*/}
+                                {/*</div>*/}
                             </div>
-                            <button  type="submit" className="btn btn-dark py-3 w-100 mb-4" style={{color:"white"}}>
+                            <button type="submit" className="btn btn-dark py-3 w-100 mb-4" style={{color:"white"}}>
                                 Sign In {show && (<img className="App-logo-load" width={"20%"} src={logo} alt=""/>)}
                             </button>
                         </form>
@@ -116,9 +116,7 @@ const Login = ()=>{
                         <p className="text-center mb-0">
                             Don't have an Account? <a href="">Sign Up</a>
                         </p>
-                        <div className="mt-3">
-                            {errorMessage && <p className="text-danger">{errorMessage}</p>}
-                        </div>
+
                     </div>
                 </div>
             </div>

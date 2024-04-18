@@ -1,0 +1,681 @@
+/* 
+    4. Banner css 
+*/
+.banner__items{
+    border-radius: 5px;
+    
+}
+.banner__thumbnail{
+    overflow: hidden;
+    width: 100%;
+    border-radius: 5px;
+    &--img{
+        width: 100%;
+        border-radius: 5px;
+    }
+    &:hover{
+        & .banner__thumbnail--img{
+            transform: scale(1.03);
+        }
+    } 
+}
+.banner__content{
+    position: absolute;
+    top: 50%;
+    left: 3rem;
+    transform: translatey(-50%);
+    cursor: pointer;
+    display: inline-block;
+    @media only screen and (min-width: 992px) {
+        left: 5rem;
+    }
+    &.right{
+        right: 3rem;
+        left: auto;
+        text-align: center;
+        @media only screen and (min-width: 480px) {
+            right: 5rem;
+        }
+    }
+    &.style__right{
+        right: 3rem;
+        left: auto;
+    }
+    &.style__top{
+        top: 3rem;
+        transform: inherit;
+        left: 2.5rem;
+    }
+    &--subtitle{
+        font-family: var(--inter-fonts);
+        font-weight: 600;
+        margin-bottom: 0.4rem;
+        @media only screen and (max-width: 991px) {
+            line-height: 2rem;
+        }
+    }
+    &--title{
+        color: var(--text-white-color);
+        margin-bottom: 1rem;
+        @media only screen and (min-width: 992px) {
+            margin-bottom: 10px;
+        }
+        @media only screen and (min-width: 1200px) {
+            margin-bottom: 12px;
+        }
+        @media only screen and (max-width: 991px) {
+            line-height: 2.4rem;
+            font-size: 1.7rem;
+        }
+        &__inner{
+            color: var(--secondary-color);
+        }
+    }
+    &--price{
+        font-size: 1.6rem;
+        line-height: 2rem;
+        font-weight: 600;
+        color: var(--text-white-color);
+        font-family: var(--inter-fonts);
+        display: block;
+        @media only screen and (min-width: 992px) {
+            font-size: 1.8rem;
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 2rem;
+            line-height: 2.2rem;
+        }
+    }
+    &--btn{
+        font-weight: 700;
+        color: var(--text-white-color);
+        margin-top: 0.5rem;
+        font-size: 1.4rem;
+        @media only screen and (min-width: 1200px) {
+            margin-top: 1rem;
+            font-size: 1.5rem;
+        }
+        & svg{
+            margin-left: 0.5rem;
+        }
+        &:hover{
+            color: var(--secondary-color);
+        }
+    }
+}
+.banner__badge{
+    position: absolute;
+    background: var(--secondary-color);
+    transform: translatey(-50%);
+    top: 50%;
+    right: 2rem;
+    width: 6rem;
+    height: 6rem;
+    padding: 7px;
+    font-size: 1.4rem;
+    line-height: 1.8rem;
+    font-family: var(--inter-fonts);
+    font-weight: 500;
+    color: var(--text-white-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    @media only screen and (min-width: 992px) {
+        right: 5rem;
+    }
+    @media only screen and (max-width: 479px) {
+        display: none;
+    }
+    &::before{
+        position: absolute;
+        content: "";
+        border: 1px dashed var(--body-background-color);
+        top: 5px;
+        left: 5px;
+        right: 5px;
+        bottom: 5px;
+        border-radius: 50%;
+        opacity: 0.6;
+    }
+    &--style2{
+        -webkit-clip-path: polygon(0 19%, 97% 19%, 85% 49%, 100% 82%, 0 82%, 14% 51%);
+        clip-path: polygon(0 19%, 97% 19%, 85% 49%, 100% 82%, 0 82%, 14% 51%);
+        background: var(--secondary-color);
+        color: var(--text-white-color);
+        font-size: 1.1rem;
+        width: 70px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        margin-bottom: 0.6rem;
+    }
+
+
+}
+.banner__sidebar{
+    @media only screen and (max-width: 767px) {
+        margin-top: 3rem;
+    }
+}
+.banner__sidebar--badge{
+    transform: inherit;
+    bottom: -8px;
+    right: -80px;
+    top: auto;
+}
+
+.banner__max--height{
+    @media only screen and (min-width: 768px) and (max-width: 991px){
+        height: 160px;
+        object-fit: cover;
+    }
+    @media only screen and (max-width: 479px) {
+        height: 150px;
+        object-fit: cover;
+    }
+}
+
+/*
+    discount banner css here
+*/
+.discount__banner--thumbnail{
+    &__img{
+        height: 5.3rem;
+        object-fit: cover;
+    }
+
+}
+
+.discount__banner--text{
+    font-size: 1.6rem;
+    font-weight: 600;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    transform: translatey(-50%);
+    @media only screen and (min-width: 992px) {
+        font-size: 1.8rem;
+    }
+    @media only screen and (max-width: 479px) {
+        font-size: 1.5rem;
+        line-height: 2.8rem;
+    }
+}
+
+
+/*
+    home two banner css here
+*/
+.banner__content--style{
+    right: 5rem;
+    left: auto;
+    & .banner__content--subtitle{
+        font-size: 1.2rem;
+        line-height: 2rem;
+        text-transform: uppercase;
+    }
+    & .banner__content--btn{
+        font-weight: 600;
+        line-height: 2rem;
+        color: var(--secondary-color);
+        text-decoration: underline;
+    }
+}
+.discount__banner--content{
+    position: absolute;
+    left: 2rem;
+    top: 50%;
+    transform: translatey(-50%);
+    @media only screen and (min-width: 576px) {
+        left: 4rem;
+    }
+    @media only screen and (min-width: 992px) {
+        left: 7rem;
+    }
+    &__subtitle{
+        font-size: 1.4rem;
+        line-height: 2rem;
+        font-family: var(--inter-fonts);
+        text-transform: uppercase;
+        color: var(--body-text-color);
+        margin-bottom: 1rem;
+        @media only screen and (min-width: 768px) {
+            font-size: 1.6rem;
+            line-height: 2.4rem;
+            margin-bottom: 1.3rem;
+        }
+        @media only screen and (min-width: 992px) {
+            margin-bottom: 1.5rem;
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 2rem;
+            line-height: 2.4rem;
+            margin-bottom: 1.8rem;
+        }
+    }
+    &__title{
+        font-size: 2rem;
+        line-height: 3rem;
+        text-transform: uppercase;
+        margin-bottom: 1.8rem;
+        @media only screen and (min-width: 768px) {
+            font-size: 2.5rem;
+            line-height: 3rem;
+            margin-bottom: 2rem;
+        }
+        @media only screen and (min-width: 768px) {
+            font-size: 3rem;
+            line-height: 3.5rem;
+        }
+        @media only screen and (min-width: 992px) {
+            font-size: 3.5rem;
+            line-height: 4rem;
+            margin-bottom: 2.5rem;
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 4.5rem;
+            line-height: 5rem;
+            margin-bottom: 3rem;
+        }
+    }
+}
+.banner__sidebar.style2{
+    @media only screen and (max-width: 991px) {
+        margin-top: 3rem;
+    }
+}
+
+.discount__banner--img__height{
+    @media only screen and (max-width: 575px) {
+       height: 200px;
+       object-fit: cover;
+    }
+}
+
+
+/*
+    home 3 banner css
+*/
+.banner__content--style3{
+    left: 2.5rem;
+    @media only screen and (min-width: 576px) {
+        left: 3.2rem;
+    }
+    &__subtitle{
+        font-size: 1.1rem;
+        line-height: 1.8rem;
+        font-family: var(--inter-fonts);
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+        @media only screen and (min-width: 576px) {
+            font-size: 1.2rem;
+        }
+    }
+    &__title{
+        font-family: var(--rubik-fonts);
+        font-size: 1.8rem;
+        line-height: 2rem;
+        margin-bottom: 1rem;
+        @media only screen and (min-width: 576px) {
+            font-size: 2rem;
+            line-height: 2.2rem;
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 2.3rem;
+            line-height: 2.5rem;
+            margin-bottom: 1.2rem;
+        }
+    }
+    &__btn{
+        font-size: 1.3rem;
+        line-height: 2rem;
+        font-weight: 600;
+        font-family: var(--inter-fonts);
+        color: var(--text-white-color);
+        border-bottom: 1px solid var(--text-white-color);
+        @media only screen and (min-width: 576px) {
+            font-size: 1.4rem;
+        }
+
+    }
+}
+
+/*
+    video banner css here
+*/
+.banner__video--inner{
+    @media only screen and (max-width: 991px) {
+        padding-right: 170px;
+    }
+    @media only screen and (max-width: 767px) {
+        padding-right: 0;
+    }
+}
+
+.image__width--text{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translatey(-50%);
+    background: linear-gradient(to right, #FF5E03, #ED1D24);
+    padding: 3.5rem 2.5rem;
+    border-radius: 5px;
+    @media only screen and (min-width: 768px) {
+        width: 400px;
+        padding: 3rem 2.5rem;
+    }
+    @media only screen and (min-width: 992px) {
+        width: 500px;
+        padding: 5rem 3.5rem;
+    }
+    @media only screen and (max-width: 767px) {
+        position: inherit;
+        width: 100%;
+        top: inherit;
+        transform: inherit;
+        margin-top: 3rem;
+    }
+    &__title{
+        font-family: var(--rubik-fonts);
+        color: var(--text-white-color);
+        font-weight: 500;
+        margin-bottom: 1.5rem;
+        @media only screen and (min-width: 1200px) {
+            font-size: 3.5rem;
+            line-height: 4.5rem;
+            margin-bottom: 2rem;
+        }
+    }
+    &__desc{
+        font-size: 1.4rem;
+        color: var(--text-white-color);
+        margin-bottom: 1.5rem;
+        @media only screen and (min-width: 1200px) {
+            margin-bottom: 1.8rem;
+        } 
+    }
+    &__btn{
+        float: right;
+        font-weight: 700;
+        color: var(--text-white-color);
+        &:hover{
+            color: var(--primary-color);
+        }
+    }
+}
+
+.banner__video--play{
+    position: absolute;
+    bottom: 3rem;
+    left: 3rem;
+    color: var(--text-white-color);
+    font-size: 1.4rem;
+    font-weight: 600;
+    & svg{
+        margin-right: 4px;
+    }
+}
+
+
+/*
+    home 4 banner css
+*/
+.banner__content--style4{
+    position: absolute;
+    top: 50%;
+    left: 3rem;
+    transform: translatey(-50%);
+    &.right{
+        right: 4rem;
+        left: auto;
+    }
+    &__subtitle{
+        font-weight: 600;
+        color: var(--text-white-color);
+        text-transform: uppercase;
+        font-size: 1.3rem;
+        line-height: 2rem;
+        margin-bottom: 1rem;
+        @media only screen and (min-width: 576px) {
+            font-size: 1.4rem;
+        }
+        @media only screen and (min-width: 992px) {
+            font-size: 1.5rem;
+            line-height: 2.2rem;
+            margin-bottom: 1.2rem;
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+        }
+        @media only screen and (min-width: 1366px) {
+            font-size: 1.8rem;
+            line-height: 2.5rem;
+        }
+        & span{
+            color: var(--secondary-color);
+        }
+    }
+    &__title{
+        font-size: 1.8rem;
+        line-height: 2.2rem;
+        font-family: var(--rubik-fonts);
+        color: var(--text-white-color);
+        margin-bottom: 1.2rem;
+        @media only screen and (min-width: 576px) {
+            font-size: 2.2rem;
+            line-height: 2.4rem;
+            margin-bottom: 1.5rem;
+        }
+        @media only screen and (min-width: 992px) {
+            font-size: 2.8rem;
+            line-height: 3rem;
+            margin-bottom: 1.8rem;
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 3.2rem;
+            line-height: 3.5rem;
+            margin-bottom: 2rem;
+        }
+        @media only screen and (min-width: 1366px) {
+            font-size: 4rem;
+            line-height: 4rem;
+        }
+        & span{
+            color: var(--secondary-color);
+        }
+        &.font__style{
+            font-size: 1.6rem;
+            line-height: 2rem;
+            @media only screen and (min-width: 576px) {
+                font-size: 1.8rem;
+            }
+            @media only screen and (min-width: 992px) {
+                font-size: 2.2rem;
+                line-height: 2.2rem;
+            }
+            @media only screen and (min-width: 1200px) {
+                font-size: 2.5rem;
+                line-height: 2.5rem;
+            }
+            @media only screen and (min-width: 1366px) {
+                font-size: 3rem;
+                line-height: 3rem;
+            }
+        }
+    }
+    &__title2{
+        color: var(--text-white-color);
+        font-weight: 600;
+        font-size: 1.4rem;
+        line-height: 2rem;
+        margin-bottom: 1.5rem;
+        @media only screen and (min-width: 576px) {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        @media only screen and (min-width: 992px) {
+            font-size: 1.8rem;
+            line-height: 2rem;
+            margin-bottom: 2.5rem;
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 2rem;
+            line-height: 2rem;
+            margin-bottom: 3rem;
+        }
+        @media only screen and (min-width: 1366px) {
+            font-size: 2.5rem;
+            line-height: 2.5rem;
+            margin-bottom: 4rem;
+        }
+        &.font__style2{
+            font-size: 1.3rem;
+            line-height: 2rem;
+            margin-bottom: 1.5rem;
+            @media only screen and (min-width: 576px) {
+                font-size: 1.4rem;
+            }
+            @media only screen and (min-width: 1200px) {
+                font-size: 1.6rem;
+                margin-bottom: 2.2rem;
+            }
+            @media only screen and (min-width: 1200px) {
+                font-size: 1.8rem;
+                line-height: 2.2rem;
+                margin-bottom: 2.5rem;
+            }
+            @media only screen and (min-width: 1366px) {
+                font-size: 2rem;
+                line-height: 2.5rem;
+                margin-bottom: 3rem;
+            }
+            @media only screen and (max-width: 479px) {
+                display: none;
+            }
+        }
+    }
+}
+.banner__max--height4{
+    @media only screen and (min-width: 992px) and (max-width: 1199px) {
+        height: 450px;
+        object-fit: cover;
+    }
+    @media only screen and (max-width: 479px) {
+        height: 210px;
+        object-fit: cover;
+    }
+}
+.banner__content--style4__badge{
+    font-size: 1.3rem;
+    line-height: 2rem;
+    background: var(--secondary-color);
+    color: var(--text-white-color);
+    font-family: var(--inter-fonts);
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 1.5rem;
+    @media only screen and (min-width: 992px) {
+        font-size: 1.4rem;
+        line-height: 2.2rem;
+        padding: 3px 8px;
+        margin-bottom: 2rem;
+    }
+    @media only screen and (max-width: 479px) {
+        display: none;
+    }
+}
+.banner__price--style4{
+    margin-bottom: 1.2rem;
+    @media only screen and (min-width: 480px) {
+        margin-bottom: 1.5rem;
+    }
+    @media only screen and (min-width: 992px) {
+        margin-bottom: 2rem;
+    }
+    @media only screen and (min-width: 1200px) {
+        margin-bottom: 2rem;
+    }
+
+}
+.banner__content--style4__btn{
+    font-size: 1.4rem;
+    line-height: 3.8rem;
+    height: 3.8rem;
+    padding: 0 2.2rem;
+    @media only screen and (max-width: 767px) {
+        line-height: 3.5rem;
+        height: 3.5rem;
+        padding: 0 1.8rem;
+    }
+
+}
+
+/*
+    home 5 banner css
+*/
+.banner__sidebar.style5{
+    @media only screen and (max-width: 991px) {
+        display: flex;
+        gap: 3rem;
+        margin-top: 3rem;
+    }
+    @media only screen and (max-width: 479px) {
+        flex-wrap: wrap;
+    }
+    & .banner__items.mb-30{
+        @media only screen and (max-width: 991px) {
+            margin-bottom: 0;
+        }
+    }
+    & .banner__items{
+        @media only screen and (max-width: 479px) {
+            width: 100%;
+        }
+    }
+}
+.banner__content--style5{
+    position: absolute;
+    left: 2.5rem;
+    top: 2rem;
+    @media only screen and (min-width: 1200px) {
+        top: 3rem;
+    }
+    &.right{
+        right: 2.5rem;
+        left: auto;
+    }
+    &__subtitle{
+        font-size: 1.4rem;
+        line-height: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    &__title{
+        font-family: var(--rubik-fonts);
+        font-weight: 600;
+    }
+    &__btn{
+        color: var(--text-white-color);
+        font-size: 1.3rem;
+        text-transform: uppercase;
+        line-height: 1.8rem;
+        border-bottom: 1px solid var(--body-background-color);
+        margin-top: 1rem;
+        &:hover{
+            color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 1.4rem;
+            margin-top: 1.5rem;
+        }
+    }
+}
+
+// End banner css here

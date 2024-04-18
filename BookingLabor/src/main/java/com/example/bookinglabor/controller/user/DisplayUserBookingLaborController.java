@@ -99,7 +99,7 @@ public class DisplayUserBookingLaborController implements HttpSessionListener {
         if(message.isEmpty()) message = "Nothing";
         if(checkin.isEmpty() || checkout.isEmpty() ||
            book_address.isEmpty() || city_name.isEmpty()){
-            notify = "Invalid!";
+            notify = "KHÔNG HỢP LỆ!";
             res.addFlashAttribute("invalid", notify);
             return "redirect:/your-booking-cart";
         }
@@ -114,24 +114,24 @@ public class DisplayUserBookingLaborController implements HttpSessionListener {
         System.out.println("Checkout" + job_detail_id);
 
         if(total_price < 1.0){
-            notify = "Choose our labor, Please!";
+            notify = "VUI LÒNG CHỌN ỨNG VIÊN!";
             res.addFlashAttribute("invalid",notify);
             return "redirect:/your-booking-cart";
         }
         try{
             if(!bookingService.saveData(booking, session, customer_id)){
-                notify = "You are not allowed book " + checkin + " from "+ checkout + ", Please select new check-in and check-out dates.";
-                res.addFlashAttribute("invalid", notify);
+                notify = "Bạn không được phép tuyển từ " + checkin + " đến "+ checkout + ", Vui lòng chọn thời gian làm việc mới cho ứng viên!";
+                res.addFlashAttribute("invalid!", notify);
                 return "redirect:/your-booking-cart";
             }
             notify = "Book successfully";
             session.removeAttribute("bookingObjects");
-            System.out.println("Book successfully");
+            System.out.println("TUYỂN THÀNH CÔNG");
             res.addFlashAttribute("success",notify);
 
             return "redirect:/your-booking-cart";
         }catch (Exception exception){
-            notify = "Book failed!!!";
+            notify = "TUYỂN THẤT BẠI!!!";
             System.out.println("Book failed!!!\n Error: " + exception.getMessage());
             res.addFlashAttribute("failed", notify);
 //            throw exception;
@@ -172,7 +172,7 @@ public class DisplayUserBookingLaborController implements HttpSessionListener {
         System.out.println("COUNT: "+bookingService.invalidCancelBooking(current_cancel_time, id));
 
         if (bookingService.invalidCancelBooking(current_cancel_time, id) > 0) {
-            res.addFlashAttribute("notAllowed","Overed the limited time cancel, you are not allowed to cancel!");
+            res.addFlashAttribute("notAllowed","Quá thời hạn hủy, bạn không được phép hủy!");
             return "redirect:/your-booking";
         }
         try{

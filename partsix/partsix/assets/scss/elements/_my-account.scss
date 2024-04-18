@@ -1,0 +1,226 @@
+/* 
+    24. My account page css 
+*/
+
+.my__account--section{
+    &__inner{
+        background: var(--body-background-color);
+        box-shadow: 0 2px 22px rgba(0, 0, 0, 0.16);
+        padding: 3rem 2rem;
+        @media only screen and (min-width: 1199px) {
+            padding: 5rem 4rem;
+        }
+        @media only screen and (max-width: 991px) {
+            flex-direction: column;
+        }
+    }
+}
+
+.account__left--sidebar {
+    border-right: 1px solid var(--border-color);
+    padding-right: 3rem;
+    margin-right: 3rem;
+    width: 18rem;
+    @media only screen and (min-width: 1199px) {
+        padding-right: 5rem;
+        margin-right: 5rem;
+        width: 23rem;
+    }
+    @media only screen and (max-width: 991px) {
+        width: 100%;
+        padding-right: 0;
+        margin-right: 0;
+        border-right: 0;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 2.5rem;
+        margin-bottom: 2.5rem;
+    }
+}
+.account__wrapper{
+    width: calc(100% - 18rem);
+    @media only screen and (min-width: 1199px) {
+        width: calc(100% - 23rem);
+    }
+    @media only screen and (max-width: 991px) {
+        width: 100%;
+    }
+}
+
+.account__menu{
+    @media only screen and (max-width: 991px) {
+        width: 250px;
+        margin-right: 3rem;
+    }
+    @media only screen and (max-width: 479px) {
+        margin-right: 0;
+    }
+    &--list{
+        font-size: 1.5rem;
+        line-height: 2.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        margin-bottom: 1.5rem;
+        &:last-child{
+            margin-bottom: 0;
+        }
+        &:hover{
+            color: var(--secondary-color);
+        }
+        &.active{
+            & a{
+                color: var(--secondary-color);
+            }
+        }
+        @media only screen and (min-width: 992px) {
+            font-size: 1.6rem;
+        }
+    }
+}
+.account__details{
+    &.two{
+        padding-top: 0;
+    }
+    @media only screen and (min-width: 992px) {
+        padding-top: 3rem;
+    }
+    @media only screen and (max-width: 479px) {
+        padding-top: 3rem;
+    }
+    &--title{
+        margin-bottom: 1rem;
+    }
+    &--desc{
+        color: var(--foreground-sub-color);
+        line-height: 3rem;
+        margin-bottom: 2rem;
+        font-size: 1.5rem;
+    }
+    &--link{
+        color: var(--secondary-color);
+        border-bottom: 1px solid var(--secondary-color);
+        font-size: 1.5rem;
+        &:hover{
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+    }
+}
+
+.new__address--btn{
+    padding: 0 2.5rem;
+    @media only screen and (min-width: 992px) {
+        font-size: 1.5rem;
+    }
+}
+
+.account__details--footer{
+    margin-top: 3rem;
+    &__btn{
+        background: var(--body-background-color);
+        border: 1px solid var( --primary-color);
+        padding: 0 2.5rem;
+        height: 4.5rem;
+        line-height: 4.1rem;
+        border-radius: 2.5rem;
+        margin-right: 1rem;
+        font-size: 1.5rem;
+        &:last-child{
+            margin-right: 0;
+        }
+        &:hover{
+            color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+    }
+}
+
+.account__welcome--text{
+    font-size: 1.6rem;
+    margin-bottom: 2rem;
+    @media only screen and (min-width: 992px) {
+        font-size: 1.8rem;
+        margin-bottom: 3rem;
+    }
+}
+.account__content{
+    &--title{
+        font-weight: 600;
+    }
+}
+
+.account__table{
+    width: 100%;
+    border: 1px solid var(--border-color);
+    border-spacing: 0;
+    border-bottom: 0;
+    
+    @media only screen and (max-width: 479px) {
+        border: 0;
+    }
+    &--header{
+        @media only screen and (max-width: 767px) {
+            display: none;
+        }
+        &__child{
+            &--items{
+                text-align: left;
+                border-bottom: 1px solid var(--border-color);
+                padding: 1.7rem 1.3rem;
+                font-size: 1.5rem;
+                &:last-child{
+                    text-align: right;
+                }
+                @media only screen and (min-width: 1200px) {
+                    font-size: 1.6rem;
+                    padding: 1.7rem 1.5rem;
+                }
+            }
+        }
+    }
+    &--body{
+        &.mobile__none{
+            @media only screen and (max-width: 767px) {
+                display: none;
+            }
+        }
+        &.mobile__block{
+            display: none;
+            @media only screen and (max-width: 767px) {
+                display: block;
+            }
+        }
+        &__child{
+            @media only screen and (max-width: 767px) {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 2rem;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 2rem;
+                &:last-child{
+                    margin-bottom: 0;
+                }
+            }
+
+            &--items{
+                border-bottom: 1px solid var(--border-color);
+                padding: 1.7rem 2rem;
+                color: var(--foreground-sub-color);
+                &:last-child{
+                    text-align: right;
+                }
+                @media only screen and (max-width: 767px) {
+                    padding: 0.5rem 2rem;
+                    display: flex;
+                    justify-content: space-between;
+                    border: 0;
+                }
+                @media only screen and (max-width: 479px) {
+                    padding: 0.5rem 0;
+                }
+            }
+        }
+    }
+}
+
+

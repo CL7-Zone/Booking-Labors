@@ -9,8 +9,6 @@ import com.example.bookinglabor.model.sessionObject.AuthObject;
 import com.example.bookinglabor.model.sessionObject.UserObject;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,15 +31,18 @@ public interface UserService {
 
     void updateUserRole(Role role);
 
+    public void updateUser(List<UserObject> userObject ,HttpSession session);
+
     void createUserRoleCustomer(Role role);
     void createUserRoleLabor(Role role);
 
-    void saveDataToSessionStore(List<UserObject> userObject, UserDto user, HttpServletRequest request, HttpSession session);
+    void saveDataToSessionStore(List<UserObject> userObject, UserDto user,
+                                HttpServletRequest request, HttpSession session);
 
     void saveDataToSessionStore(HttpServletRequest request, AuthResponseDto auth);
 
     void saveDataToSessionStore(List<AuthObject> authObject, UserDto userDto
-        ,HttpServletRequest request, HttpSession session, String NONE);
+    ,HttpServletRequest request, HttpSession session, String NONE);
 
 
     Collection<? extends GrantedAuthority> getUpdatedAuthorities(Authentication authentication);

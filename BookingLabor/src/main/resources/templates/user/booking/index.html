@@ -149,6 +149,10 @@
                                     <input readonly th:value="${booking.jobDetail.job.nameJob}" name="nameJob" id="nameJob" type="text" class="form-control"   >
                                 </div>
                                 <div class="mb-3">
+                                    <label for="phone_number" class="form-label">EMAIL CỦA NGƯỜI LAO ĐỘNG</label>
+                                    <input readonly th:value="${booking.jobDetail.labor.userAccount.email}" name="laborEmail" id="laborEmail" type="text" class="form-control"   >
+                                </div>
+                                <div class="mb-3">
                                     <label for="phone_number" class="form-label">SỐ ĐIỆN THOẠI CỦA NGƯỜI LAO ĐỘNG</label>
                                     <input readonly th:value="${booking.jobDetail.labor.phone_number}" name="phone_number" id="phone_number" type="text" class="form-control"   >
                                 </div>

@@ -20,8 +20,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.text.DecimalFormat;
+import java.util.Map;
 
 @Controller
 @AllArgsConstructor
@@ -87,25 +89,27 @@ public class DisplayUserBookingCartController {
         List<BookingObject> bookingObjects = (List<BookingObject>) request.getSession().getAttribute("bookingObjects");
         JobDetail jobDetail = jobDetailService.findById(id);
         long user_id = userService.findByEmail(SecurityUtil.getSessionUser()).getId();
+        Map<String, String> notify = new HashMap<>();
+
         try{
             long labor_id = laborService.findByUserId(user_id).getId();
             if(labor_id != 0){
                 if(labor_id == jobDetail.getLabor().getId()){
-                    res.addFlashAttribute("failed","This is your job, therefore you are not allowed to book!!!");
+                    res.addFlashAttribute("failed", "Đây là công việc của bạn, do đó bạn không được phép chọn!!!");
                     return "redirect:/your-booking-cart";
                 }
             }
         }catch (Exception ignored){}
 
         if(jobDetail!= null){
-            if(bookingService.saveDataToSessionStore(bookingObjects, request, session, jobDetail)){
+            if(bookingService.saveDataToSessionStore(bookingObjects, request, session, jobDetail, notify)){
                 System.out.println("Saved  successfully");
-                res.addFlashAttribute("success","Saved successfully");
+                res.addFlashAttribute("success","LƯU THÀNH CÔNG");
                 return "redirect:/your-booking-cart";
             }
         }
         System.out.println("Saved failed!!!");
-        res.addFlashAttribute("failed","Saved failed!!!");
+        res.addFlashAttribute("failed",notify.get("message"));
         return "redirect:/your-booking-cart";
     }
 
@@ -124,10 +128,10 @@ public class DisplayUserBookingCartController {
                 if(bookingObjects.isEmpty()){
                     session.removeAttribute("bookingObjects");
                 }
-                res.addFlashAttribute("deleteSuccess", "Delete item " + (index+1) + " successfully");
+                res.addFlashAttribute("deleteSuccess", "XÓA MỤC " + (index+1) + " THÀNH CÔNG");
             }
         }catch (Exception exception){
-            res.addFlashAttribute("deleteFailed", "Delete failed!!!");
+            res.addFlashAttribute("deleteFailed", "XÓA THẤT BẠI!!!");
         }
         return "redirect:/your-booking-cart";
     }

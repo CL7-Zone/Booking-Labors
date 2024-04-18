@@ -12,6 +12,8 @@ import Error from "./component/admin/404";
 import Booking from "./component/admin/booking/Booking";
 import Header from "./component/element/Header";
 import Footer from "./component/element/Footer";
+import {toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
@@ -27,7 +29,6 @@ function App() {
                 document.cookie.split(";").forEach(function(c) {
                     document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
                 });
-                console.log("ERROR: ",e);
             }
         }
         fetchUser().then(r => r);
@@ -43,6 +44,7 @@ function App() {
               <Route path="/admin/profile" element={<Profile/>}/>
               <Route path="/login" element={<Login/>}></Route>
           </Routes>
+          <ToastContainer />
       </div>
   );
 }

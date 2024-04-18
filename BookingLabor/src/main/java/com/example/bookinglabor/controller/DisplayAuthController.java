@@ -3,19 +3,15 @@ package com.example.bookinglabor.controller;
 import com.example.bookinglabor.controller.component.EnumComponent;
 import com.example.bookinglabor.dto.UserDto;
 import com.example.bookinglabor.model.UserAccount;
-import com.example.bookinglabor.model.sessionObject.JobDetailObject;
 import com.example.bookinglabor.model.sessionObject.UserObject;
 import com.example.bookinglabor.repo.RoleRepo;
 import com.example.bookinglabor.repo.UserRepo;
 import com.example.bookinglabor.security.JWTGeneratorToken;
 import com.example.bookinglabor.service.SendMailService;
 import com.example.bookinglabor.service.UserService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -29,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 public class DisplayAuthController {
@@ -76,6 +71,77 @@ public class DisplayAuthController {
         return "/auth/verify";
     }
 
+    @GetMapping("/forgot-password")
+    public String forgot(Model model, HttpSession session){
+
+        List<UserObject> forgotPass = (List<UserObject>) session.getAttribute("userObject");
+
+        model.addAttribute("forgotPass",forgotPass);
+        return "/auth/forgot";
+    }
+
+    @PostMapping("/send/token")
+    public String send(@Valid @ModelAttribute("user") UserDto user,
+                         HttpServletRequest request, HttpSession session,
+                         RedirectAttributes flashMessage){
+        @SuppressWarnings("unchecked")
+        List<UserObject> userObject = (List<UserObject>) request.getSession().getAttribute("userObject");
+
+        try{
+            UserAccount userAccount = userService.findByEmailAndProvider(user.getEmail() , EnumComponent.SIMPLE);
+            if(userAccount == null){
+                flashMessage.addFlashAttribute("failed",
+    "KHÔNG CÓ TÀI KHOẢN NÀY!");
+                return "redirect:/forgot-password";
+            }
+            userService.saveDataToSessionStore(userObject, user, request, session);
+            List<UserObject> forgotSend = (List<UserObject>) session.getAttribute("userObject");
+            for (UserObject forgotPass : forgotSend){
+                sendMailService.setMailSender(forgotPass.getEmail(),
+         "XÁC MINH TÀI KHOẢN QUÊN MẬT KHẨU",
+           "Xin chào "+ forgotPass.getEmail()+ "," +
+                "\n\nMã xác minh quên mật khẩu tài khoản của bạn là: " +
+                forgotPass.getToken() +
+                "\n\nNếu có bất kỳ thắc mắc nào vui lòng liên hệ với chúng tôi." +
+                "\n\nBest regards,\nBookingLabor Website");
+                break;
+            }
+            flashMessage.addFlashAttribute("success",
+ "CHÚNG TÔI ĐÃ GỬI MÃ XÁC MINH VÀO GMAIL CỦA BẠN HÃY\n" +
+            "KIỂM TRA GMAIL CỦA BẠN VÀ NHẬP VÀO MÃ XÁC MINH!");
+        }catch (Exception exception){
+            flashMessage.addFlashAttribute("failed",exception);
+        }
+        return "redirect:/forgot-password";
+    }
+
+
+    @PostMapping("/update/password")
+    public String update(HttpSession session,
+                         RedirectAttributes flashMessage,
+                         @RequestParam("verify_token") String verify_token){
+        try{
+            if(verify_token != null){
+                List<UserObject> forgotSend = (List<UserObject>) session.getAttribute("userObject");
+                if(!userService.checkVerifyToken(forgotSend,verify_token)){
+                    flashMessage.addFlashAttribute("failed","SAI MÃ XÁC MINH!");
+                    return "redirect:/forgot-password";
+                }
+                userService.updateUser(forgotSend ,session);
+                session.removeAttribute("userObject");
+                flashMessage.addFlashAttribute("success", "CẬP NHẬT MẬT KHẨU THÀNH CÔNG");
+                return "redirect:/forgot-password";
+            }
+            flashMessage.addFlashAttribute("failed", "VUI LÒNG NHẬP VÀO MÃ XÁC MINH!");
+
+        }catch (Exception exception){
+            flashMessage.addFlashAttribute("failed",exception);
+
+            throw exception;
+        }
+        return "redirect:/forgot-password";
+    }
+
     @PostMapping("/register/save")
     public String register(@Valid @ModelAttribute("user") UserDto user,
                            BindingResult res, Model model,
@@ -111,8 +177,8 @@ public class DisplayAuthController {
                 break;
             }
             flashMessage.addFlashAttribute("verify",
-"CHÚNG TÔI ĐÃ GỬI MÃ XÁC MÌNH VÀO GMAIL CỦA BẠN HÃY\n" +
-            "KIỂM TRA GMAIL CỦA BẠN VÀ NHẬP VÀO MÃ XÁC MÌNH!");
+"CHÚNG TÔI ĐÃ GỬI MÃ XÁC MINH VÀO GMAIL CỦA BẠN HÃY\n" +
+            "KIỂM TRA GMAIL CỦA BẠN VÀ NHẬP VÀO MÃ XÁC MINH!");
             return "redirect:/verify";
 
         }catch (Exception exception){

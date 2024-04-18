@@ -114,7 +114,7 @@
                                     <div th:each="jobDetail : ${jobDetails}" class="col-md-4">
                                         <div class="job-item">
                                             <div class="job-info">
-                                                <a th:href="${'labors/job-detail/' + jobDetail.id}" class="d-flex">
+                                                <a th:href="@{'labors/job-detail/' + ${jobDetail.id}}" class="d-flex">
                                                     <div class="job-image">
                                                         <img width="90%" th:src="${jobDetail.job.imageJob}" alt="">
                                                     </div>

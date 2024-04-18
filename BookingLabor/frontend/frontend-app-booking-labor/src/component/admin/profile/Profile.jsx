@@ -10,7 +10,7 @@ import Sidebar from "../../element/Sidebar";
 import Booking from "../booking/Booking";
 import {Link} from "react-router-dom";
 import styles from "../../element/element.module.css";
-import NotFound from "../../element/NotFound";
+import Unauthorized from "../../element/Unauthorized";
 import { SetUser } from '../../../redux/action/SetUser';
 import User from "../user/User";
 import Statistical from "../../element/Statistical";
@@ -56,7 +56,7 @@ const Profile = () =>{
     }
     return (
         <div>
-            {Array.isArray(user) && user.length === 0 ? (<NotFound />) : (
+            {Array.isArray(user) && user.length === 0 ? (<Unauthorized />) : (
                 <>
                     <Sidebar/>
                     <div className="content">

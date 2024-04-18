@@ -7,7 +7,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Booking Manager By labor</title>
+
+
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .btn-save-job-detail{
+            width: 100%;
+            font-size: 20px;
+            padding: 15px;
+            text-align: center;
+        }
+        .main-button button {
+            font-size: 15px;
+            color: #fff;
+            background-color: #00bdfe;
+            border: 1px solid #00bdfe;
+            padding: 10px 30px;
+            display: inline-block;
+            border-radius: 10px;
+            font-weight: 500;
+            text-transform: capitalize;
+            letter-spacing: 0.5px;
+            transition: all .3s;
+        }
+    </style>
 </head>
+
 <body>
 
     <div layout:fragment="content">
@@ -135,6 +175,41 @@
 
                             <div class="row">
 
+                                <div class="pt-4">
+
+                                    <h5 class="mb-4">BẠN ĐÃ ỨNG TUYỂN TIN TUYỂN DỤNG</h5>
+                                    <div th:each="apply : ${applies}">
+                                        <table class="mt-4">
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Tiêu đề tin bạn đã ứng tuyển</th>
+                                                <th>Tên</th>
+                                                <th>Ảnh</th>
+                                                <th>Trình độ</th>
+                                                <th>Kinh nghiệm</th>
+                                                <th>Giới thiệu</th>
+                                                <th>ACTION</th>
+                                            </tr>
+
+                                            <tr>
+                                                <td th:text="${apply.id}"></td>
+                                                <td th:text="${apply.post.title}"></td>
+                                                <td th:text="${labor.full_name}"></td>
+                                                <td >
+                                                    <img width="70%" th:src="${'/assets/images/' + apply.image_apply}" alt="">
+                                                </td>
+                                                <td th:text="${apply.education}"></td>
+                                                <td th:text="${apply.experience}"></td>
+                                                <td th:text="${apply.about}"></td>
+                                                <td>
+                                                    <a th:href="@{'/post/show/' + ${apply.post.id}}">XEM CHI TIẾT TIN BẠN ĐÃ ỨNG TUYỂN</a>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+
+                                </div>
                             </div>
 
                         </div>

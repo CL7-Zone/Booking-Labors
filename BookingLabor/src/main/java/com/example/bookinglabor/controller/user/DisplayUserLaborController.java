@@ -59,7 +59,7 @@ public class DisplayUserLaborController {
         return "user/labor/index";
     }
 
-    @GetMapping(value={"/labors/job-detail/{job_detail_id}", "/your-menu/labors/{job_detail_id}"})
+    @GetMapping(value={"/labors/job-detail/{job_detail_id}", "/your-menu/labors/job-detail/{job_detail_id}"})
     public String show(Model model,
                        @PathVariable Long job_detail_id,
                        @AuthenticationPrincipal UserDetails userDetails){

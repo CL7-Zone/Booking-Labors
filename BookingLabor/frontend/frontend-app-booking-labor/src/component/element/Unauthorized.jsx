@@ -5,7 +5,7 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {set} from "mdb-ui-kit/src/js/mdb/perfect-scrollbar/lib/css";
 
-const NotFound = () => {
+const Unauthorized = () => {
 
     const dispatch = useDispatch();
     const show = useSelector(state => state.showElement);
@@ -28,7 +28,7 @@ const NotFound = () => {
                         <div className="col-sm-12 d-flex align-items-center justify-content-center">
                             <div className="col-sm-10 col-sm-offset-1  text-center">
                                 <div className={styles.four_zero_four_bg} >
-                                    <h1 className="text-center ">404 Page Not Found</h1>
+                                    <h1 className="text-center ">401 Unauthorized</h1>
                                 </div>
                                 <div className={styles.contant_box_404}>
                                     <h3 className="h2">Look like you're lost</h3>
@@ -48,4 +48,4 @@ const NotFound = () => {
     );
 }
 
-export default NotFound
+export default Unauthorized

@@ -1,0 +1,185 @@
+/* 
+    34. About page css 
+*/
+.team__section.section--padding{
+    @media only screen and (max-width: 991px) {
+        padding-bottom: 6rem;
+    }
+    @media only screen and (max-width: 767px) {
+        padding-bottom: 4rem;
+    }
+}
+.about__thumb {
+    @media only screen and (max-width: 991px) {
+        margin-bottom: 3rem;
+    }
+    @media only screen and (max-width:767px) {
+        margin-bottom: 2.5rem;
+    }
+    &--items{
+        margin-right: 2rem;
+        &:last-child{
+            margin-right: 0;
+        }
+        &:first-child{
+            margin-top: 8rem;
+            @media only screen and (max-width: 991px) {
+                margin-top: 0;
+            }
+        }
+    }
+}
+
+.about__thumb--play{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translatey(-50%) translatex(-50%);
+    &__icon{
+        width: 4rem;
+        height: 4rem;
+        line-height: 3.5rem;
+        text-align: center;
+        background: var(--secondary-color);
+        color: var(--text-white-color);
+        border-radius: 50%;
+        &:hover{
+            background: var(--primary-color);
+            color: var(--text-white-color);
+            transform: scale(1.1);
+        }
+    }
+}
+
+.about__content{
+    @media only screen and (max-width: 575px) {
+       text-align: center;
+    }
+    &--subtitle{
+        font-size: 1.8rem;
+        font-weight: 600;
+        line-height: 2.2rem;
+        @media only screen and (min-width: 992px) {
+            font-size: 2rem;
+            line-height: 2.4rem;
+        }
+    }
+    &--maintitle{
+        font-weight: 700;
+        @media only screen and (min-width: 992px) {
+            font-size: 2.5rem;
+            line-height: 3.5rem;
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 3rem;
+            line-height: 4rem;
+        }
+        @media only screen and (min-width: 1600px) {
+            font-size: 3.5rem;
+            line-height: 4.4rem;
+        }
+    }
+    &--desc{
+        font-size: 1.6rem;
+        line-height: 2.8rem;
+        color: var(--text-gray-color);
+    }
+}
+.about__author{
+    &--name{
+        font-weight: 600;
+        line-height: 2.6rem;
+    }
+    &--rank{
+        color: var(--light-color);
+    }
+    &--signature{
+        position: absolute;
+        top: 50%;
+        left: 105px;
+        transform: translatey(-50%);
+    }
+}
+
+/*
+    team member css
+*/
+.team__items{
+    &:hover{
+        & .team__thumb{
+            border-color: var(--secondary-color);
+        }
+    }
+}
+
+.team__thumb{
+    position: relative;
+    line-height: 1;
+    display: inline-block;
+    border: 2px solid var(--border-color);
+    padding: 0.3rem;
+    transition: var(--transition);
+    border-radius: 10px;
+    &--img{
+        border-radius: 10px;
+    }
+}
+.team__social{
+    gap: 1rem;
+    @media only screen and (min-width: 1200px) {
+        gap: 1.2rem;
+    }
+    &--icon{
+        width: 2.8rem;
+        height: 2.8rem;
+        text-align: center;
+        background: var(--bg-offwhite-color);
+        color: var(--body-text-color);
+        line-height: 3rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &:hover{
+            background: var(--secondary-color);
+            color: var(--text-white-color);
+        }
+        @media only screen and (min-width: 1200px) {
+            width: 3rem;
+            height: 3rem;
+            line-height: 3.2rem;
+        }
+    }
+}
+
+.team__content{
+    padding: 1rem 0 0;
+    @media only screen and (max-width: 991px) {
+        padding: 0.8rem 0 0;
+    }
+    &--subtitle{
+        color: var(--foreground-sub-color);
+        font-size: 1.5rem;
+        line-height: 2rem;
+        margin-bottom: 1.3rem;
+        @media only screen and (min-width: 767px) {
+            font-size: 1.6rem;
+            line-height: 2.2rem;
+        }
+    }
+    &--title{
+        font-weight: 700;
+        margin-bottom: 1rem;
+        font-size: 1.7rem;
+        line-height: 2rem;
+        @media only screen and (min-width: 992px) {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 2rem;
+            line-height: 2.2rem;
+        }
+    }
+}
+// End about css here

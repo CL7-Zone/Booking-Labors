@@ -1,0 +1,46 @@
+/* 
+    27. Counterup css here
+*/
+.counterup__banner__bg2{
+    background: var(--bg-offwhite-color);
+}
+.counterup__banner{
+    &--inner{
+        padding: 6rem 0;
+        gap: 2.5rem;
+        @media only screen and (max-width: 767px) {
+            flex-wrap: wrap;
+        }
+    }
+}
+.counterup__title{
+    color: var(--foreground-sub-color);
+    font-size: 1.5rem;
+    line-height: 2.4rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    @media only screen and (min-width: 992px) {
+        font-size: 1.6rem;
+        line-height: 2.5rem;
+    }
+    @media only screen and (min-width: 1200px) {
+        font-size: 1.8rem;
+        line-height: 2.6rem;
+        margin-bottom: 2rem;
+    }
+}
+.counterup__number{
+    font-size: 2.5rem;
+    line-height: 2.5rem;
+    font-weight: 600;
+    @media only screen and (min-width: 992px) {
+        font-size: 3rem;
+        line-height: 3rem;
+    }
+    @media only screen and (min-width: 1200px) {
+        font-size: 4rem;
+        line-height: 4rem;
+    }
+}
+
+

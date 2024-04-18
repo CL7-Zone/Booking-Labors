@@ -52,19 +52,19 @@
                             </li>
 
                             <li class="has-sub" sec:authorize="isAuthenticated()" >
-                                <a href="javascript:void(0)">CÔNG VIỆC</a>
+                                <a href="javascript:void(0)">ỨNG VIÊN</a>
                                 <ul class="sub-menu">
                                     <li> <a th:href="@{/jobs}">CÁC CÔNG VIỆC</a></li>
-                                    <li><a th:href="@{/your-info-labor}">THÔNG TIN CỦA LAO ĐỘNG</a></li>
-                                    <li><a th:href="@{/labor-create-info}">TẠO THÔNG TIN LAO ĐỘNG</a></li>
+                                    <li><a th:href="@{/your-info-labor}">HỒ SƠ THÔNG TIN CÁ NHÂN</a></li>
+                                    <li><a th:href="@{/labor-create-info}">TẠO HỒ SƠ</a></li>
                                     <li th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}">
                                         <a th:href="@{/your-cart}">CHI TIẾT CÔNG VIÊC</a>
                                     </li>
                                     <li th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}">
-                                        <a th:href="@{/your-job}">CÔNG VIỆC CỦA BẠN</a>
+                                        <a th:href="@{/your-job}">HỒ SƠ CÔNG VIỆC</a>
                                     </li>
                                     <li th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}">
-                                        <a th:href="@{/booking-manager-by-labor}">ĐƠN TUYỂN DÀNH CHO BẠN</a>
+                                        <a th:href="@{/booking-manager-by-labor}">QUẢN LÝ ĐƠN TUYỂN DỤNG</a>
                                     </li>
                                 </ul>
                             </li>
@@ -72,13 +72,13 @@
                             <li class="has-sub"  sec:authorize="isAuthenticated()">
                                 <a href="javascript:void(0)">NGƯỜI TUYỂN</a>
                                 <ul class="sub-menu">
-                                    <li><a th:href="@{/your-info-customer}">THÔNG TIN NGƯỜI TUYỂN DỤNG</a></li>
-                                    <li ><a th:href="@{/customer-create-info}">TẠO THÔNG TIN NGƯỜI TUYỂN</a></li>
+                                    <li><a th:href="@{/your-info-customer}">HỒ SƠ THÔNG TIN CÁ NHÂN</a></li>
+                                    <li ><a th:href="@{/customer-create-info}">TẠO HỒ SƠ</a></li>
                                     <li th:if="${#lists.contains(userRoles, 'ROLE_CUSTOMER')}">
                                         <a th:href="@{/your-booking-cart}">CHI TIẾT TUYỂN DỤNG</a>
                                     </li>
                                     <li th:if="${#lists.contains(userRoles, 'ROLE_CUSTOMER')}">
-                                        <a th:href="@{/your-booking}">ĐƠN TUYỂN DỤNG CỦA BẠN</a>
+                                        <a th:href="@{/your-booking}">QUẢN LÝ ĐƠN TUYỂN DỤNG</a>
                                     </li>
                                 </ul>
                             </li>

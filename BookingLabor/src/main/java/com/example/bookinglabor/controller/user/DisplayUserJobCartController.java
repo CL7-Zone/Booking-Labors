@@ -84,13 +84,13 @@ public class DisplayUserJobCartController {
 
                 switch (jobDetailService.saveDataToSessionStore(jobDetailObjects, request, session, job, labor_id)){
                     case 0:
-                        res.addFlashAttribute("overLimit", "You are not allowed to select the same job!!!");
+                        res.addFlashAttribute("overLimit", "BẠN KHÔNG ĐƯỢC PHÉP CHỌN CÔNG VIỆC GIỐNG NHAU!!!");
                         return "redirect:/your-cart";
                     case 1:
-                        res.addFlashAttribute("overLimit", "You have saved into the cart over the limit!!!");
+                        res.addFlashAttribute("overLimit", "BẠN ĐÃ LƯU SỐ CỘNG VIỆC VƯỢT QUÁ GIỚI HẠN!!!");
                         return "redirect:/your-cart";
                     case 2:
-                        res.addFlashAttribute("overLimit", "You have had this job!!!");
+                        res.addFlashAttribute("overLimit", "BẠN ĐÃ CÓ CÔNG VIỆC NÀY TRONG HỒ SƠ!!!");
                         return "redirect:/your-cart";
                 }
             }
@@ -98,6 +98,7 @@ public class DisplayUserJobCartController {
 
         }catch (Exception exception){
 
+            res.addFlashAttribute("overLimit", "LƯU THẤT BẠI!!!");
             System.out.println("ERROR SAVED CART: "+exception);
             return "redirect:/your-cart?failed";
         }
@@ -117,11 +118,11 @@ public class DisplayUserJobCartController {
                 if(jobDetails.isEmpty()){
                     session.removeAttribute("jobObjects");
                 }
-                res.addFlashAttribute("deleteSuccess", "Delete item " + (index+1) + " successfully");
+                res.addFlashAttribute("deleteSuccess", "XÓA MỤC " + (index+1) + " THÀNH CÔNG");
             }
 
         }catch (Exception exception){
-            res.addFlashAttribute("deleteFailed", "Delete failed!!!");
+            res.addFlashAttribute("deleteFailed", "XÓA THẤT BẠI!!!");
         }
 
         return "redirect:/your-cart";

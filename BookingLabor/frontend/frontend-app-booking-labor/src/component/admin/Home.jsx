@@ -7,10 +7,13 @@ import React, {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getUserProfile} from "../../api/apiFunction";
-import NotFound from "../element/NotFound";
+import Unauthorized from "../element/Unauthorized";
 import { SetUser } from '../../redux/action/SetUser';
 import User from "./user/User";
 import Statistical from "../element/Statistical";
+import {toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Home = () => {
     const navigate = useNavigate();
@@ -53,7 +56,7 @@ const Home = () => {
     }
     return (
         <div>
-            {Array.isArray(user) && user.length === 0 ? (<NotFound />) : (
+            {Array.isArray(user) && user.length === 0 ? (<Unauthorized />) : (
                 <>
                     <Sidebar/>
                     <div className="content">

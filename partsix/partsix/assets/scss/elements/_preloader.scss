@@ -1,0 +1,164 @@
+/* 
+    20. Preloader css 
+*/
+
+.ctn-preloader {
+	align-items: center;
+	display: flex;
+    height: 100%;
+    justify-content: center;
+	position: fixed;
+	left: 0;
+    top: 0;
+	width: 100%;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.ctn-preloader .animation-preloader {
+	position: absolute;
+    z-index: 100;
+}
+
+.ctn-preloader .animation-preloader .spinner {
+    animation: spinner 1s infinite linear;
+	border-radius: 50%;
+    border: 4px solid var(--border-color);
+    border-top-color: var(--bg-light-dark-color); 
+    height: 9em;
+    margin: 0 auto 3.5em auto;
+    width: 9em;
+}
+
+
+.ctn-preloader .animation-preloader .txt-loading {
+    font-weight: 900;
+	text-align: center;
+	user-select: none;
+    color: var(--foreground-sub-color);
+    font-size: 3.5rem;
+}
+
+.ctn-preloader .animation-preloader .txt-loading .letters-loading:before {
+    animation: letters-loading 5s infinite;
+    color: var(--body-text-color);
+    content: attr(data-text-preloader);
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    transform: rotateY(-90deg);
+    -webkit-animation: letters-loading 5s infinite;
+}
+
+.ctn-preloader .animation-preloader .txt-loading .letters-loading {
+	color: rgba(0, 0, 0, 0.2);
+	position: relative;
+}
+
+.ctn-preloader .animation-preloader .txt-loading .letters-loading:nth-child(2):before {
+    animation-delay: 0.2s;
+}
+
+.ctn-preloader .animation-preloader .txt-loading .letters-loading:nth-child(3):before {
+    animation-delay: 0.3s;
+}
+
+.ctn-preloader .animation-preloader .txt-loading .letters-loading:nth-child(4):before {
+    animation-delay: 0.4s;
+}
+
+.ctn-preloader .animation-preloader .txt-loading .letters-loading:nth-child(5):before {
+    animation-delay: 0.5s;
+}
+
+.ctn-preloader .animation-preloader .txt-loading .letters-loading:nth-child(6):before {
+    animation-delay: 0.6s;
+}
+
+.ctn-preloader .animation-preloader .txt-loading .letters-loading:nth-child(7):before {
+    animation-delay: 0.7s;
+}
+
+.ctn-preloader .loader-section {
+    background: var(--body-background-color);
+    height: 100%;
+	position: fixed;
+    top: 0;
+    width: calc(50% + 1px);
+}
+
+
+.ctn-preloader .loader-section.section-left {
+    left: 0;
+}
+
+.ctn-preloader .loader-section.section-right {
+   right: 0;
+}
+
+
+.loaded .animation-preloader {
+    opacity: 0;
+    transition: 0.5s ease-out;
+    -webkit-transition: 0.5s ease-out;
+    -moz-transition: 0.5s ease-out;
+    -ms-transition: 0.5s ease-out;
+    -o-transition: 0.5s ease-out;
+}
+
+
+.loaded .loader-section.section-left {
+    transition: 0.7s 0.3s all cubic-bezier(0.1, 0.1, 0.1, 1.000);
+    transform: translateX(-101%);
+}
+
+.loaded .loader-section.section-right {
+    transition: 0.7s 0.3s all cubic-bezier(0.1, 0.1, 0.1, 1.000);
+    transform: translateX(101%);
+}
+
+/* Animación del preloader */
+@keyframes spinner {
+	to {
+		transform: rotateZ(360deg);
+	}
+}
+
+/* Animación de las letras cargando del preloader */
+@keyframes letters-loading {
+  0%,
+  75%,
+  100% {
+  	opacity: 0;
+    transform: rotateY(-90deg);
+  }
+
+  25%,
+  50% {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+}
+
+/* Tamaño de portatil hacia atras (portatil, tablet, celular) */
+@media screen and (max-width: 767px) {
+	/* Preloader */
+	/* Spinner cargando */	
+	.ctn-preloader .animation-preloader .spinner {
+		height: 8em;
+		width: 8em;
+	}
+
+	/* Texto cargando */
+	.ctn-preloader .animation-preloader .txt-loading {
+	  font-size: 2.5rem;
+	}
+}
+
+@media screen and (max-width: 500px) {
+	.ctn-preloader .animation-preloader .spinner {
+		height: 7em;
+		width: 7em;
+	}
+}

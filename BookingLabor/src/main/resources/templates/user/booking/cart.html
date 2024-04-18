@@ -129,10 +129,11 @@
                             </div>
 
                             <ul>
-                                <h4><i class="fa fa-cart-plus text-info"></i> CÔNG VIỆC BẠN VỪA CHỌN</h4>
+                                <h4><i class="fa fa-cart-plus text-info"></i> CHI TIẾT ỨNG VIÊN BẠN VỪA CHỌN</h4>
                             </ul>
-                            <h3 class="pb-4">TỔNG TIỀN:
-                                <b class="text-info"  th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></b>
+                            <h3 class="pb-4">
+                                TỔNG LƯƠNG BẠN CẦN TRẢ CHO ỨNG VIÊN:
+                                <b class="text-info"  th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></b>
                             </h3>
                             <div  style="padding-bottom: 10px; ">
                                 <h5>Attention:</h5>
@@ -163,12 +164,8 @@
 
                                     <ul style="list-style: disc; padding: 0px 20px">
                                         <input type="hidden" th:value="${customer_id}" name="customer_id" id="customer_id">
-                                        <li style="list-style: disc;">
-                                            <div class="mb-2">
-                                                <label for="total_price" class="form-label">Tổng tiền</label>
-                                                <input type="text" readonly th:value="${totalPrice}" name="total_price" id="total_price"  class="form-control">
-                                            </div>
-                                        </li>
+                                        <input type="hidden" readonly th:value="${totalPrice}" name="total_price" id="total_price"  class="form-control">
+
                                         <li style="list-style: disc;">
                                             <div class="mb-2">
                                                 <label for="book_address" class="form-label">ĐỊA CHỈ LÀM VIỆC</label>
@@ -206,7 +203,7 @@
                                         </li>
                                         <li style="list-style: disc;">
                                             <div class="mb-2">
-                                                <label for="message" class="form-label">THÔNG ĐIỆP CHO LAO ĐỘNG</label>
+                                                <label for="message" class="form-label">YÊU CẦU DÀNH CHO ỨNG VIÊN</label>
                                                 <textarea type="text"  name="message" id="message"  class="form-control"></textarea>
                                             </div>
                                         </li>
@@ -239,7 +236,7 @@
                                         <th>ID</th>
                                         <th>TÊN LAO ĐỘNG</th>
                                         <th>TÊN CÔNG VIỆC</th>
-                                        <th>GIÁ</th>
+                                        <th>LƯƠNG</th>
                                         <th>TÊN DANH MỤC</th>
                                         <th>ĐỊA CHỈ LÀM VIỆC CHÍNH THỨC</th>
                                         <th>TÊN THÀNH PHỐ</th>
@@ -258,7 +255,7 @@
                                             <span th:text="${item.nameJob}"></span>
                                         </td>
                                         <td>
-                                            <span  th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></span>
+                                            <span  th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></span>
                                         </td>
                                         <td>
                                             <span th:text="${item.categoryName}"></span>

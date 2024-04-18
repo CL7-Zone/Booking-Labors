@@ -1,0 +1,299 @@
+/* 
+    5. Product card css 
+*/
+
+.tab__btn{
+    &--wrapper{
+      gap: 1rem;
+      flex-wrap: wrap;
+      @media only screen and (min-width: 992px) {
+        gap: 1.5rem;
+      }
+      @media only screen and (min-width: 1200px) {
+        gap: 2.5rem;
+      }
+    }
+  &--link{
+    font-weight: 600;
+    font-family: var(--inter-fonts);
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    color: var(--foreground-sub-color);
+    padding: 3px 10px;
+    border: 0;
+    background: var(--body-background-color);
+    border-radius: 5px;
+    line-height: 2.4rem;
+    @media only screen and (min-width: 992px) {
+      font-size: 1.4rem;
+      padding: 3px 12px;
+      line-height: 2.6rem;
+    }
+    &:hover{
+      background: var(--secondary-color);
+      color: var(--text-white-color);
+      text-decoration: underline;
+    }
+    &.active{
+      background: var(--secondary-color);
+      color: var(--text-white-color);
+      text-decoration: underline;
+    }
+  }
+}
+.product__card {
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    &:hover {
+      & .product__card--thumbnail__img {
+        transform: scale(1.02);
+      }
+      & .product__secondary--img {
+        opacity: 1;
+        visibility: visible;
+      }
+      & .product__primary--img {
+        opacity: 0;
+        visibility: hidden;
+      }
+      & .swiper__nav--btn {
+        opacity: 1;
+        visibility: visible;
+      }
+      & .product__card--action{
+          opacity: 1;
+          visibility: visible;
+         bottom: 35%;
+         &__btn{
+          transform: scale(1);
+         }
+      }
+      & .product__card--price{
+        opacity: 0;
+        visibility: hidden;
+      }
+      & .product__card--footer{
+        opacity: 1;
+        visibility: visible;
+        bottom: -15px;
+      }
+    }
+    &--thumbnail {
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      @media only screen and (min-width: 1200px) {
+        padding: 2rem 2.5rem;
+      }
+      &__link{
+        position: relative;
+      }
+      &__img {
+        width: 100%;
+      }
+    }
+    &--content {
+      padding: 0 1.5rem 2rem;
+      position: relative;
+      @media only screen and (min-width: 1200px) {
+        padding: 0 2rem 2rem;
+      }
+    }
+    &--title {
+      margin-bottom: 0.8rem;
+      @media only screen and (max-width: 479px) {
+        margin-bottom: 0.6rem;
+        font-size: 1.6rem;
+        line-height: 2.2rem;
+      }
+    }
+    &--footer{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.4s;
+      padding: 0 2rem 2rem;
+      background: var(--body-background-color);
+      &::before{
+        position: absolute;
+        content: "";
+        border: 1px solid var(--border-color);
+        left: -1px;
+        bottom: 0;
+        right: -2px;
+        border-top: 0;
+        width: 101%;
+        height: 100%;
+        border-radius: 0 0 5px 5px;
+        pointer-events: none;
+      }
+
+    }
+    &--btn {
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        display: block;
+        height: 3.5rem;
+        line-height: 3.5rem;
+        border-radius: 5px;
+        text-align: center;
+        padding: 0 1.5rem;
+        & svg{
+            margin-right: 3px;
+        }
+        @media only screen and (min-width: 992px) {
+          height: 3.8rem;
+          line-height: 3.8rem;
+          padding: 0 2rem;
+        }
+    }
+    &--action {
+      position: absolute;
+      left: 50%;
+      transform: translatex(-50%);
+      opacity: 0;
+      visibility: visible;
+      z-index: 9;
+      transition: 0.5s;
+      bottom: 30%;
+      gap: 0.8rem;
+      &__btn {
+        width: 3rem;
+        height: 3rem;
+        line-height: 2.8rem;
+        color: var(--foreground-sub-color);
+        background: var(--body-background-color);
+        border-radius: 50%;
+        text-align: center;
+        transform: scale(0.5);
+        transition: 0.5s;
+        &:hover {
+          background: var(--secondary-color);
+          color: var(--text-white-color);
+        }
+        @media only screen and (min-width: 576px) {
+          width: 3.5rem;
+          height: 3.5rem;
+          line-height: 3.3rem;
+        }
+        @media only screen and (min-width: 992px) {
+            width: 4rem;
+            height: 4rem;
+            line-height: 3.8rem;
+        }
+      }
+    }
+    &--rating{
+      margin-bottom: 1.1rem;
+    }
+    &--price{
+      transition: var(--transition);
+    }
+  }
+
+  .product__badge{
+      width: 4rem;
+      height: 4rem;
+      font-size: 1.2rem;
+      line-height: 4rem;
+      background: var(--secondary-color);
+      color: var(--text-white-color);
+      font-family: var(--inter-fonts);
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      text-align: center;
+      border-radius: 50%;
+
+  }
+  .product__secondary--img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .current__price {
+    color: var(--secondary-color);
+    font-weight: 600;
+    line-height: 1.8rem;
+    font-family: var(--inter-fonts);
+  }
+  .old__price {
+    color: var(--foreground-sub-color);
+    margin-left: 0.8rem;
+    line-height: 1.8rem;
+    font-family: var(--inter-fonts);
+  }
+  .rating {
+    gap: 0.5rem;
+    &__icon{
+      color: var(--secondary-color);
+    }
+  }
+.rating__review--text{
+  font-size: 1.2rem;
+  font-family: var(--inter-fonts);
+  color: var(--foreground-sub-color);
+}
+
+
+/*
+  home three product css
+*/
+.product__tab--btn__style3{
+  margin-top: 2.5rem;
+  @media only screen and (min-width: 768px) {
+    margin-top: 3rem;
+  }
+  & .tab__btn--link{
+    background: var(--bg-offwhite-color);
+    padding: 8px 2.4rem;
+    border-radius: 20px;
+    font-weight: 500;
+    text-transform: capitalize;
+    &.active{
+      background: var(--secondary-color);
+      text-decoration: inherit;
+    }
+    &:hover{
+      background: var(--secondary-color);
+      text-decoration: inherit;
+    }
+  }
+}
+
+
+/*
+  home four product css here
+*/
+.deals__product--card{
+  border: 1px solid var(--secondary-color);
+  padding: 2rem 1.5rem;
+  border-radius: 5px;
+  @media only screen and (max-width: 991px) {
+    margin-top: 3rem;
+  }
+}
+.deals__product--card__thumbnail{
+  margin-bottom: 2.2rem;
+  &--img{
+    margin: 0 auto;
+  }
+}
+.deals__product--title{
+  margin-bottom: 1.4rem;
+}
+
+.hurryup__text{
+  font-size: 1.4rem;
+  & span{
+    color: var(--secondary-color);
+    font-weight: 600;
+  }
+}

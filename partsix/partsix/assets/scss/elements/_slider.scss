@@ -1,0 +1,667 @@
+/* 
+    3. Slider css 
+*/
+.hero__slider--items{
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: auto;
+    justify-content: center;
+    gap: 30px;
+    padding: 4rem 2rem;
+    @media only screen and (min-width: 576px) {
+        gap: 35px;
+        padding: 0 3rem;
+        height: 300px;
+    }
+    @media only screen and (min-width: 768px) {
+        height: 350px;
+        gap: 50px;
+    }
+    @media only screen and (min-width: 992px) {
+        height: 450px;
+    }
+    @media only screen and (min-width: 1200px) {
+        height: 450px;
+    }
+    @media only screen and (min-width: 1366px) {
+       height: 490px;
+    }
+    @media only screen and (min-width: 1600px) {
+       height: 552px;
+    }
+    @media only screen and (max-width: 575px) {
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
+    }
+}
+.home1-slider1-bg{
+    background: url(../img/slider/home1-slider1-bg.webp);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+}
+.hero__slider--ml{
+    @media only screen and (min-width: 992px) {
+        margin-left: 255px;
+    }
+    @media only screen and (min-width: 1200px) {
+        margin-left: 280px;
+    }
+}
+.slider__content{
+    position: relative;
+    z-index: 9;
+    @media only screen and (max-width: 575px) {
+        text-align: center;
+    }
+}
+.slider__subtitle{
+    font-size: 1.4rem;
+    font-weight: 600;
+    font-family: var(--inter-fonts);
+    margin-bottom: 0.5rem;
+}
+
+.slider__maintitle {
+    text-decoration: underline;
+    margin-bottom: 1.5rem;
+    @media only screen and (min-width: 576px) {
+        margin-bottom: 1.8rem;
+    }
+    @media only screen and (min-width: 992px) {
+        margin-bottom: 2.2rem;
+    }
+    @media only screen and (min-width: 1200px) {
+        margin-bottom: 2.6rem;
+    }
+    &--inner__text{
+        font-family: var(--rubik-fonts);
+        font-weight: 400;
+        text-decoration: underline;
+        @media only screen and (min-width: 992px) {
+            font-size: 3.4rem;
+            line-height: 4rem;
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 3.8rem;
+            line-height: 4.2rem;
+        }
+    }
+}
+
+.slider__price--text{
+    font-family: var(--inter-fonts);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 1.5rem;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    @media only screen and (min-width: 576px) {
+        margin-bottom: 1.8rem;
+        font-size: 1.8rem;
+        line-height: 2.2rem;
+    }
+    @media only screen and (min-width: 1200px) {
+        margin-bottom: 2.5rem;
+        font-size: 2.2rem;
+        line-height: 2.4rem;
+    }
+    @media only screen and (min-width: 1200px) {
+        font-size: 2.6rem;
+        line-height: 2.8rem;
+        margin-bottom: 3rem;
+    }
+
+}
+.slider__btn{
+    & svg{
+        margin-left: 0.3rem;
+    }
+}
+.hero__slider--layer{
+    @media only screen and (max-width: 1199px) {
+        max-width: 385px;
+    }
+    @media only screen and (max-width: 991px) {
+        max-width: 360px;
+    }
+    @media only screen and (max-width: 767px) {
+        max-width: 290px;
+    }
+
+}
+
+.slider__layer--img{
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    display: block;
+}
+.swiper-slide-active .slider__content > * {
+    -webkit-animation-name: fadeInUp;
+    animation-name: fadeInUp;
+    -webkit-animation-duration: 1.2s;
+    animation-duration: 1.2s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+.swiper-slide-active{
+    & .slider__subtitle{
+        -webkit-animation-delay: 0.3s;
+	    animation-delay: 0.3s;
+    }
+    & .slider__maintitle{
+        -webkit-animation-delay: 0.5s;
+	    animation-delay: 0.5s;
+    }
+    & .slider__maintitle--style2{
+        -webkit-animation-delay: 0.5s;
+	    animation-delay: 0.5s;
+    }
+    & .slider__desc{
+        -webkit-animation-delay: 0.7s;
+	    animation-delay: 0.7s;
+    }
+    & .slider__price--text{
+        -webkit-animation-delay: 0.7s;
+	    animation-delay: 0.7s;
+    }
+    & .slider__btn{
+        -webkit-animation-delay: 0.9s;
+	    animation-delay: 0.9s;
+    }
+    & .slider__layer--img{
+        transform: scale(1);
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        -ms-transform: scale(1);
+        -o-transform: scale(1);
+        transition: 1.4s;
+    }
+}
+
+.hero__slider--activation{
+    & .swiper__nav--btn.swiper-button-prev{
+        left: 1.5rem;
+    }
+    & .swiper__nav--btn.swiper-button-next{
+        right: 1.5rem;
+    }
+}
+
+/*
+    home two css here
+*/
+.slider__section--bg2{
+    background: url(../img/slider/home2-slider-shape-bg.webp);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+    @media only screen and (max-width: 991px) {
+        padding-top: 3rem;
+    }
+}
+.hero__slider--layer__style2{
+    position: absolute;
+    bottom: 25px;
+    right: 15px;
+    @media only screen and (max-width: 1199px) {
+        max-width: 390px;
+    }
+    @media only screen and (max-width: 767px) {
+        max-width: 270px;
+    }
+    @media only screen and (max-width: 575px) {
+        position: inherit;
+        bottom: inherit;
+        right: inherit;
+        padding: 0 2rem;
+    }
+}
+.home2-slider1-bg{
+    background: url(../img/slider/home2-slider1-bg.webp);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+    border-radius: 5px;
+}
+.hero__slider--items{
+    &__style2{
+        position: relative;
+        height: 340px;
+        display: flex;
+        align-items: center;
+        @media only screen and (min-width: 768px) {
+            height: 385px;
+        }
+        @media only screen and (min-width: 992px) {
+            height: 456px;
+        }
+        @media only screen and (min-width: 1200px) {
+            height: 493px;
+        }
+        @media only screen and (min-width: 1366px) {
+            height: 530px;
+        }
+        @media only screen and (max-width: 575px) {
+            flex-direction: column-reverse;
+            gap: 3rem;
+            height: auto;
+            padding: 4rem 0;
+        }
+    }
+}
+.slider__content.style2{
+    @media only screen and (min-width: 576px) {
+        padding-left: 4.5rem;
+    }
+    @media only screen and (min-width: 1200px) {
+        padding-left: 5.5rem;
+    }
+}
+.slider__maintitle--style2{
+    margin-bottom: 1.2rem;
+    @media only screen and (min-width: 992px) {
+        font-size: 3.2rem;
+        line-height: 4.2rem;
+        margin-bottom: 1.8rem;
+    }
+    @media only screen and (min-width: 1200px) {
+        font-size: 4.5rem;
+        line-height: 5.5rem;
+        margin-bottom: 2.2rem;
+    }
+    @media only screen and (max-width: 767px) {
+        font-size: 2.5rem;
+        line-height: 3.3rem;
+    }
+    @media only screen and (max-width: 575px) {
+        font-size: 2.2rem;
+        line-height: 3.2rem;
+        margin-bottom: 1rem;
+    }
+}
+.slider__desc{
+    margin-bottom: 1.8rem;
+    @media only screen and (min-width: 576px) {
+        margin-bottom: 2.2rem;
+    }
+    @media only screen and (min-width: 992px) {
+        margin-bottom: 2.5rem;
+    }
+    @media only screen and (min-width: 1200px) {
+        margin-bottom: 3rem;
+    }
+}
+
+
+/*
+    home 3 slider css
+*/
+.slider__section--bg3{
+    background: url(../img/slider/home3-slider-section-bg.webp);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+}
+.hero__slider--items__style3{
+    gap: 2.5rem;
+    height: auto;
+    @media only screen and (min-width: 576px) {
+        gap: 3rem;
+        height: 350px;
+    }
+    @media only screen and (min-width: 768px) {
+        gap: 4rem;
+        height: 440px;
+    }
+    @media only screen and (min-width: 992px) {
+        height: 550px;
+    }
+    @media only screen and (min-width: 1200px) {
+        height: 600px;
+    }
+    @media only screen and (min-width: 1366px) {
+        height: 620px;
+    }
+    @media only screen and (min-width: 1600px) {
+        height: 750px;
+    }
+    @media only screen and (max-width: 575px) {
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
+        padding: 5rem 0 7rem;
+    }
+}
+
+.hero__slider--layer__style3{
+    @media only screen and (max-width: 1199px) {
+        max-width: 470px;
+    }
+    @media only screen and (max-width: 991px) {
+        max-width: 340px;
+    }
+    @media only screen and (max-width: 767px) {
+        max-width: 240px;
+    }
+}
+
+.slider__pagination{
+    &.swiper-pagination{
+        bottom: 2rem !important;
+    }
+}
+
+.slider__subtitle.style3{
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+    line-height: 2.3rem;
+    text-transform: uppercase;
+    @media only screen and (min-width: 576px) {
+        font-size: 1.6rem;
+    }
+    @media only screen and (min-width: 768px) {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        line-height: 2.5rem;
+    }
+    @media only screen and (min-width: 992px) {
+        font-size: 2rem;
+        line-height: 2.8rem;
+    }
+    @media only screen and (min-width: 1200px) {
+        font-size: 2.2rem;
+        margin-bottom: 1.7rem;
+    }
+    @media only screen and (min-width: 1366px) {
+        font-size: 2.5rem;
+        line-height: 3rem;
+    }
+}
+
+.slider__maintitle.style3{
+    font-size: 2.6rem;
+    line-height: 2.8rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    @media only screen and (min-width: 480px) {
+        font-size: 2.8rem;
+        line-height: 3rem;
+    }
+    @media only screen and (min-width: 576px) {
+        font-size: 3.2rem;
+        line-height: 3.2rem;
+    }
+    @media only screen and (min-width: 768px) {
+        font-size: 4rem;
+        line-height: 4rem;
+    }
+    @media only screen and (min-width: 992px) {
+        font-size: 5rem;
+        line-height: 5rem;
+    }
+    @media only screen and (min-width: 1200px) {
+        font-size: 6rem;
+        line-height: 6rem;
+    }
+    @media only screen and (min-width: 1366px) {
+        font-size: 7rem;
+        line-height: 7rem;
+    }
+}
+
+.slider__desc.style3{
+    font-size: 1.5rem;
+    margin-bottom: 1.8rem;
+    @media only screen and (min-width: 576px) {
+        margin-bottom: 2rem;
+    }
+    @media only screen and (min-width: 992px) {
+        font-size: 1.6rem;
+        margin-bottom: 2.4rem;
+    }
+    @media only screen and (min-width: 992px) {
+        font-size: 1.8rem;
+        margin-bottom: 3rem;
+    }
+    @media only screen and (min-width: 1200px) {
+        font-size: 2rem;
+        margin-bottom: 3.5rem;
+    }
+}
+
+
+/*
+    home 4 slider css here
+*/
+.slider4__items--bg1{
+    background: url(../img/slider/home4-slider1-bg.webp);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position:  center center;
+    background-size: cover;
+    position: relative;
+}
+.hero__slider--items.style4{
+    height: auto;
+    padding: 0;
+    @media only screen and (min-width: 768px) {
+        height: 450px;
+    }
+    @media only screen and (min-width: 992px) {
+        height: 510px;
+    }
+    @media only screen and (min-width: 1200px) {
+        height: 540px;
+    }
+    @media only screen and (min-width: 1366px) {
+        height: 580px;
+    }
+    @media only screen and (min-width: 1600px) {
+        height: 740px;
+    }
+    @media only screen and (max-width: 767px) {
+        flex-direction: column-reverse;
+        height: auto;
+        padding: 4rem 0 6.5rem;
+    }
+}
+
+.hero__slider--layer__style4{
+    position: absolute;
+    right: 0;
+    @media only screen and (min-width: 1366px) and (max-width: 1599px) {
+        max-width: 720px;
+    }
+    @media only screen and (min-width: 1200px) and (max-width: 1365px) {
+        width: 600px;
+    }
+    @media only screen and (min-width: 992px) and (max-width: 1199px) {
+        width: 500px;
+    }
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+        width: 400px;
+    }
+    @media only screen and (max-width: 767px) {
+        position: inherit;
+        padding: 0 4rem;
+    }
+    @media only screen and (max-width: 479px) {
+        padding: 0 2rem;
+    }
+    &.style__right{
+        
+        @media only screen and (min-width: 1366px) {
+            right: 5rem;
+        }
+        @media only screen and (min-width: 1600px) {
+            right: 9rem;
+        }
+    }
+
+}
+.slider__content.style4 {
+    position: relative;
+    z-index: 9;
+    @media only screen and (max-width: 767px) {
+        text-align: center;
+    }
+}
+.slider__subtitle.style4{
+    font-size: 1.5rem;
+    line-height: 2rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    color: var(--secondary-color);
+    @media only screen and (min-width: 576px) {
+        font-size: 1.6rem;
+    }
+    @media only screen and (min-width: 992px) {
+        font-size: 1.8rem;
+        margin-bottom: 1.8rem;
+    }
+    @media only screen and (min-width: 1200px) {
+        font-size: 2rem;
+        line-height: 2.2rem;
+        margin-bottom: 2rem;
+    }
+    
+}
+.slider__maintitle.style4{
+    text-decoration: inherit;
+    text-transform: uppercase;
+    font-family: var(--rubik-fonts);
+    font-size: 2rem;
+    line-height: 2.8rem;
+    margin-bottom: 1.2rem;
+    @media only screen and (min-width: 400px) {
+        font-size: 2.2rem;
+        line-height: 3rem;
+    }
+    @media only screen and (min-width: 480px) {
+        font-size: 2.5rem;
+        line-height: 3.2rem;
+    }
+    @media only screen and (min-width: 576px) {
+        font-size: 2.8rem;
+        line-height: 3.5rem;
+        margin-bottom: 1.5rem;
+    }
+    @media only screen and (min-width: 768px) {
+        font-size: 3.2rem;
+        line-height: 4rem;
+    }
+    @media only screen and (min-width: 992px) {
+        font-size: 4rem;
+        line-height: 5rem;
+    }
+    @media only screen and (min-width: 1200px) {
+        font-size: 4.8rem;
+        line-height: 6rem;
+        margin-bottom: 2rem;
+    }
+    @media only screen and (min-width: 1366px) {
+        font-size: 5.2rem;
+        line-height: 6.5rem;
+    }
+    @media only screen and (min-width: 1600px) {
+        font-size: 6.2rem;
+        line-height: 7.5rem;
+    }
+}
+.slider__desc.style4{
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+    @media only screen and (min-width: 480px) {
+        font-size: 1.5rem;
+    }
+    @media only screen and (min-width: 576px) {
+        margin-bottom: 2.2rem;
+    }
+    @media only screen and (min-width: 992px) {
+        font-size: 1.6rem;
+        margin-bottom: 2.5rem;
+    }
+    @media only screen and (min-width: 1200px) {
+        margin-bottom: 3.5rem;
+    }
+}
+
+/*
+    home five slider css
+*/
+.slider__thumbnail--img__style5{
+    width: 100%;
+    object-fit: cover;
+    @media only screen and (min-width: 1366px) and (max-width: 1599px) {
+        height: 570px;
+    }
+    @media only screen and (min-width: 1200px) and (max-width: 1365px) {
+        height: 520px;
+    }
+    @media only screen and (min-width: 992px) and (max-width: 1199px) {
+        height: 470px;
+    }
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+        height: 320px;
+    }
+}
+.hero__content--style5{
+    position: absolute;
+    top: 16%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 0 3rem;
+    @media only screen and (min-width: 992px) {
+        top: 20%;
+    }
+    @media only screen and (min-width: 1200px) {
+        top: 22%;
+    }
+    @media only screen and (max-width: 767px) {
+        position: inherit;
+        top: inherit;
+        margin-top: 4.3rem;
+    }
+    &__title{
+        font-size: 2.5rem;
+        line-height: 3.7rem;
+        font-weight: 600;
+        font-family: var(--rubik-fonts);
+        @media only screen and (min-width: 480px) {
+            font-size: 3rem;
+            line-height: 4.2rem;
+        }
+        @media only screen and (min-width: 768px) {
+            font-size: 3.5rem;
+            line-height: 4.8rem;
+        }
+        @media only screen and (min-width: 992px) {
+            font-size: 4rem;
+            line-height: 5.5rem;
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 4.5rem;
+            line-height: 6rem;
+        }
+        @media only screen and (min-width: 1366px) {
+            font-size: 5rem;
+            line-height: 6.5rem;
+        }
+        @media only screen and (min-width: 1600px) {
+            font-size: 6rem;
+            line-height: 7.5rem;
+        }
+    }
+}
+
+
+// End slider css here

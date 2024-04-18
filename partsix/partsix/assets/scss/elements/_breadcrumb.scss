@@ -1,0 +1,67 @@
+/* 
+    32. Breadcrumb css 
+*/
+.breadcrumb__bg{
+    background-color: var(--bg-offwhite-color);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 2.5rem 0;
+    @media only screen and (min-width: 768px) {
+        padding: 3rem 0;
+    }
+}
+
+.breadcrumb__content{
+    position: relative;
+    &--title{
+        margin-bottom: 12px;
+        font-size: 2.2rem;
+        line-height: 2.2rem;
+        @media only screen and (min-width: 768px) {
+            margin-bottom: 15px;
+            font-size: 2.5rem;
+            line-height: 2.5rem;
+        }
+        @media only screen and (min-width: 992px) {
+            margin-bottom: 16px;
+            font-size: 2.8rem;
+           line-height: 2.8rem;
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 3rem;
+            line-height: 3rem;
+        }
+    }
+    &--menu{
+        &__items{
+            position: relative;
+            margin-right: 18px;
+            padding-right: 20px;
+            font-size: 15px;
+            line-height: 22px;
+            &:last-child{
+                margin-right: 0;
+                padding-right: 0;
+                &::before{
+                    display: none;
+                }
+            }
+            &::before{
+                position: absolute;
+                content: "";
+                width: 1px;
+                height: 16px;
+                background: var(--secondary-color);
+                right: 0;
+                top: 6px;
+                border-radius: 5px;
+                transform: rotate(30deg);
+            }
+        }
+    }
+}

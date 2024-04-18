@@ -163,7 +163,7 @@ public class DisplayUserPostController {
             "\n\n Best regards," +
             "\n\n"+ userAccount.get().getLabors().get(0).getFull_name()+
             "\n\nBY BOOKINGLABOR WEBSITE\n\nBookingLabor.com.vn");
-            flashMessage.addFlashAttribute("success", "ỨNG TUYỂN THANH CÔNG");
+            flashMessage.addFlashAttribute("success", "ỨNG TUYỂN THÀNH CÔNG");
             return "redirect:/post/show/" + id;
 
         }catch (Exception exception){

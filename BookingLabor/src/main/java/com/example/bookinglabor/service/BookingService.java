@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface BookingService {
 
@@ -22,7 +23,10 @@ public interface BookingService {
 
     boolean checkInvalidBooking(int size1, int size2, Long jobDetail_id, List<BookingObject> bookingObjects);
 
-    boolean saveDataToSessionStore(List<BookingObject> bookingObjects, HttpServletRequest request, HttpSession session, JobDetail jobDetail);
+    boolean saveDataToSessionStore(List<BookingObject> bookingObjects,
+                                   HttpServletRequest request,
+                                   HttpSession session, JobDetail jobDetail,
+                                   Map<String, String> notify);
 
     List<BookingDto> findBookingsByCustomerId(Long customer_id);
 

@@ -1,8 +1,11 @@
 package com.example.bookinglabor.controller.user;
 
 
+import com.example.bookinglabor.controller.component.EnumComponent;
+import com.example.bookinglabor.model.Apply;
 import com.example.bookinglabor.model.Booking;
 import com.example.bookinglabor.model.JobDetail;
+import com.example.bookinglabor.model.Labor;
 import com.example.bookinglabor.security.SecurityUtil;
 import com.example.bookinglabor.service.*;
 import lombok.AllArgsConstructor;
@@ -36,6 +39,7 @@ public class DisplayUserBookingManagerController {
     private LaborService laborService;
     private CustomerService customerService;
     private JobDetailService jobDetailService;
+    ApplyService applyService;
     @Autowired
     private SendMailService sendMailService;
 
@@ -43,9 +47,10 @@ public class DisplayUserBookingManagerController {
     String index(Model model, @AuthenticationPrincipal UserDetails userDetails){
 
 
-        Long user_id = userService.findByEmail(SecurityUtil.getSessionUser()).getId();
-        Long labor_id = laborService.findByUserId(user_id).getId();
-        List<JobDetail> jobDetails = jobDetailService.findJobDetailByLaborId(labor_id);
+        Long user_id = userService.findByEmailAndProvider(SecurityUtil.getSessionUser(), EnumComponent.SIMPLE).getId();
+        Labor labor = laborService.findByUserId(user_id);
+        List<JobDetail> jobDetails = jobDetailService.findJobDetailByLaborId(labor.getId());
+        List<Apply> appliesByUser = applyService.findAppliesByUserAccountId(user_id);
         LocalDateTime currentAcceptTime = LocalDateTime.now();
         //Lambda function vế trước là tham số đầu vào
         // vế sau là tham số đầu ra
@@ -59,6 +64,8 @@ public class DisplayUserBookingManagerController {
 
         model.addAttribute("invalidAcceptFunction", invalidAcceptFunction);
         model.addAttribute("jobDetails",jobDetails);
+        model.addAttribute("applies",appliesByUser);
+        model.addAttribute("labor",labor);
 
         return "/user/booking/detail";
     }
@@ -99,7 +106,7 @@ public class DisplayUserBookingManagerController {
         System.out.println(customerEmail);
 
         if(bookingService.invalidAcceptBooking(currentAcceptTime, id) < 1){
-            res.addFlashAttribute("failed","You are not allowed to accept labor booking, the time check-in with the employer had been to pass!!!");
+            res.addFlashAttribute("failed","QUÁ HẠN ĐỒNG Ý!");
             return "redirect:/booking-manager-by-labor";
         }
         try{
@@ -125,7 +132,7 @@ public class DisplayUserBookingManagerController {
                 "\n\nNếu có bất kỳ thắc mắc nào vui lòng liên hệ với chúng tôi." +
                 "\n\nBest regards,\nBookingLabor Website");
 
-            res.addFlashAttribute("success","Accept successfully");
+            res.addFlashAttribute("success","ĐỒNG Ý THÀNH CÔNG");
             return "redirect:/booking-manager-by-labor";
         }catch (ParseException exception){
 

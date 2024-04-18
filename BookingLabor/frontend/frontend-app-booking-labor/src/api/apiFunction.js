@@ -1,21 +1,39 @@
 import axios from "axios"
 import Cookies from "js-cookie";
+import {toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export const api = axios.create({
     baseURL:"http://localhost:8080"
 });
 
 
+export const notify = (text, time)=>{
+    toast.error(text, {
+
+        position: "top-center",
+        autoClose: time,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+
+    })
+}
+
 
 export async function loginUser(login){
 
     try{
-        const res = await api.post("/auth-login", login)
+        const res = await api.post("/api/login", login);
         if(res.status >= 200 && res.status < 300){
             return res.data;
         }
     }catch (error) {
-        console.log("error: "+error);
+        console.error("Login failed: ",error);
         return null;
     }
 

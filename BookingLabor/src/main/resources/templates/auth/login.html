@@ -38,6 +38,14 @@
                                 </div>
 
                                 <div class="col-lg-12">
+                                    <fieldset>
+                                        <span>
+                                            <a th:href="@{/forgot-password}">Quên mật khẩu.</a>
+                                        </span>
+                                    </fieldset>
+                                </div>
+
+                                <div class="col-lg-12">
                                     <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${param.error}">
                                         <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Failed:"><use xlink:href="#check-circle-fill"/></svg>
                                         <strong>Invalid username and password!</strong>

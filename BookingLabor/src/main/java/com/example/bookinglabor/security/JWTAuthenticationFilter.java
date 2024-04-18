@@ -71,9 +71,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         catch (BadCredentialsException ex) {
             sendErrorResponse(response, "Incorrect username or password!");
         }
-        catch (Exception ex) {
-            sendErrorResponse(response, "Login failed!");
-        }
 
     }
 
@@ -95,7 +92,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
             return bearerToken.substring(7);
         }
-
         return null;
     }
 }

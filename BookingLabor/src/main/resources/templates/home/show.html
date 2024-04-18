@@ -40,7 +40,8 @@
                                     </div>
                                     <div class="right">
                                         <h4 th:text="${job.nameJob}"></h4>
-                                        <span><em th:text="${'Số công việc của danh mục: ' + countJobsByCategoryJob.apply(job.categoryJob.id)}"></em></span>
+                                        <span><em th:text="'Số công việc: ' + ${countJobsByCategoryJob.apply(categoryJob.id)}"></em></span>
+
                                     </div>
                                 </div>
                                 <div class="thumb">

@@ -89,7 +89,8 @@ public class BookingWork implements BookingService {
     public boolean saveDataToSessionStore(List<BookingObject> bookingObjects,
                                           HttpServletRequest request,
                                           HttpSession session,
-                                          JobDetail jobDetail) {
+                                          JobDetail jobDetail,
+                                          Map<String, String> notify) {
 
         Long user_id = userRepo.findByEmail(SecurityUtil.getSessionUser()).getId();
         Long customerId = customerRepo.findByUserId(user_id).get(0).getId();
@@ -112,6 +113,7 @@ public class BookingWork implements BookingService {
 
         for(BookingObject book : bookingCarts){
             if(Objects.equals(jobDetail.getId(), book.getId())){
+                notify.put("message","BẠN ĐÃ CHỌN ỨNG VIÊN NÀY VUI LÒNG TUYỂN NGƯỜI KHÁC!");
                 System.out.println("Saved failed!!!");
                 return false;
             }
@@ -119,6 +121,7 @@ public class BookingWork implements BookingService {
         try{
             for(BookingObject book : bookingCarts){
                 if(Objects.equals(jobDetail.getLabor().getId(), book.getLabor_id())){
+                    notify.put("message","BẠN ĐÃ CHỌN ỨNG VIÊN NÀY VUI LÒNG TUYỂN NGƯỜI KHÁC!");
                     return false;
                 }
             }

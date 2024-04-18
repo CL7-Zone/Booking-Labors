@@ -74,7 +74,6 @@ public class UserWork implements UserService {
         }
     }
 
-
     @Override
     public UserAccount findByEmail(String email) {
 
@@ -113,7 +112,6 @@ public class UserWork implements UserService {
     @Override
     public void saveDataToSessionStore(List<UserObject> userObject, UserDto user,
                                        HttpServletRequest request, HttpSession session) {
-
         if(userObject == null){
             userObject = new ArrayList<>();
             request.getSession().setAttribute("userObject", userObject);
@@ -220,6 +218,19 @@ public class UserWork implements UserService {
             newRoles.add(role);
             user.setRoles(newRoles);
             userRepository.save(user);
+        }
+
+    }
+
+    @Override
+    public void updateUser(List<UserObject> userObject ,HttpSession session) {
+
+        for (UserObject forgotPassword : userObject){
+            UserAccount user = userRepository.findByEmailAndProvider(forgotPassword.getEmail(), EnumComponent.SIMPLE);
+            if(user != null){
+                user.setPassword(passwordEncoder.encode(forgotPassword.getPassword()));
+                userRepository.save(user);
+            }
         }
 
     }

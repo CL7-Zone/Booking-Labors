@@ -3,6 +3,8 @@ import React, {useEffect} from "react";
 import {getApi} from "../../../api/apiFunction";
 import {useNavigate} from "react-router-dom";
 import { SetUsers } from '../../../redux/action/SetUsers';
+import {toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const User = () => {
 

@@ -1,0 +1,129 @@
+/* 
+    14. Small Product css 
+*/
+
+.product__sidebar{
+    border: 1px solid var(--secondary-color);
+    background: var(--body-background-color);
+    border-radius: 5px;
+    @media only screen and (max-width: 991px) {
+      margin-top: 3rem;
+    }
+  }
+.small__product{
+  &--header{
+    background: var(--secondary-color);
+    &__title{
+      color: var(--text-white-color);
+      font-size: 1.6rem;
+      font-weight: 600;
+      line-height: 4.5rem;
+      padding: 0 1.8rem;
+      @media only screen and (min-width: 1200px) {
+        font-size: 1.8rem;
+      }
+    }
+  }
+  &--inner{
+    padding: 0.3rem 1.2rem 1.2rem;
+    max-height: 463px;
+    @media only screen and (min-width: 1200px) {
+      padding: 0.5rem 1.5rem 1.5rem;
+    }
+    @media only screen and (min-width: 1366px) {
+      padding: 0.4rem 1.7rem 1.7rem;
+    }
+    & .swiper-slide-active{
+        & .small__product--card{
+            border-top: 0;
+        }
+      }
+  }
+  &--thumbnail{
+      overflow: hidden;
+      @media only screen and (max-width: 1199px) {
+        width: 63px;
+      }
+      @media only screen and (max-width: 767px) {
+        width: 85px;
+      }
+  }
+  &--card{
+    gap: 1.8rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    @media only screen and (min-width: 768px) {
+      gap: 1.2rem;
+    }
+    @media only screen and (min-width: 1200px) {
+      gap: 1.5rem;
+    }
+    @media only screen and (min-width: 1366px) {
+      gap: 2rem;
+    }
+    &:hover{
+        & .small__product--thumbnail img{
+          transform: scale(1.03);
+        }
+    }
+    &__title{
+      margin-bottom: 0.3rem;
+      font-size: 1.4rem;
+      @media only screen and (min-width: 1200px) {
+        font-size: 1.5rem;
+      }
+    }
+    &__price{
+      margin-bottom: 0.4rem;
+    }
+    &.style2 {
+      gap: 2rem;
+      padding: 1.5rem;
+      border: 1px solid transparent;
+      background: var(--body-background-color);
+      border-radius: 5px;
+      transition: var(--transition);
+      @media only screen and (min-width: 576px) {
+        padding: 2rem;
+      }
+      @media only screen and (min-width: 1200px) {
+        gap: 3rem;
+      }
+      &:hover{
+        border-color: var(--secondary-color);
+      }
+      & .small__product--rating{
+        margin-bottom: 8px;
+      }
+    }
+  }
+}
+
+.small__product--swiper__btn{
+  position: absolute;
+  top: 35px;
+  padding: 0;
+  height: auto;
+  right: 8px;
+  width: auto;
+  color: var(--text-white-color);
+  &::after{
+      display: none;
+  }
+  &.swiper-button-prev{
+      right: 34px;
+      left: auto;
+  }
+  &.swiper-button-disabled{
+      opacity: .55;
+  }
+}
+
+
+.small__product--section__bg{
+  background: url(../img/banner/small-product-sectio-bg.webp);
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position:  center center;
+  background-size: cover;;
+}

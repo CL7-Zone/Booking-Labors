@@ -1,0 +1,83 @@
+/* 
+    7. Shipping css
+*/
+.shipping__inner{
+    border: 1px solid var(--bg-light-dark-color);
+    border-radius: 5px;
+    margin-bottom: 5rem;
+    @media only screen and (max-width: 991px) {
+        flex-wrap: wrap;
+        gap: 2rem;
+        justify-content: center;
+        padding: 10px 0;
+    }
+    @media only screen and (max-width: 575px) {
+        gap: 1rem;
+    }
+}
+.shipping__items{
+    gap: 1.5rem;
+    justify-content: center;
+    width: auto;
+    padding: 1rem;
+    position: relative;
+    transition: var(--transition);
+    @media only screen and (min-width: 576px) {
+        padding: 1.5rem;
+    }
+    @media only screen and (min-width: 992px) {
+        width: 25%;
+        padding: 1.5rem;
+    }
+    @media only screen and (min-width: 1200px) {
+        gap: 1.7rem;
+        padding: 2rem;
+    }
+    &::before{
+        position: absolute;
+        content: "";
+        width: 1px;
+        height: 48px;
+        background: var(--bg-light-dark-color);
+        right: 0;
+        top: 50%;
+        transform: translatey(-50%);
+        @media only screen and (max-width: 991px) {
+            display: none;
+        }
+    }
+    &:last-child{
+        &::before{
+            display: none;
+        }
+    }
+    &:hover{
+        background: var(--bg-light-dark-color);
+    }
+}
+.shipping__content{
+    &--title{
+        margin-bottom: 4px;
+    }
+    &--desc{
+        color: var(--foreground-sub-color);
+        font-size: 1.4rem;
+        line-height: 2rem;
+        font-family: var(--inter-fonts);
+    }
+}
+
+/*
+    home two shipping css
+*/
+.shipping__inner.style2{
+    border: 1px solid var(--border-color);
+}
+.shipping__items.style2{
+    &::before{
+        background: var(--border-color);
+    }
+    &:hover{
+        background: var(--bg-offwhite-color);
+    }
+}

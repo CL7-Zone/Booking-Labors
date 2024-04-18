@@ -1,0 +1,183 @@
+/* 
+    25. Login page css 
+*/
+
+.account__login{
+    background: var(--body-background-color);
+    padding: 2rem 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+    @media only screen and (min-width: 576px) {
+        padding: 2.5rem;
+    }
+    @media only screen and (min-width: 992px) {
+        padding: 3rem;
+    }
+    &--header{
+        &__title{
+            font-weight: 600;
+        }
+        &__desc{
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--foreground-sub-color);
+        }
+    }
+    &--input{
+        width: 100%;
+        height: 4.8rem;
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+        padding: 0 1.5rem;
+        margin-bottom: 1.5rem;
+        @media only screen and (min-width: 768px) {
+            height: 5.2rem;
+        }
+        @media only screen and (min-width: 992px) {
+            font-size: 1.5rem;
+        }
+        &:focus{
+            border-color: var(--secondary-color);
+        }
+    }
+    &--btn{
+        width: 100%;
+        border-radius: 0.5rem;
+        font-size: 1.5rem;
+        @media only screen and (min-width: 992px) {
+            font-size: 1.7rem;
+        }
+    }
+    &--signup__text{
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--foreground-sub-color);
+        & button{
+            padding: 0;
+            border: 0;
+            background: inherit;
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+    }
+    &--forgot{
+        font-weight: 600;
+        color: var(--secondary-color);
+        font-size: 1.5rem;
+        border: 0;
+        padding: 0;
+        background: inherit;
+        @media only screen and (max-width: 575px) {
+            margin-top: 0.6rem;
+        }
+    }
+    &.register{
+        @media only screen and (max-width: 767px) {
+            margin-top: 3rem;
+        }
+    }
+}
+
+.account__login--remember{
+    &__forgot{
+        @media only screen and (max-width: 575px) {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+    & .checkout__checkbox--checkmark{
+        @media only screen and (max-width: 575px) {
+            top: 0;
+            top: 5px;
+            transform: inherit;
+        }
+    }
+}
+.login__remember--label{
+    color: var(--foreground-sub-color);
+    font-size: 1.3rem;
+    font-weight: 600;
+    @media only screen and (min-width: 992px) {
+        font-size: 1.5rem;
+    }
+}
+.account__login--divide{
+    text-align: center;
+    position: relative;
+    padding: 1rem 0;
+    &::before{
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 0.1rem;
+        background: var(--border-color);
+        top: 50%;
+        left: 0;
+        transform: translatey(-50%);
+    }
+    &__text{
+        padding: 0 0.8rem;
+        background: var(--body-background-color);
+        position: relative;
+        font-weight: 500;
+        color: var(--foreground-sub-color);
+        @media only screen and (min-width: 992px) {
+            font-size: 1.5rem;
+        }
+    }
+
+}
+
+.account__social {
+    &--link{
+        height: 4.2rem;
+        line-height: 4rem;
+        padding: 0 2.5rem;
+        color: var(--text-white-color);
+        border-radius: 0.5rem;
+        font-weight: 600;
+        &.facebook{
+            background: #4867AA;
+            &:hover{
+                background: var(--secondary-color);
+                color: var(--text-white-color);
+            }
+        }
+        &.google{
+            background: #E94235;
+            &:hover{
+                background: var(--secondary-color);
+                color: var(--text-white-color);
+            }
+        }
+        &.twitter{
+            background: #55ADEE;
+            &:hover{
+                background: var(--secondary-color);
+                color: var(--text-white-color);
+            }
+        }
+        margin-right: 1rem;
+        &:last-child{
+            margin-right: 0;
+        }
+        @media only screen and (min-width: 768px) {
+            padding: 0 2rem;
+        }
+        @media only screen and (min-width: 992px) {
+            padding: 0 3.2rem;
+            margin-right: 1.2rem;
+            font-size: 1.5rem;
+        }
+        @media only screen and (min-width: 1200px) {
+            padding: 0 4.5rem;
+            margin-right: 2rem;
+        }
+        @media only screen and (max-width: 575px) {
+            height: 4rem;
+            line-height: 4rem;
+            padding: 0 1.4rem;
+        }
+    }
+}

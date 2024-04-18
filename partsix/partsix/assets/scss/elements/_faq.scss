@@ -1,0 +1,41 @@
+/* 
+    26. Faq page css 
+*/
+.face__step{
+    margin-bottom: 3.5rem;
+    padding-bottom: 3rem;
+    &:last-child{
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    &--title{
+        font-weight: 600;
+        font-size: 2rem;
+        &.mb-30{
+            @media only screen and (max-width: 767px) {
+                margin-bottom: 2.2rem;
+            }
+        }
+        @media only screen and (min-width: 992px) {
+            font-size: 2.2rem;
+        }
+    }
+}
+.faq__accordion--btn{
+    box-shadow: 0 2px 22px rgba(0, 0, 0, 0.10);
+    padding: 1.8rem 6rem 1.8rem 2rem;
+    font-size: 1.5rem;
+    border-radius: 0.5rem;
+    & .accordion__items--button__icon{
+        right: 1.5rem;
+        @media only screen and (max-width: 767px) {
+            margin-bottom: 1.2rem;
+        }
+    }
+    @media only screen and (min-width: 768px) {
+        font-size: 1.6rem;
+    }
+    & > *{
+        pointer-events: none;
+    }
+}

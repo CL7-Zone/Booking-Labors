@@ -1,10 +1,10 @@
-import NotFound from "../element/NotFound";
+import Unauthorized from "../element/Unauthorized";
 import React from "react";
 
 const Error = () => {
 
 
-    return <NotFound />;
+    return <Unauthorized />;
 }
 
 export default Error

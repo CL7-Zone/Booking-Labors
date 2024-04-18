@@ -36,7 +36,7 @@ public class CustomUserDetailsService  implements UserDetailsService, CustomUser
                     RoleMapper.mapRolesToAuthorities(user.getRoles())
             );
 
-            System.out.println("User detail: "+userDetail);
+            System.out.println("CustomUser detail: "+userDetail);
 
             return userDetail;
 

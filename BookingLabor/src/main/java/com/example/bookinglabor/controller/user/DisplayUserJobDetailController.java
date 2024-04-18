@@ -85,7 +85,7 @@ public class DisplayUserJobDetailController {
                           RedirectAttributes flashMessage) {
         try {
             if(jobDetailService.updateById(job_id, labor_id, jobDetail))
-                flashMessage.addFlashAttribute("success", "Update successfully");
+                flashMessage.addFlashAttribute("success", "CẬP NHẬT THÀNH CÔNG");
 
             return "redirect:/your-job";
         } catch (Exception exception) {
@@ -101,10 +101,11 @@ public class DisplayUserJobDetailController {
             System.out.println("Delete job detail: "+id);
 
             if(jobDetailService.deleteById(id)){
-                flashMessage.addFlashAttribute("success", "Delete successfully");
+                flashMessage.addFlashAttribute("success", "XÓA THÀNH CÔNG");
                 return "redirect:/your-job";
             }
-            flashMessage.addFlashAttribute("failed", "Delete failed");
+
+            flashMessage.addFlashAttribute("failed", "BẠN KHÔNG ĐƯỢC PHÉP XÓA CÔNG VIỆC NÀY VÌ NÓ ĐANG NẰM TRONG DANH SÁCH ỨNG TUYỂN!!!");
             return "redirect:/your-job";
         }catch (Exception exception){
             flashMessage.addFlashAttribute("failed", "Error: "+exception);

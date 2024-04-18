@@ -1,0 +1,203 @@
+/* 
+    23. Newsletter popup css
+*/
+/* ANIMATIONS
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+[data-animation] .newsletter__popup--inner {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s cubic-bezier(0.51, 0.92, 0.24, 1.15);
+  }
+  
+  [data-animation].newsletter__show .newsletter__popup--inner {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0.2s;
+  }
+  
+.newsletter__popup{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    padding: 1rem;
+    cursor: pointer;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 1s ease-in-out;
+    z-index: 999;
+    &.newsletter__show{
+        visibility: visible;
+        opacity: 1;
+        & .newsletter__popup--inner{
+            transform: translateY(0);
+        }
+    }
+    &--inner{
+        position: relative;
+        width: 88%;
+        max-height: 80vh;
+        border-radius: 10px;
+        background: var(--body-background-color);
+        box-shadow: 2px 0 20px rgba(0, 0, 0, 0.06);
+        overflow: auto;
+        cursor: default;
+        -webkit-transform: translateY(-50px);
+        transform: translateY(-50px);
+        @media only screen and (min-width: 576px) {
+            width: 80%;
+        }
+        @media only screen and (min-width: 768px) {
+            width: 655px;
+        }
+        @media only screen and (min-width: 992px) {
+            width: 720px;
+        }
+        @media only screen and (min-width: 1200px) {
+            width: 760px;
+        }
+    }
+    &--close__btn{
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        background: var(--secondary-color);
+        color: var(--text-white-color);
+        line-height: 2.8rem;
+        border: 0;
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        border-radius: 50%;
+        padding: 0;
+        width: 3rem;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &:hover{
+            background: var(--primary-color);
+        }
+        @media only screen and (min-width: 992px) {
+            width: 3.2rem;
+            height: 3.2rem;
+        }
+        & > *{
+            pointer-events: none;
+        }
+    }
+    &--thumbnail{
+        width: 280px;
+        @media only screen and (min-width: 992px) {
+            width: 320px;
+        }
+        @media only screen and (min-width: 1200px) {
+            width: 330px;
+        }
+        @media only screen and (max-width: 767px) {
+            display: none;
+        }
+    }
+    &--box{
+        &__right{
+            width: 100%;
+            padding: 3rem 2rem 2.2rem;
+            text-align: center;
+            @media only screen and (min-width: 576px) {
+                padding: 3rem 2rem 3rem;
+            }
+            @media only screen and (min-width: 768px) {
+                width: calc(100% - 280px);
+                padding: 3rem 2rem;
+            }
+            @media only screen and (min-width: 992px) {
+                width: calc(100% - 320px);
+                padding: 3rem 2.5rem;
+            }
+            @media only screen and (min-width: 1200px) {
+                width: calc(100% - 330px);
+                padding: 3rem 3rem;
+            }
+        }
+    }
+    &--title{
+        margin-bottom: 1.3rem;
+        @media only screen and (min-width: 992px) {
+            margin-bottom: 2rem;
+        }
+    }
+    &--content{
+        &--desc{
+            color: var(--foreground-sub-color);
+            display: inline-block;
+            line-height: 2.4rem;
+            font-size: 1.5rem;
+            margin-bottom: 1.6rem;
+            @media only screen and (min-width: 768px) {
+                line-height: 2.6rem;
+                font-size: 1.5rem;
+            }
+        }
+    }
+    &--subscribe{
+        &__input{
+            width: 100%;
+            height: 4rem;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 0 15px;
+            &:focus{
+                border-color: var(--secondary-color);
+            }
+            @media only screen and (min-width: 768px) {
+                height: 4.5rem;
+            }
+        }
+        &__btn{
+            width: 100%;
+            height: 4rem;
+            background: var(--secondary-color);
+            color: var(--text-white-color);
+            border: 0;
+            padding: 0 2rem;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            font-weight: 500;
+            border-radius: 5px;
+            margin-top: 1.5rem;
+            &:hover{
+                background: var(--primary-color);
+            }
+            @media only screen and (min-width: 768px) {
+                height: 4.5rem;
+            }
+        }
+    }
+    &--footer{
+        margin-top: 1.2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        & input{
+            vertical-align: middle;
+            margin-right: 0.8rem;
+        }
+    }
+    &--dontshow__again--text{
+        color: var(--foreground-sub-color);
+        cursor: pointer;
+        font-size: 1.4rem;
+        @media only screen and (min-width: 768px) {
+            font-size: 1.6rem;
+        }
+    }
+}

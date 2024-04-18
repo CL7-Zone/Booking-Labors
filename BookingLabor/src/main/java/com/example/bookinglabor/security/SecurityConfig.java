@@ -63,9 +63,10 @@ public class SecurityConfig{
     private CustomerOauth2UserService oauth2UserService;
     private Oauth2LoginSuccessHandler oauth2LoginSuccessHandler;
     private CustomAccessDeniedHandler customAccessDeniedHandler;
+    private  CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Autowired
-    public SecurityConfig(JwtAuthEntryPoint authEntryPoint, CustomUserDetailsService userDetailsService, UserService userService, ClientRegistrationRepository clientRegistrationRepository, CustomerOauth2UserService oauth2UserService, Oauth2LoginSuccessHandler oauth2LoginSuccessHandler, CustomAccessDeniedHandler customAccessDeniedHandler) {
+    public SecurityConfig(JwtAuthEntryPoint authEntryPoint, CustomUserDetailsService userDetailsService, UserService userService, ClientRegistrationRepository clientRegistrationRepository, CustomerOauth2UserService oauth2UserService, Oauth2LoginSuccessHandler oauth2LoginSuccessHandler, CustomAccessDeniedHandler customAccessDeniedHandler, CustomAuthenticationEntryPoint customAuthenticationEntryPoint) {
         this.authEntryPoint = authEntryPoint;
         this.userDetailsService = userDetailsService;
         this.userService = userService;
@@ -73,6 +74,7 @@ public class SecurityConfig{
         this.oauth2UserService = oauth2UserService;
         this.oauth2LoginSuccessHandler = oauth2LoginSuccessHandler;
         this.customAccessDeniedHandler = customAccessDeniedHandler;
+        this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
     }
     @Bean
     public static PasswordEncoder passwordEncoder(){
@@ -106,70 +108,72 @@ public class SecurityConfig{
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.csrf().disable() // Vô hiệu hóa CSRF protection để cho phép đăng nhập qua form POST mà không cần token CSRF
-                .authorizeRequests() // Bắt đầu cấu hình cho việc xác thực yêu cầu
-                .antMatchers(HttpMethod.GET,"/","/error","/login",
-                "/labors/**", "/category-job/**","/jobs/show/**","/blog",
-                "/assets/**", "/vendor/**", "/send-mail","/contact",
-                "/verify", "/post/show/{id}", "/guest/**", "/send-sms",
-                "/auth", "/header-api", "/logout")
-                .permitAll()
+        .authorizeRequests() // Bắt đầu cấu hình cho việc xác thực yêu cầu
+        .antMatchers(HttpMethod.GET,"/","/error","/login",
+        "/labors/**", "/category-job/**","/jobs/show/**","/blog",
+        "/assets/**", "/vendor/**", "/send-mail","/contact",
+        "/verify", "/post/show/{id}", "/guest/**", "/send-sms",
+        "/auth", "/header-api", "/logout", "/forgot-password")
+        .permitAll()
 
-                .antMatchers(HttpMethod.POST, "/register/save","/verify/account",
-                "/auth/save", "/auth/account","/guest/**", "/auth-login", "/logout")
-                .permitAll()
+        .antMatchers(HttpMethod.POST, "/register/save","/verify/account",
+        "/auth/save", "/auth/account","/guest/**", "/api/login",
+        "/logout", "/update/password", "/send/token")
+        .permitAll()
 
-                // Cho phép mọi người truy cập các đường dẫn này mà không cần xác thực
-                .antMatchers(HttpMethod.GET,"/your-menu/**", "/labor-create-info",
-                "/contact/report", "/customer-create-info", "/jobs",
-                "/post/create", "/post-manager")
-                .hasAnyRole("USER", "LABOR", "CUSTOMER", "ADMIN")// Cho phép người dùng có role là USER truy cập vào các route trên
+        // Cho phép mọi người truy cập các đường dẫn này mà không cần xác thực
+        .antMatchers(HttpMethod.GET,"/your-menu/**", "/labor-create-info",
+        "/contact/report", "/customer-create-info", "/jobs",
+        "/post/create", "/post-manager")
+        .hasAnyRole("USER", "LABOR", "CUSTOMER", "ADMIN")// Cho phép người dùng có role là USER truy cập vào các route trên
 
-                .antMatchers(HttpMethod.POST, "/labor/info/save", "/customer/info/save","/save/post",
-                "/user/search", "/apply/post/{id}", "/delete/post/{id}", "/send/report")
-                .hasAnyRole("USER", "LABOR", "CUSTOMER", "ADMIN")
+        .antMatchers(HttpMethod.POST, "/labor/info/save", "/customer/info/save","/save/post",
+        "/user/search", "/apply/post/{id}", "/delete/post/{id}", "/send/report")
+        .hasAnyRole("USER", "LABOR", "CUSTOMER", "ADMIN")
 
-                .antMatchers(HttpMethod.GET, "/your-info-labor",  "/your-cart", "/your-job"
-                , "/booking-manager-by-labor", "booking-manager-by-labor/{id}").hasAnyRole("LABOR")
+        .antMatchers(HttpMethod.GET, "/your-info-labor",  "/your-cart", "/your-job"
+        , "/booking-manager-by-labor", "booking-manager-by-labor/{id}").hasAnyRole("LABOR")
 
-                .antMatchers(HttpMethod.POST, "/save/cart/job/**", "/save/your-job",
-                "/update/job-detail/**","/accept-booking/{id}","/save/comment_skill/{id}",
-                "/delete/job-cart/**", "/delete/job-detail/**").hasAnyRole("LABOR")
+        .antMatchers(HttpMethod.POST, "/save/cart/job/**", "/save/your-job",
+        "/update/job-detail/**","/accept-booking/{id}","/save/comment_skill/{id}",
+        "/delete/job-cart/**", "/delete/job-detail/**").hasAnyRole("LABOR")
 
-                .antMatchers(HttpMethod.GET, "/your-info-customer", "/your-booking-cart",
-                "/your-booking", "/delete/booking-cart/**").hasAnyRole("CUSTOMER")
+        .antMatchers(HttpMethod.GET, "/your-info-customer", "/your-booking-cart",
+        "/your-booking", "/delete/booking-cart/**").hasAnyRole("CUSTOMER")
 
-                .antMatchers(HttpMethod.POST, "/save/cart/job-detail/**", "/save/cart/booking",
-                 "/save/booking", "/update/booking/**").hasAnyRole("CUSTOMER")
+        .antMatchers(HttpMethod.POST, "/save/cart/job-detail/**", "/save/cart/booking",
+        "/save/booking", "/update/booking/**").hasAnyRole("CUSTOMER")
 
-                .antMatchers(HttpMethod.GET , "/admin/**", "/admin/api/role")
-                .hasAnyRole("ADMIN")
+        .antMatchers(HttpMethod.GET , "/admin/**")
+        .hasAnyRole("ADMIN")
 
-                .antMatchers(HttpMethod.POST , "/admin/**")
-                .hasAnyRole("ADMIN")
+        .antMatchers(HttpMethod.POST , "/admin/**")
+        .hasAnyRole("ADMIN")
 
-                .antMatchers()
-                .authenticated()// Yêu cầu xác thực (đăng nhập) để truy cập các đường dẫn này
-                .anyRequest().authenticated() // Bất kỳ yêu cầu nào khác cũng yêu cầu xác thực
-                .and() // Kết thúc phần cấu hình cho authorizeRequests(), bắt đầu một cấu hình mới
-//                .oauth2Login()//cấu hình oAuth2 google login
-//                .loginPage("/login")
-//                .userInfoEndpoint().userService(oauth2UserService)
-//                .and()
-//                .successHandler(oauth2LoginSuccessHandler)
-//                .and()
-                .formLogin(form -> form
-                .loginPage("/login")
-                .defaultSuccessUrl("/your-menu")//login thành công
-                .loginProcessingUrl("/login")
-                .failureUrl("/login?error=true")//sai mật khẩu
-                .permitAll())
-                .exceptionHandling()
-                .authenticationEntryPoint(
-                new LoginUrlAuthenticationEntryPoint("/login?login=false"))
-                .accessDeniedHandler(customAccessDeniedHandler);//Unauthorized
+        .antMatchers()
+        .authenticated()// Yêu cầu xác thực (đăng nhập) để truy cập các đường dẫn này
+        .anyRequest().authenticated() // Bất kỳ yêu cầu nào khác cũng yêu cầu xác thực
+        .and() // Kết thúc phần cấu hình cho authorizeRequests()
+        // bắt đầu một cấu hình mới
+//      .oauth2Login()//cấu hình oAuth2 google login
+//      .loginPage("/login")
+//      .userInfoEndpoint().userService(oauth2UserService)
+//      .and()
+//      .successHandler(oauth2LoginSuccessHandler)
+//      .and()
+        .formLogin(form -> form
+        .loginPage("/login")
+        .defaultSuccessUrl("/your-menu")//login thành công
+        .loginProcessingUrl("/login")
+        .failureUrl("/login?error=true")//sai mật khẩu
+        .permitAll())
+        .exceptionHandling()
+        .authenticationEntryPoint(customAuthenticationEntryPoint)//Unauthorized khi chưa login
+        .accessDeniedHandler(customAccessDeniedHandler);//Unauthorized khi login
 
-        http.authenticationProvider(authenticationProvider());
-        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.authenticationProvider(authenticationProvider());// lưu user login vào UserDetail
+        http.addFilterBefore(jwtAuthenticationFilter(),//Xác thực khi đăng nhập bằng API
+        UsernamePasswordAuthenticationFilter.class);//Kiểm tra username và password
 
         return http.build();
     }
@@ -181,8 +185,6 @@ public class SecurityConfig{
 //                        exception -> exception.authenticationEntryPoint(authEntryPoint))
 //                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 //                .authorizeHttpRequests(auth -> auth
-
-
     @Bean
     public OAuth2AuthorizationRequestRedirectFilter oauth2AuthorizationRequestRedirectFilter() {
         return new OAuth2AuthorizationRequestRedirectFilter(clientRegistrationRepository, "/oauth2/authorization");

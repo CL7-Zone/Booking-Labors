@@ -1,0 +1,273 @@
+/* 
+    33. Blog details css 
+*/
+.blog__sidebar--widget{
+    position: sticky;
+    top: 0;
+    &.left{
+        @media only screen and (max-width: 991px) {
+            margin-top: 6rem;
+        }
+        @media only screen and (max-width: 767px) {
+            margin-top: 5rem;
+        }
+    }
+}
+.blog__post--header{
+    &.mb-30{
+        margin-bottom: 2.5rem;
+    }
+}
+
+.post__header--title{
+    @media only screen and (min-width: 992px) {
+        line-height: 4rem;
+    }
+}
+.blog__post--meta{
+    text-transform: capitalize;
+    @media only screen and (min-width: 992px) {
+        font-size: 1.5rem;
+    }
+    &__link{
+        color: var(--secondary-color);
+        &:hover{
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+    }
+}
+.blog__thumbnail{
+    line-height: 1;
+    &.mb-30{
+        @media only screen and (max-width: 767px) {
+            margin-bottom: 2rem;
+        }
+    }
+}
+.blog__details--content{
+    &__subtitle{
+        line-height: 3rem;
+        @media only screen and (min-width: 992px) {
+            line-height: 3.2rem;
+        }
+        @media only screen and (min-width: 1200px) {
+            line-height: 3.5rem;
+        }
+    }
+}
+
+.blockquote__content{
+    padding:  20px 30px;
+    text-align: center;
+    border-radius: 10px;
+    @media only screen and (min-width: 992px) {
+        padding:  30px 40px;
+    }
+    @media only screen and (min-width: 1200px) {
+        padding:  40px 70px;
+    }
+    @media only screen and (max-width: 767px) {
+        margin: 0 0 2.5rem;
+        padding: 1.5rem 2rem;
+    }
+    &--desc{
+        font-size: 1.7rem;
+        line-height: 3rem;
+        font-style: italic;
+        font-weight: 500;
+        @media only screen and (min-width: 768px) {
+            font-size: 2rem;
+            line-height: 3.4rem;
+        }
+        
+    }
+    
+}
+
+
+.blog__tags--social__media{
+    padding: 5rem 0;
+    @media only screen and (max-width: 1199px) {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+.blog__tags--media{
+    @media only screen and (max-width: 1199px) {
+        margin-bottom: 2rem;
+    }
+    @media only screen and (max-width: 575px) {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    &__title{
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-right: 1rem;
+        @media only screen and (min-width: 992px) {
+            font-size: 1.6rem;
+        }
+        @media only screen and (max-width: 575px) {
+            margin-right: 0;
+            margin-bottom: 1rem;
+        }
+    }
+    &__list{
+        margin-right: 0.7rem;
+        &:last-child{
+            margin-right: 0;
+        }
+    }
+    &__link{
+        border: 1px solid var(--border-color);
+        background: var(--body-background-color);
+        padding: 0.5rem 1.2rem;
+        line-height: 2.5rem;
+        border-radius: 0.3rem;
+        text-transform: capitalize;
+        &:hover{
+            background: var(--secondary-color);
+            border-color: var(--secondary-color);
+            color: var(--text-white-color);
+        }
+        @media only screen and (max-width: 575px) {
+            padding: 0.4rem 0.8rem;   
+        }
+    }
+}
+.meta__deta{
+    color: var( --foreground-sub-color);
+    font-weight: 500;
+    margin-top: 0.6rem;
+    line-height: 2rem;
+    font-size: 1.4rem;
+}
+
+.blog__social--media{
+    &__title{
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-right: 1rem;
+        @media only screen and (min-width: 992px) {
+            font-size: 1.6rem;
+        }
+    }
+    &__list{
+        margin-right: 1rem;
+        &:last-child{
+            margin-right: 0;
+        }
+    }
+    &__link{
+        width: 3rem;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--secondary-color);
+        color: var(--text-white-color);
+        border-radius: 50%;
+        &:hover{
+            background: var(--primary-color);
+            color: var(--text-white-color);
+        }
+    }
+}
+
+.related__post{
+    &--text{
+        @media only screen and (max-width: 575px) {
+            text-align: center;
+        }
+    }
+    &--items{
+        &:hover{
+            & .related__post--img{
+                transform: scale(1.05);
+            }
+        }
+    }
+    &--thumb{
+        line-height: 1;
+        overflow: hidden;
+    }
+    &--title{
+        font-size: 1.6rem;
+        line-height: 2.2rem;
+        @media only screen and (min-width: 992px) {
+            font-size: 1.8rem;
+        }
+    }
+    &--deta{
+        font-size: 1.4rem;
+        color: var(--light-color);
+        line-height: 2.2rem;
+        @media only screen and (min-width: 992px) {
+            font-size: 1.5rem;
+        }
+    }
+}
+
+.comment__reply--btn{
+    height: 3.6rem;
+    line-height: 3.6rem;
+    padding: 0 2rem;
+    @media only screen and (min-width: 768px) {
+        height: 4rem;
+        line-height: 4rem;
+        padding: 0 2.5rem;
+    }
+}
+
+.reviews__comment--content{
+    &__title2{
+        font-weight: 600;
+        line-height: 2.2rem;
+        margin-bottom: 0.4rem;
+    
+        
+    }
+    &__date2{
+        font-size: 1.5rem;
+        color: var(--foreground-sub-color);
+    }
+    
+}
+.reviews__comment--reply__title.style2{
+    @media only screen and (max-width: 575px) {
+        text-align: center;
+    }
+}
+
+/*
+    post article css here
+*/
+.post__article{
+    &--items{
+        gap: 1.6rem;
+        margin-bottom: 2rem;
+        &:last-child{
+            margin-bottom: 0;
+        }
+        &:hover{
+            & .post__article--thumbnail__img{
+                transform: scale(1.03);
+            }
+        }
+    }
+    &--thumbnail{
+        width: 110px;
+        border-radius: 5px;
+        overflow: hidden;
+        &__img{
+            border-radius: 5px;
+        }
+    }
+    &--content{
+        width: calc(100% - 110px);
+        &__title{
+            font-size: 1.5rem;
+        }
+    }
+}

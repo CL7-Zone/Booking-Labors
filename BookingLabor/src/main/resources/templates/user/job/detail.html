@@ -76,7 +76,7 @@
                             </div>
 
                             <ul>
-                                <h4><i class="fa fa-add text-info"></i> CỘNG VIỆC CỦA BẠN</h4>
+                                <h4><i class="fa fa-add text-info"></i> HỒ SƠ CÔNG VIỆC CỦA BẠN</h4>
                             </ul>
 
                             <div class="your-job">
@@ -87,8 +87,8 @@
                                     <span class="text-info mr-3" th:text="${jobDetail.labor.full_name}"></span>
                                     <b>TÊN CÔNG VIỆC: </b>
                                     <span class="text-info mr-3" th:text="${jobDetail.job.nameJob}"></span>
-                                    <b>GIÁ: </b>
-                                    <span class="text-info mr-3" th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ/day'}"></span>
+                                    <b>LƯƠNG: </b>
+                                    <span class="text-info mr-3" th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></span>
                                     <b>TẠI TỈNH/ THÀNH PHỐ: </b>
                                     <span class="text-info mr-3" th:text="${jobDetail.labor.city.city_name}"></span>
                                     <p th:each="commentSkill : ${jobDetail.commentSkills}">
@@ -114,7 +114,7 @@
                                     <th>ID</th>
                                     <th>HỌ VÀ TÊN</th>
                                     <th>TÊN CÔNG VIỆC</th>
-                                    <th>GIÁ</th>
+                                    <th>LƯƠNG</th>
                                     <th>Ảnh</th>
                                     <th>TẠI TỈNH/ THÀNH PHỐ</th>
                                     <th colspan="2">ACTION</th>

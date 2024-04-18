@@ -1,0 +1,325 @@
+/* 
+    6. Categories css
+*/
+.categories__card{
+    background: var(--bg-offwhite-color);
+    border-radius: 5px;
+    transition: var(--transition);
+    height: 100%;
+    &:hover{
+        background: var(--secondary-color);
+        & .categories__icon{
+            color: var(--text-white-color);
+        }
+        & .categories__title{
+            color: var(--text-white-color);
+        }
+        & .categories__subtitle{
+            color: var(--text-white-color);
+        }
+    }
+    &--link{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+        padding: 1.2rem;
+        @media only screen and (min-width: 1200px) {
+            padding: 1.5rem;
+        }
+    }
+}
+.categories__icon{
+    margin-bottom: 1.2rem;
+}
+.categories__title{
+    font-size: 1.5rem;
+    line-height: 2.4rem;
+    font-family: var(--rubik-fonts);
+    margin-bottom: 0.6rem;
+    transition: var(--transition);
+}
+.categories__subtitle{
+    font-size: 1.4rem;
+    line-height: 2rem;
+    font-family: var(--rubik-fonts);
+    color: var(--foreground-sub-color);
+}
+
+
+/*
+    Sidebar categorie css
+*/
+.sidebar__category{
+    padding: 1rem;
+    background: url(../img/other/category-sidebar-bg.webp);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+    border-radius: 5px;
+    @media only screen and (min-width: 1200px) {
+        padding: 1.5rem;
+    }
+    @media only screen and (max-width: 991px) {
+        margin-top: 3rem;
+    }
+}
+.choose__category{
+    &--content{
+        padding: 2rem 1.5rem;
+        @media only screen and (min-width: 1200px) {
+            padding: 2.5rem 2rem;
+        }
+    }
+    &--title{
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        @media only screen and (min-width: 768px) {
+            margin-bottom: 2.6rem;
+        }
+    }
+    &--menu{
+        &__list{
+            margin-bottom: 1.8rem;
+            @media only screen and (min-width: 576px) {
+                margin-bottom: 2.2rem;
+            }
+            @media only screen and (min-width: 1200px) {
+                margin-bottom: 2.5rem;
+            }
+            &:last-child{
+                margin-bottom: 0;
+            }
+            &:hover{
+                & .choose__category--menu__icon{
+                    color: var(--secondary-color);
+                }
+                & .choose__category--menu__link{
+                    color: var(--secondary-color);
+                    text-decoration: underline;
+                }
+            }
+        }
+        &__icon{
+            color: var(--foreground-sub-color);
+            margin-right: 0.2rem;
+            transition: var(--transition);
+            @media only screen and (min-width: 1200px) {
+                margin-right: 0.4rem;
+            }
+        }
+        &__link{
+            font-size: 1.5rem;
+            line-height: 2.4rem;
+            font-family: var(--inter-fonts);
+            color: var(--foreground-sub-color);
+            font-weight: 500;
+            @media only screen and (min-width: 1200px) {
+                font-size: 1.6rem;
+                line-height: 2.6rem;
+            }
+        }
+    }
+    &--banner{
+        & .banner__thumbnail{
+            width: auto;
+            display: inline-block;
+            @media only screen and (max-width: 767px) {
+                width: 100%;
+            }
+            &--img{
+                width: auto;
+                @media only screen and (max-width: 767px) {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+/*
+    categories banner css
+*/
+.category__banner{
+    &--content{
+        position: absolute;
+        top: 50%;
+        transform: translatey(-50%);
+        left: 2.5rem;
+    }
+    &--subtitle{
+        font-size: 1.2rem;
+        line-height: 1.8rem;
+        font-weight: 600;
+        font-family: var(--inter-fonts);
+    }
+    &--title{
+        font-size: 1.6rem;
+        font-family: var(--rubik-fonts);
+        color: var(--text-white-color);
+        text-transform: uppercase;
+        @media only screen and (min-width: 1200px) {
+            font-size: 2rem;
+        }
+    }
+    &--desc{
+        font-size: 1.2rem;
+        color: var(--foreground-sub-color);
+        font-weight: 500;
+        font-family: var(--inter-fonts);
+        margin-bottom: 0;
+        line-height: 2rem;
+        @media only screen and (min-width: 1200px) {
+            font-size: 2rem;
+            line-height: 2.4rem;
+        }
+    }
+    &--price{
+        font-size: 1.6rem;
+        font-weight: 500;
+        line-height: 2rem;
+        @media only screen and (min-width: 1200px) {
+            font-size: 2rem;
+            line-height: 2.4rem;
+        }
+    }
+}
+
+
+
+/*
+    home two categories card css
+*/
+.categories__card{
+    &.style2{
+        border: 1px solid var(--border-color);
+        background: inherit;
+        &:hover{
+            border-color: var(--secondary-color);
+        }
+    }
+    &--link__style2{
+        gap: 2rem;
+        padding: 1.8rem 1.5rem;
+        @media only screen and (min-width: 480px) {
+            gap: 1.3rem;
+            padding: 1.8rem 1rem;
+        }
+        @media only screen and (min-width: 1200px) {
+            gap: 2.2rem;
+            padding: 2rem;
+        }
+        @media only screen and (min-width: 1366px) {
+            gap: 2.5rem;
+            padding: 2rem 2.5rem;
+        }
+    }
+}
+.categories__content{
+    &--title{
+        font-size: 1.6rem;
+        line-height: 2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        @media only screen and (min-width: 1200px) {
+            font-size: 1.8rem;
+            line-height: 2.2rem;
+        }
+    }
+    &--subtitle{
+        font-size: 1.4rem;
+        line-height: 2rem;
+        color: var(--body-text-color);
+    }
+}
+
+
+/*
+    categories shop card css
+*/
+.categories__shop{
+    &--inner{
+        display: flex;
+        box-shadow: 0 2px 22px rgba(0, 0, 0, 0.10);
+        border-radius: 5px;
+        flex-wrap: wrap;
+    }
+    &--card{
+        border-right: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border-color);
+        transition: var(--transition);
+        &:hover{
+            background: var(--bg-offwhite-color);
+        }
+        width: 50%;
+        @media only screen and (min-width: 480px) {
+            width: 33.33%;
+        }
+        @media only screen and (min-width: 768px) {
+            width: 25%;
+        }
+        &__link{
+            padding: 2rem;
+            text-align: center;
+        }
+        & .categories__content--title{
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            @media only screen and (min-width: 1200px) {
+                font-size: 1.6rem;
+            }
+        }
+        & .categories__content--subtitle{
+            color: var(--foreground-sub-color);
+        }
+    }
+}
+
+
+/*
+    home 3 categories css
+*/
+.categories__inner--style3{
+    gap: 2rem;
+    flex-wrap: wrap;
+    @media only screen and (min-width: 576px) {
+        gap: 2.5rem;
+    }
+    @media only screen and (min-width: 1200px) {
+        gap: 3rem;
+    }
+}
+.categories__card--style3{
+    border: 1px solid var(--border-color);
+    width: 45%;
+    border-radius: 5px;
+    transition: var(--transition);
+    @media only screen and (min-width: 400px) {
+        width: 46%;
+    }
+    @media only screen and (min-width: 576px) {
+        width: 29.7%;
+    }
+    @media only screen and (min-width: 768px) {
+        width: 22.3%;
+    }
+    @media only screen and (min-width: 992px) {
+        width: 17.8%;
+    }
+    @media only screen and (min-width: 1366px) {
+        width: 18%;
+    }
+    & .categories__thumbnail--img{
+        margin: 0 auto;
+    }
+    &:hover{
+        border-color: var(--secondary-color);
+    }
+}
+.categories__content.style3{
+    padding-top: 1.3rem;
+    & .categories__content--subtitle{
+        color: var(--foreground-sub-color);
+    }
+}

@@ -1,0 +1,44 @@
+/* 
+    10. Brand logo css
+*/
+.brand__section--inner{
+    gap: 3rem;
+    background: linear-gradient(to right, #FAEEF2, #F1F3FB);
+    padding: 3rem 3rem;
+    border-radius: 5px;
+    @media only screen and (max-width: 767px) {
+        flex-wrap: wrap;
+        justify-content: center !important;
+    }
+}
+
+.brang__logo--img{
+    opacity: 0.5;
+    &:hover{
+        transform: scale(1.05);
+        opacity: 1;
+    }
+    @media only screen and (max-width: 479px) {
+        max-width: 125px;
+    }
+}
+
+
+/*
+    home three brand logo css
+*/
+.brand__section--style3{
+    background: url(../img/other/brand-section-bg3.webp);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+
+}
+.brand__section--inner__style3{
+    gap: 3rem;
+    @media only screen and (max-width: 767px) {
+        flex-wrap: wrap;
+        justify-content: center !important;
+    }
+}

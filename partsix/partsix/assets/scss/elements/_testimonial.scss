@@ -1,0 +1,54 @@
+/* 
+    9. Testimonial css
+*/
+
+.testimonial__items{
+    &--content{
+        text-align: center;
+    }
+    &--thumbnail{
+        transform: scale(0.6);
+        border: 1px solid var(--secondary-color);
+        border-radius: 50%;
+        opacity: 0.5;
+    }
+    &--desc{
+        font-size: 1.5rem;
+        line-height: 2.8rem;
+        color: var(--body-text-color);
+        max-width: 100%;
+        margin: 0 auto 1.5rem;
+        @media only screen and (min-width: 576px) {
+            font-size: 1.6rem;
+            line-height: 2.8rem;
+            max-width: 85%;
+            margin: 0 auto 1.8rem;
+        }
+        @media only screen and (min-width: 992px) {
+            max-width: 64%;
+        }
+    }
+    &--subtitle{
+        font-size: 1.6rem;
+        color: var(--foreground-sub-color);
+    }
+}
+.swiper-slide-active{
+    & .testimonial__items--thumbnail{
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.testimonial__active--two{
+    margin-top: 2rem;
+    @media only screen and (min-width: 768px) {
+        margin-top: 2.5rem;
+    }
+    @media only screen and (min-width: 1200px) {
+        margin-top: 3rem;
+    }
+}
+.testimonial__rating{
+    margin-bottom: 1.5rem;
+}

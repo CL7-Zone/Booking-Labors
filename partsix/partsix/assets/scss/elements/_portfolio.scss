@@ -1,0 +1,58 @@
+/* 
+    21. Portfolio css 
+*/
+.portfolio__items{
+    &--thumbnail{
+        border-radius: 5px;
+        &::before{
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 100%;
+            background: var(--secondary-color);
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 9;
+            pointer-events: none;
+            border-radius: 5px;
+        }
+        &:hover{
+            &::before{
+                opacity: 0.7;
+            }
+            & .portfolio__view--icon{
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+        &__link{
+            overflow: hidden;
+            border-radius: 5px;
+        }
+        &:hover{
+            & .portfolio__items--thumbnail__img{
+                transform: scale(1.05);
+            }
+        }
+        &__img{
+            transition: .3s;
+            border-radius: 5px;
+        } 
+    }
+}
+
+.portfolio__view--icon{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translatey(-50%) translatex(-50%);
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    z-index: 9;
+    &__link{
+        color: var(--text-white-color);
+    }
+}

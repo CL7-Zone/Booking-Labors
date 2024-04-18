@@ -107,7 +107,7 @@ public class AuthApiController {
     }
 
     @CrossOrigin
-    @PostMapping("/auth-login")
+    @PostMapping("/api/login")
     public ResponseEntity<AuthResponseDto> login(@RequestBody UserDto userDto,
                                                  HttpServletRequest request,
                                                  HttpSession session){

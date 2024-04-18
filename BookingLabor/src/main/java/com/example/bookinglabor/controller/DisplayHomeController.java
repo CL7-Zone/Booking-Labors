@@ -95,6 +95,12 @@ public class DisplayHomeController {
         CategoryJob categoryJob = categoryJobService.findCategoryJobById(id);
         Function<Long, Long> countJobsByCategoryJobFunction = categoryJobService::countJobsByCategoryJob;
 
+        System.out.println("CategoryJob: " + categoryJob);
+        System.out.println("CategoryJob ID: " + categoryJob.getId());
+
+        Long jobCount = countJobsByCategoryJobFunction.apply(categoryJob.getId());
+        System.out.println("Số công việc của danh mục: " + jobCount);
+
         model.addAttribute("categoryJob", categoryJob);
         model.addAttribute("countJobsByCategoryJob", countJobsByCategoryJobFunction);
 

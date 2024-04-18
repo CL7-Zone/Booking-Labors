@@ -1,0 +1,210 @@
+/* 
+    28. Contact page css 
+*/
+.contact__section--heading{
+    &__maintitle{
+        font-size: 2.8rem;
+        line-height: 3rem;
+        color: var(--secondary-color);
+        margin-bottom: 1.5rem;
+    }
+    &__desc{
+        color: var(--foreground-sub-color);
+        width: 90%;
+        margin: 0 auto;
+        font-size: 1.5rem;
+        line-height: 2.6rem;
+        @media only screen and (min-width: 768px) {
+            width: 75%;
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 1.6rem;
+            line-height: 2.8rem;
+            width: 55%;
+        }
+    }
+}
+.contact__form{
+    background: var(--body-background-color);
+    border-radius: 10px;
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.16);
+    padding: 2rem;
+    @media only screen and (min-width: 576px) {
+        padding: 3rem;
+     }
+    @media only screen and (min-width: 768px) {
+        padding: 4rem;
+     }
+    @media only screen and (min-width: 992px) {
+        margin-left: 36rem;
+        padding: 5.5rem 3.5rem 5.5rem 10rem;
+     }
+    @media only screen and (min-width: 1200px) {
+        margin-left: 40rem;
+     }
+    &--title{
+        font-weight: 600;
+        font-size: 1.8rem;
+        @media only screen and (min-width: 1200px) {
+            font-size: 2.2rem;
+         }
+        &.mb-30{
+            @media only screen and (max-width: 1199px) {
+               margin-bottom: 2rem;
+            }
+        }
+    }
+    &--label{
+        display: block;
+        margin-bottom: 8px;
+        &__star{
+            color: var(--secondary-color);
+        }
+    }
+    &--input{
+        width: 100%;
+        height: 50px;
+        padding: 5px 15px;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        &:focus{
+            border-color: var(--secondary-color) !important;
+        }
+    }
+    &--textarea{
+        width: 100%;
+        height: 100px;
+        padding: 12px 15px;
+        border-radius: 8px;
+        resize: none;
+        border: 1px solid var(--border-color);
+        &:focus{
+            border-color: var(--secondary-color) !important;
+        }
+        @media only screen and (min-width: 992px) {
+            height: 120px;
+         }
+        @media only screen and (min-width: 1200px) {
+            height: 160px;
+         }
+    }
+}
+
+.contact__info{
+    background: var(--secondary-color);
+    width: 46rem;
+    padding: 2rem;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translatey(-50%);
+    @media only screen and (max-width: 575px) {
+        width: 100%;
+    }
+    @media only screen and (min-width: 576px) {
+        padding: 3rem;
+    }
+    @media only screen and (min-width: 768px) {
+        padding: 4rem;
+    }
+    @media only screen and (min-width: 992px) {
+        width: 42rem;
+        padding: 4rem 3rem;
+    }
+    @media only screen and (min-width: 1200px) {
+        width: 46rem;
+        padding: 5rem 6rem;
+    }
+    @media only screen and (max-width: 991px) {
+        position: inherit;
+        top: inherit;
+        transform: inherit;
+        margin: 3rem auto 0;
+        width: 100%;
+    }
+    &--items{
+        margin-bottom: 2.7rem;
+        &:last-child{
+            margin-bottom: 0;
+        }
+        @media only screen and (max-width: 575px) {
+            margin-bottom: 2rem;
+        }
+    }
+}
+
+.contact__info--icon{
+    margin-right: 1.2rem;
+    color: var(--text-white-color);
+    padding-top: 0.8rem;
+    @media only screen and (min-width: 1200px) {
+        margin-right: 2rem;
+     }
+    & svg{
+        @media only screen and (max-width: 575px) {
+            width: 2.5rem;
+        }
+    }
+}
+
+.contact__info--content{
+    &__title{
+        font-weight: 600;
+        @media only screen and (min-width: 992px) {
+            font-size: 2rem;
+            line-height: 2.8rem;
+        }
+    }
+    &__desc{
+        font-size: 1.5rem;
+        line-height: 2.6rem;
+        color: var(--text-white-color);
+        @media only screen and (min-width: 1200px) {
+            font-size: 1.6rem;
+            line-height: 2.7rem;
+        }
+        & a{
+            color: var(--text-white-color);
+            &:hover{
+                color: var(--primary-color);
+            }
+        }
+    }
+}
+
+.contact__info--social{
+    &__list{
+        margin-right: 11px;
+        &:last-child{
+            margin-right: 0;
+        }
+    }
+    &__icon{
+        width: 3rem;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--body-background-color);
+        color: var(--secondary-color);
+        border-radius: 50%;
+        &:hover{
+            background: var(--primary-color);
+            color: var(--text-white-color);
+        }
+    }
+}
+.contact__map--iframe{
+    width: 100%;
+    height: 250px;
+    margin-bottom: -7px;
+    @media only screen and (min-width: 768px) {
+        height: 320px;
+    }
+    @media only screen and (min-width: 992px) {
+        height: 400px;
+    }
+    @media only screen and (min-width: 1200px) {
+        height: 500px;
+    }
+}
