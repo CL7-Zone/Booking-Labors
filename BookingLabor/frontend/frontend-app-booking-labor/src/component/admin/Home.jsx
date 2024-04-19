@@ -2,61 +2,41 @@ import logo from '../../logo.svg';
 import Sidebar from "../element/Sidebar";
 import Header from "../element/Header";
 import Booking from "./booking/Booking";
+import Job from "./job/Job";
 import Footer from "../element/Footer";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {getUserProfile} from "../../api/apiFunction";
+import { getUserProfile } from "../../redux/action/getUserProfile";
 import Unauthorized from "../element/Unauthorized";
-import { SetUser } from '../../redux/action/SetUser';
 import User from "./user/User";
 import Statistical from "../element/Statistical";
 import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import {set} from "mdb-ui-kit/src/js/mdb/perfect-scrollbar/lib/css";
+import JobDetail from "./jobdetail/JobDetail";
+import Post from "./post/Post";
 
 
 const Home = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const show = useSelector(state => state.showElement);
-    const user = useSelector(state => state.userProfile);
+    const user = useSelector(state => state.Array.user);
+    const isLoading = useSelector(state => state.Array.isLoading);
 
     useEffect(() => {
-        console.log(show);
-    }, [show]);
+        dispatch(getUserProfile());
+    }, [dispatch]);
 
     useEffect(() => {
-        const fetchUser = async ()=>{
-            try{
-                const user = await getUserProfile();
-                dispatch(SetUser(user));
-                dispatch({ type: 'SHOW' });
-                await new Promise(resolve => setTimeout(resolve, 500));
 
-                if(user){
-                    dispatch({ type: 'HIDDEN' });
-                }
+        console.log(isLoading);
+    }, [dispatch]);
 
-            }catch (e) {
-                dispatch({ type: 'HIDDEN' });
-                console.error("ERROR: ",e);
-            }
-        }
-        fetchUser().then(r => r);
 
-    }, []);
-
-    if(Array.isArray(user) && user.length === 0){
-
-    }
-    if(show){
-        return (
-            <div className="mt-5 pt-5"><img className="App-logo" width="30%" src={logo} alt=""/></div>
-        );
-    }
     return (
         <div>
-            {Array.isArray(user) && user.length === 0 ? (<Unauthorized />) : (
+            {Array.isArray(user) && user.length === 0 ? (<Unauthorized/>) : (
                 <>
                     <Sidebar/>
                     <div className="content">
@@ -68,6 +48,9 @@ const Home = () => {
                             </div>
                         </div>
                         <User/>
+                        <JobDetail/>
+                        <Post/>
+                        <Booking/>
                         <Footer/>
                     </div>
                 </>

@@ -2,32 +2,23 @@ import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect} from "react";
 import {getApi} from "../../../api/apiFunction";
 import {useNavigate} from "react-router-dom";
-import { SetUsers } from '../../../redux/action/SetUsers';
 import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import {getUser} from "../../../redux/action/getUser";
 
 const User = () => {
 
     const dispatch = useDispatch();
-    const users = useSelector(state => state.users);
     const navigate = useNavigate();
+    const users = useSelector(state => state.Array.users);
+    const isLoading = useSelector(state => state.Array.isLoading);
 
     useEffect(() => {
-        const fetch = async ()=>{
-            try{
-                const users = await getApi(`/admin/api/user`);
-                dispatch(SetUsers(users));
-            }catch (e) {
-                console.log(e);
-            }
-        }
-        fetch().then(r => r);
-
+        dispatch(getUser());
     }, [dispatch]);
 
     useEffect(() => {
-        console.log("users: ", users);
-
+        console.log("user", users);
     }, [users]);
 
     return (
@@ -45,25 +36,27 @@ const User = () => {
                                 <th scope="col"><input className="form-check-input" type="checkbox"/></th>
                                 <th scope="col">ID</th>
                                 <th scope="col">EMAIL</th>
+                                <th scope="col">PROVIDER</th>
                                 <th scope="col">ROLES</th>
-
                             </tr>
                             </thead>
                             <tbody>
-                            {users.map(user => (
-                                <tr key={user.id}>
-                                    <td><input className="form-check-input" type="checkbox"/></td>
-                                    <td>{user.id}</td>
-                                    <td>{user.email}</td>
-                                    <td>
-                                        [
-                                            {user.roles.map(role => (<span key={role.id}>{role.name+", "}</span>))}
-                                        ]
-                                    </td>
-                                    <td><a className="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                            ))}
+                                {!isLoading && users.map(user => (
+                                    <tr key={user.id}>
+                                        <td><input className="form-check-input" type="checkbox"/></td>
+                                        <td>{user.id}</td>
+                                        <td>{user.email}</td>
+                                        <td>{user.provider}</td>
+                                        <td>
+                                            {user.roles.map(role =>
+                                                <input key={role.id} id={role.id} defaultValue={role.name}/>
+                                            )}
+                                        </td>
+                                        <td><a className="btn btn-sm btn-primary" href="">Detail</a></td>
+                                    </tr>
+                                ))}
                             </tbody>
+
                         </table>
                     </div>
                 </div>

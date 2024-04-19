@@ -1,22 +1,16 @@
-import React, {useState, useEffect} from "react";
-import {getHeader, getHeaders, loginUser} from "../../../api/apiFunction";
+import React, {useEffect} from 'react';
 import {useNavigate} from "react-router-dom";
-import {post} from "axios";
-import Cookies from "js-cookie";
 import {useDispatch, useSelector} from "react-redux";
-import Header from "../../element/Header";
-import Footer from "../../element/Footer";
-import Sidebar from "../../element/Sidebar";
-import Booking from "../booking/Booking";
-import {Link} from "react-router-dom";
-import styles from "../../element/element.module.css";
-import Unauthorized from "../../element/Unauthorized";
-import User from "../user/User";
-import Statistical from "../../element/Statistical";
-import { getUserProfile } from "../../../redux/action/getUserProfile";
 import logo from "../../../logo.svg";
+import Unauthorized from "../../element/Unauthorized";
+import Sidebar from "../../element/Sidebar";
+import Header from "../../element/Header";
+import User from "../user/User";
+import Footer from "../../element/Footer";
+import City from "./City";
+import {getUserProfile} from "../../../redux/action/getUserProfile";
 
-const Profile = () =>{
+const View = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -34,7 +28,7 @@ const Profile = () =>{
                     <Sidebar/>
                     <div className="content">
                         <Header/>
-                        <User/>
+                        <City/>
                         <Footer/>
 
                     </div>
@@ -42,8 +36,6 @@ const Profile = () =>{
             )}
         </div>
     );
+};
 
-
-}
-
-export default Profile
+export default View;

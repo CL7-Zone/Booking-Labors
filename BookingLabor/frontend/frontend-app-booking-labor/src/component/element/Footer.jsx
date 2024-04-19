@@ -6,8 +6,6 @@ import React from "react";
 
 const Footer = () => {
     const dispatch = useDispatch();
-    const show = useSelector(state => state.showElement);
-
 
     return (
 

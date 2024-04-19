@@ -39,28 +39,6 @@ export async function loginUser(login){
 
 }
 
-export async function getHeaders() {
-    try{
-        const res = await api.get(`/header-api`);
-
-        return res.data;
-    }catch (error) {
-        throw error;
-    }
-}
-
-
-export async function getApi(url) {
-    try{
-        const res = await api.get(url,
-            {headers: getHeader()});
-
-        return res.data;
-    }catch (error) {
-        throw error;
-    }
-}
-
 export const getHeader = () =>{
 
     const token = Cookies.get("token");
@@ -68,6 +46,35 @@ export const getHeader = () =>{
     return {
         Authorization: `Bearer ${token}`,
         "Content-Type" : "application/json",
+    }
+}
+export async function getApi(url) {
+    try{
+        const res = await api.get(url,
+            {headers: getHeader()});
+        return res.data;
+    }catch (error) {
+        throw error;
+    }
+}
+
+
+export async function postApi(url, data) {
+
+    const token = Cookies.get("token");
+
+    try{
+        const res = await api.post(url, data,{
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type" : "multipart/form-data",
+            }
+        });
+        if(res.status >= 200 && res.status < 300){
+            return res.data;
+        }
+    }catch (error) {
+        throw error;
     }
 }
 export async function getUserProfile() {
@@ -86,9 +93,18 @@ export async function logoutUser() {
     try{
         const res = await api.post(`/logout`);
         document.cookie.split(";").forEach(function(c) {
-
             document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
         });
+
+        return res.data;
+    }catch (error) {
+        throw error;
+    }
+}
+
+export async function getHeaders() {
+    try{
+        const res = await api.get(`/header-api`);
 
         return res.data;
     }catch (error) {

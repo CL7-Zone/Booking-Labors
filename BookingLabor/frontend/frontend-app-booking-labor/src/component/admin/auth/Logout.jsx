@@ -8,7 +8,6 @@ const Logout =()=>{
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const show = useSelector(state => state.showElement);
 
     const handleLogout = async (e)=>{
 

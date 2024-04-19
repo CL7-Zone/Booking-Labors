@@ -2,21 +2,22 @@ import axios, {get} from "axios";
 import KEY from "../constant/constant";
 import {getApi} from "../../api/apiFunction";
 
-export const getUser = () => async (dispatch) => {
+
+export const getBooking = () => async (dispatch) => {
     dispatch({
-        type: KEY.LOAD_USERS,
+        type: KEY.LOAD_BOOKINGS,
     });
     try {
-        const res = await getApi("/admin/api/user");
+        const res = await getApi("/admin/api/booking");
         dispatch({
-            type: KEY.LOAD_USERS_SUCCESS,
-            users: res,
+            type: KEY.LOAD_BOOKINGS_SUCCESS,
+            bookings: res,
             isError: false,
         });
     } catch (e) {
         dispatch({
-            type: KEY.LOAD_USERS_SUCCESS,
-            users: [],
+            type: KEY.LOAD_BOOKINGS_SUCCESS,
+            bookings: [],
             isError: true,
         });
     }

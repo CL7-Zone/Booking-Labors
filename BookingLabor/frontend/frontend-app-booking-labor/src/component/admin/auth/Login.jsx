@@ -13,18 +13,13 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Login = ()=>{
 
-    const [errorMessage, setErrorMessage] = useState("");
+    const [show, setShow] = useState(false);
     const [login, setLogin] = useState({
         email: "",
         password: ""
     });
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const show = useSelector(state => state.showElement);
-
-    useEffect(() => {
-        dispatch({ type: 'HIDDEN' });
-    }, []);
 
     const handleInputChange = (e) =>{
 
@@ -37,9 +32,9 @@ const Login = ()=>{
 
         if(success){
             console.log(success);
-            dispatch({ type: 'SHOW' });
+            setShow(true);
             await new Promise(resolve => setTimeout(resolve, 1000));
-            dispatch({ type: 'HIDDEN' });
+            setShow(false);
             Cookies.set("token", success.accessToken, { expires: Date.now() + 3000000, path: "/" });
             navigate("/");
             window.location.reload();
@@ -53,10 +48,8 @@ const Login = ()=>{
 
         <div className="container">
 
-            <div
-                className="row h-100 align-items-center justify-content-center"
-                style={{minHeight: "100vh"}}
-            >
+            <div className="row h-100 align-items-center justify-content-center"
+                style={{minHeight: "100vh"}}>
                 <div className="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                     <div className="bg-light rounded p-4 p-sm-5 my-4 mx-3">
                         <div className="d-flex align-items-center justify-content-between mb-3">

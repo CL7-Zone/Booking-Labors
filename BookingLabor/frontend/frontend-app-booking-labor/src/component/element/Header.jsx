@@ -3,11 +3,13 @@ import {Link} from "react-router-dom";
 import Logout from "../admin/auth/Logout";
 import React, {useEffect} from "react";
 import avatar from '../../image/user.jpg';
+import {getUserProfile} from "../../redux/action/getUserProfile";
 
 const Header = () => {
+
     const dispatch = useDispatch();
-    const show = useSelector(state => state.showElement);
-    const user = useSelector(state => state.userProfile);
+    const user = useSelector(state => state.Array.user);
+    const isLoading = useSelector(state => state.Array.isLoading);
 
     return (
         <div>

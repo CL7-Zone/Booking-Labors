@@ -16,6 +16,8 @@ public class LaborMapper {
                 .status(labor.getStatus())
                 .createdOn(labor.getCreatedOn())
                 .updatedOn(labor.getUpdatedOn())
+                .jobDetails(labor.getJobDetails().stream()
+                .map(JobDetailMapper::mapToJobDetailApi).toList())
                 .build();
 
         if (laborUser != null) {

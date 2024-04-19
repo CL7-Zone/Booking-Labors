@@ -14,11 +14,14 @@ import Header from "./component/element/Header";
 import Footer from "./component/element/Footer";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-
+import { getJob } from "./redux/action/getJob";
+import Job from "./component/admin/job/Job";
+import ViewJob from "./component/admin/job/View";
+import ViewRole from "./component/admin/role/View";
+import ViewCity from "./component/admin/city/View";
 function App() {
 
     const dispatch = useDispatch();
-    const show = useSelector(state => state.showElement);
 
     useEffect(() => {
         const fetchUser = async ()=>{
@@ -39,8 +42,10 @@ function App() {
       <div className="App">
           <Routes>
               <Route path="/" element={<Home/>}/>
-              <Route path="/404" element={<Error/>}/>
-              <Route path="/admin/booking" element={<Booking/>}/>
+              <Route path="/jobs" element={<ViewJob/>}/>
+              <Route path="/roles" element={<ViewRole/>}/>
+              <Route path="/cities" element={<ViewCity/>}/>
+              <Route path="/users" element={<Profile/>}/>
               <Route path="/admin/profile" element={<Profile/>}/>
               <Route path="/login" element={<Login/>}></Route>
           </Routes>

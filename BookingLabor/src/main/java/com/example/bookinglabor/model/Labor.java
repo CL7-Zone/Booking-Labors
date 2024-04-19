@@ -7,7 +7,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -34,6 +36,9 @@ public class Labor {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = true)
     private UserAccount userAccount;
+
+    @OneToMany(mappedBy = "labor", cascade = CascadeType.REMOVE)
+    private List<JobDetail> jobDetails = new ArrayList<>();
 
     @CreationTimestamp
     private LocalDateTime createdOn;

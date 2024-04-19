@@ -1,16 +1,19 @@
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import avatar from '../../image/user.jpg';
+import {useEffect} from "react";
+import {getUserProfile} from "../../redux/action/getUserProfile";
 
 
 const Sidebar  = () => {
 
-    const user = useSelector(state => state.userProfile);
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.Array.user);
+    const isLoading = useSelector(state => state.Array.isLoading);
 
     return (
         <div>
             {/* Sidebar Start */}
-
             <div className="sidebar pe-4 pb-3">
                 <nav className="navbar bg-light navbar-light">
                     <Link to="/" className="navbar-brand mx-4 mb-3">
@@ -44,6 +47,23 @@ const Sidebar  = () => {
                             <i className="fa fa-tachometer-alt me-2"/>
                             Dashboard
                         </Link>
+
+                        <div className="nav-item dropdown">
+                            <a
+                                href="#"
+                                className="nav-link dropdown-toggle"
+                                data-bs-toggle="dropdown"
+                            >
+                                <i className="fa fa-briefcase me-2"/>
+                                JOB
+                            </a>
+                            <div className="dropdown-menu bg-transparent border-0">
+                                <Link to="/jobs" className="dropdown-item">
+                                    JOBS
+                                </Link>
+                            </div>
+                        </div>
+
                         <div className="nav-item dropdown">
                             <a
                                 href="#"
@@ -51,36 +71,52 @@ const Sidebar  = () => {
                                 data-bs-toggle="dropdown"
                             >
                                 <i className="fa fa-laptop me-2"/>
-                                Elements
+                                ROLE
                             </a>
                             <div className="dropdown-menu bg-transparent border-0">
-                                <a href="button.html" className="dropdown-item">
-                                    Buttons
-                                </a>
-                                <a href="typography.html" className="dropdown-item">
-                                    Typography
-                                </a>
-                                <a href="element.html" className="dropdown-item">
-                                    Other Elements
-                                </a>
+                                <Link to="/roles" className="dropdown-item">
+                                    ROLES
+                                </Link>
                             </div>
                         </div>
+
+                        <div className="nav-item dropdown">
+                            <a
+                                href="#"
+                                className="nav-link dropdown-toggle"
+                                data-bs-toggle="dropdown"
+                            >
+                                <i className="fa fa-city me-2"/>
+                                CITY
+                            </a>
+                            <div className="dropdown-menu bg-transparent border-0">
+                                <Link to="/cities" className="dropdown-item">
+                                    CITIES
+                                </Link>
+                            </div>
+                        </div>
+
+                        <div className="nav-item dropdown">
+                            <a
+                                href="#"
+                                className="nav-link dropdown-toggle"
+                                data-bs-toggle="dropdown"
+                            >
+                                <i className="fa fa-user me-2"/>
+                                USER
+                            </a>
+                            <div className="dropdown-menu bg-transparent border-0">
+                                <Link to="/users" className="dropdown-item">
+                                    USERS
+                                </Link>
+                            </div>
+                        </div>
+
                         <Link to="/admin/profile" className="nav-item nav-link">
                             <i className="fa fa-user me-2"/>
                             PROFILE
                         </Link>
-                        <a href="form.html" className="nav-item nav-link">
-                            <i className="fa fa-keyboard me-2"/>
-                            Forms
-                        </a>
-                        <a href="table.html" className="nav-item nav-link">
-                            <i className="fa fa-table me-2"/>
-                            Tables
-                        </a>
-                        <a href="chart.html" className="nav-item nav-link">
-                            <i className="fa fa-chart-bar me-2"/>
-                            Charts
-                        </a>
+
                         <div className="nav-item dropdown">
                             <a
                                 href="#"
