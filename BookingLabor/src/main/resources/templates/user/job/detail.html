@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html  lang="en"
+       xmlns:th="http://thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:sec="http://www.thymeleaf.org"
+       layout:decorate="~{layout}" th:with="currentPage='Your Job'">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Job </title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+
+    <div layout:fragment="content">
+
+        <div class="contest-details">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="top-content">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <span th:if="${userRoles != null}">
+                                        <span class="open" th:text="${userRoles}"></span>
+                                    </span>
+                                    <span class="wish-list">
+                                        <i class="fa fa-user"></i>
+                                        <i>lol00sever@gmail.com</i>
+                                    </span>
+                                </div>
+                                <div class="col-lg-4">
+                                    <ul>
+                                        <li>
+                                            <i class="fa fa-medal"></i>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="main-content">
+
+                            <div class="col-lg-12" th:if="${success}" >
+                                <div class="alert alert-success alert-dismissible fade show" role="alert" >
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                                    <!--/*@thymesVar id="success" type="text"*/-->
+                                    <strong th:text="${success}"></strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12" th:if="${failed}">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" >
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                                    <!--/*@thymesVar id="failed" type="text"*/-->
+                                    <strong th:text="${failed}"></strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+
+                            <ul>
+                                <h4><i class="fa fa-add text-info"></i> HỒ SƠ CÔNG VIỆC CỦA BẠN</h4>
+                            </ul>
+
+                            <div class="your-job">
+                                <div th:each="jobDetail : ${jobDetails}">
+                                    <b>ID: </b>
+                                    <span class="text-info mr-3" th:text="${jobDetail.id}"></span>
+                                    <b>HỌ VÀ TÊN: </b>
+                                    <span class="text-info mr-3" th:text="${jobDetail.labor.full_name}"></span>
+                                    <b>TÊN CÔNG VIỆC: </b>
+                                    <span class="text-info mr-3" th:text="${jobDetail.job.nameJob}"></span>
+                                    <b>LƯƠNG: </b>
+                                    <span class="text-info mr-3" th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></span>
+                                    <b>TẠI TỈNH/ THÀNH PHỐ: </b>
+                                    <span class="text-info mr-3" th:text="${jobDetail.labor.city.city_name}"></span>
+                                    <p th:each="commentSkill : ${jobDetail.commentSkills}">
+                                        <span th:text="${commentSkill.content}"></span>
+                                    </p>
+                                    <br><br>
+                                    <b class="text-success">TẠO KỸ NĂNG</b>
+                                    <br><br>
+                                    <div>
+                                        <form  th:action="@{'/save/comment_skill/' + ${jobDetail.id}}" method="POST">
+                                            <textarea type="text" name="content" id="content" class="form-control" > </textarea>
+                                            <br>
+                                            <button class="btn-success" type="submit" name="selectedJobId">TẠO</button>
+                                        </form>
+                                    </div>
+                                    <br><br>
+                                </div>
+
+                            </div>
+
+                            <table th:if="${jobDetails!=null}">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>HỌ VÀ TÊN</th>
+                                    <th>TÊN CÔNG VIỆC</th>
+                                    <th>LƯƠNG</th>
+                                    <th>Ảnh</th>
+                                    <th>TẠI TỈNH/ THÀNH PHỐ</th>
+                                    <th colspan="2">ACTION</th>
+                                </tr>
+                                <tr  th:each="jobDetail :${jobDetails}">
+                                    <td>
+                                        <span th:text="${jobDetail.id}"></span>
+                                    </td>
+                                    <td>
+                                        <span th:text="${jobDetail.labor.full_name}"></span>
+                                    </td>
+                                    <td th:text="${jobDetail.job.id+ ' '+jobDetail.job.nameJob}">
+
+                                    </td>
+                                    <td>
+                                        <span  th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></span>
+                                    </td>
+                                    <td>
+                                        <img width="100%" th:src="${jobDetail.job.imageJob}" alt="">
+                                    </td>
+                                    <td>
+                                        <span th:text="${jobDetail.labor.city.city_name}"></span>
+                                    </td>
+                                    <td>
+                                        <form th:action="@{'/delete/job-detail/' + ${jobDetail.id}}" method="POST">
+                                            <button class="btn-danger" type="submit" >
+                                                XÓA
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form th:action="@{'/update/job-detail/' + ${jobDetail.id}}" method="POST" th:object="${jobDetail}">
+                                            <input type="hidden" th:value="${jobDetail.official_work_address}" name="official_work_address" th:id="'job_id_' + ${jobDetail.job.id}">
+                                            <input type="hidden" th:value="${jobDetail.experience}" name="experience" th:id="'job_id_' + ${jobDetail.job.id}">
+                                            <input type="hidden" th:value="${jobDetail.education}" name="education" th:id="'job_id_' + ${jobDetail.job.id}">
+
+                                            <input type="hidden" th:value="${jobDetail.job.id}" name="job_id" th:id="'job_id_' + ${jobDetail.job.id}">
+                                            <input type="hidden" th:value="${labor_id}" name="labor_id" id="labor_id">
+                                            <div class="d-flex justify-content-center pt-2">
+                                                <button class="btn-warning" type="submit" >
+                                                    CẬP NHẬT
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div class="row">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+</body>
+
+
+</html>

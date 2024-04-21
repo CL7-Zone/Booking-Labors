@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org"
+      layout:decorate="~{layout}" th:with="currentPage='Home Menu user'">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+        /* CSS styles */
+        @media only screen and (max-width: 1200px) {
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            th, td {
+                padding: 8px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+                display: block;
+            }
+
+            th {
+                background-color: #f2f2f2; /* Màu nền cho cột th */
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div layout:fragment="content">
+
+        <div class="contest-details">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="top-content">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <span th:if="${userRoles!=null}">
+                                        <span class="open" th:text="${userRoles}"></span>
+                                    </span>
+                                    <span class="wish-list">
+                                        <i class="fa fa-user"></i>
+                                        <i th:text="${#authentication.name}"></i>
+                                    </span>
+                                </div>
+                                <div class="col-lg-4">
+                                    <ul>
+                                        <li><i class="fa fa-medal"></i>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="col-lg-12">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${param.unauthorized}">
+                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Failed:"><use xlink:href="#check-circle-fill"/></svg>
+                                <strong>403 Unauthorized!</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
+
+                        <div class="main-content">
+                            <div style="padding-bottom: 40px" th:if="${#lists.contains(userRoles, 'ROLE_USER')}">
+                                <h4 style="margin-bottom: 10px">CHÚ Ý:</h4>
+                                <script th:inline="javascript">
+                                    alert("Hãy tạo thông tin để tạo việc làm và tuyển lao động!");
+                                </script>
+                                <ul style="list-style: disc; padding: 0px 20px">
+                                    <li class="mb-4" style="list-style: disc;">
+                                        <a class="text-danger" th:href="@{/customer-create-info}">
+                                            <h3 >Hãy tạo thông tin cá nhân để tạo tuyển lao động!</h3>
+                                            <h3 class="text-primary">TẠO NGAY</h3>
+                                        </a>
+                                    </li>
+                                    <li style="list-style: disc;">
+                                        <a class="text-danger" th:href="@{/labor-create-info}">
+                                            <h3 >Hãy tạo thông tin cá nhân để chọn công việc!</h3>
+                                            <h3  class="text-primary">TẠO NGAY</h3>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="section-heading">
+                                    <h4><em>CHỌN NGƯỜI LAO ĐỘNG</em> BẠN MUỐN TUYỂN</h4>
+                                </div>
+                            </div>
+
+                            <div class="your-job">
+                                <div class="row">
+                                    <div th:each="jobDetail : ${jobDetails}" class="col-md-4">
+                                        <div class="job-item">
+                                            <div class="job-info">
+                                                <a th:href="@{'labors/job-detail/' + ${jobDetail.id}}" class="d-flex">
+                                                    <div class="job-image">
+                                                        <img width="90%" th:src="${jobDetail.job.imageJob}" alt="">
+                                                    </div>
+                                                    <div class="job-details flex-grow-1 ml-2">
+                                                        <div>
+                                                            <i class="text-danger fa fa-key"></i>
+                                                            <span class="text-danger" th:text="${jobDetail.id}"></span>
+                                                        </div>
+                                                        <div>
+                                                            <i class="text-primary fa fa-user"></i>
+                                                            <span class="text-black" th:text="${jobDetail.labor.full_name}"></span>
+                                                        </div>
+                                                        <div>
+                                                            <i class="text-info fa fa-briefcase"></i>
+                                                            <span class="text-black" th:text="${jobDetail.job.nameJob}"></span>
+                                                        </div>
+                                                        <div>
+                                                            <i class="text-success fa fa-money-bill-alt"></i>
+                                                            <span class="text-success" th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></span>
+                                                        </div>
+                                                        <div>
+                                                            <i class="text-warning fa fa-city"></i>
+                                                            <span class="text-black" th:text="${jobDetail.labor.city.city_name}"></span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <nav style="padding-left: 0px" aria-label="Page navigation example">
+                                <ul class="pagination mt-4">
+                                    <li class="page-item" th:each="page, status: ${pages}">
+                                        <a class="page-link" th:href="@{/your-menu/(page=${status.index})}" th:text="${status.index}"></a>
+                                    </li>
+                                </ul>
+                            </nav>
+
+                            <br><br>
+                            <h4>CHỌN <em>CÔNG </em> <em>VIỆC CỦA BẠN</em></h4>
+
+                            <div class="your-job">
+                                <div class="row">
+                                    <div th:each="job :${jobs}" class="col-md-4">
+                                        <div class="job-item">
+                                            <div class="job-info">
+                                                <a th:href="@{'/jobs/show/' + ${job.id}}" class="d-flex">
+                                                    <div class="job-image">
+                                                        <img height="90%" width="90%" th:src="${job.imageJob}" alt="">
+                                                    </div>
+                                                    <div class="job-details flex-grow-1 ml-2">
+                                                        <div>
+                                                            <i class="text-danger fa fa-key"></i>
+                                                            <span class="text-danger" th:text="${job.id}"></span>
+                                                        </div>
+                                                        <div>
+                                                            <i class="text-info fa fa-briefcase"></i>
+                                                            <span class="text-black" th:text="${job.nameJob}"></span>
+                                                        </div>
+                                                        <div>
+                                                            <i class="text-success fa fa-money-bill-alt"></i>
+                                                            <span class="text-success" th:text="${#numbers.formatDecimal(job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

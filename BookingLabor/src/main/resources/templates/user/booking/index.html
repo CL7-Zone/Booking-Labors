@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html  lang="en"
+       xmlns:th="http://thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:sec="http://www.thymeleaf.org"
+       layout:decorate="~{layout}" th:with="currentPage='Your Booking Labors'">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Booking Labors</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+        .main-button button {
+            font-size: 15px;
+            color: #fff;
+            background-color: #dc3545;
+            border: 1px solid #dc3545;
+            padding: 10px 30px;
+            display: inline-block;
+            border-radius: 10px;
+            font-weight: 500;
+            text-transform: capitalize;
+            letter-spacing: 0.5px;
+            transition: all .3s;
+        }
+        .btn-save-job-detail{
+            width: 100%;
+            font-size: 20px;
+            padding: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div layout:fragment="content">
+
+
+        <div class="contest-details">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="top-content">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                   <span th:if="${userRoles!=null}">
+                                        <span class="open" th:text="${userRoles}"></span>
+                                    </span>
+                                    <span class="wish-list">
+                                        <i class="fa fa-user"></i>
+                                        <i th:text="${#authentication.name}"></i>
+                                    </span>
+                                </div>
+                                <div class="col-lg-4">
+                                    <ul>
+                                        <li><i class="fa fa-medal"></i></li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12" >
+                        <div class="main-content">
+                            <div class="col-lg-12">
+                                <!--/*@thymesVar id="success" type="text"*/-->
+                                <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success}">
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                                    <strong th:text="${success}"></strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <!--/*@thymesVar id="failed" type="text"*/-->
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${failed}">
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Failed:"><use xlink:href="#check-circle-fill"/></svg>
+                                    <strong th:text="${failed}"></strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <!--/*@thymesVar id="notAllowed" type="text"*/-->
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${notAllowed}">
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Failed:"><use xlink:href="#check-circle-fill"/></svg>
+                                    <strong th:text="${notAllowed}"></strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                            <h4>ĐƠN TUYỂN NGƯỜI LAO ĐỘNG CỦA BẠN</h4>
+                            <div  style="padding-bottom: 10px; ">
+                                <h5>CHÚ Ý:</h5>
+                            </div>
+                            <div style="padding-bottom: 20px; ">
+                                <ul style="list-style: disc; padding: 0px 20px" >
+
+                                    <li style="list-style: disc; padding-bottom: 10px">
+                                        <h6 class="text-danger" th:if="${bookings!=null}" >
+                                            Bạn phải hủy việc đặt lao động trước 24 giờ!
+                                        </h6>
+                                    </li>
+                                    <li style="list-style: disc; padding-bottom: 10px">
+                                        <h6 class="text-danger" th:if="${bookings!=null}" >
+                                            Nếu bạn không liên hệ với lao động đúng thời điểm đặt lịch, chúng tôi sẽ có biện pháp mạnh đối với bạn!
+                                        </h6>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div  th:each="booking : ${bookings}" >
+                                <div class="mb-3">
+                                    <label for="id" class="form-label">Booking ID</label>
+                                    <input readonly th:value="${booking.id}"  name="id" id="id" type="text" class="form-control"  >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="customer_name" class="form-label">HỌ VÀ TÊN NGƯỜI TUYỂN</label>
+                                    <input readonly th:value="${booking.customer.full_name}" name="customer_name" id="customer_name" type="text" class="form-control"   >
+                                </div>
+                                <div class="mb-3" th:if="${booking.status == 0}">
+                                    <label for="accept_show" class="form-label">ĐỒNG Ý HOẶC TỪ CHỐI TỪ NGƯỜI LAO ĐỘNG</label>
+                                    <input readonly th:value="${booking.accept == 0 ? 'Not accepted' : 'Accepted'}" name="accept_show" id="accept_show" type="text" class="form-control"   >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="status_show" class="form-label">TRANG THÁI HỦY ĐƠN</label>
+                                    <input readonly th:value="${booking.status == 0 ? 'Not cancelled' : 'Cancelled'}" name="status_show" id="status_show" type="text" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="labor_id" class="form-label">MÃ NGƯỜI LAO ĐỘNG</label>
+                                    <input readonly th:value="${booking.jobDetail.labor.id}" name="labor_id" id="labor_id" type="text" class="form-control"   >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="full_name" class="form-label">HỌ VÀ TÊN NGƯỜI LAO ĐỘNG</label>
+                                    <input readonly th:value="${booking.jobDetail.labor.full_name}" name="full_name" id="full_name" type="text" class="form-control"   >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nameJob" class="form-label">CÔNG VIỆC CỦA NGƯỜI LAO ĐỘNG</label>
+                                    <input readonly th:value="${booking.jobDetail.job.nameJob}" name="nameJob" id="nameJob" type="text" class="form-control"   >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone_number" class="form-label">EMAIL CỦA NGƯỜI LAO ĐỘNG</label>
+                                    <input readonly th:value="${booking.jobDetail.labor.userAccount.email}" name="laborEmail" id="laborEmail" type="text" class="form-control"   >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone_number" class="form-label">SỐ ĐIỆN THOẠI CỦA NGƯỜI LAO ĐỘNG</label>
+                                    <input readonly th:value="${booking.jobDetail.labor.phone_number}" name="phone_number" id="phone_number" type="text" class="form-control"   >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="book_address" class="form-label">ĐỊA CHỈ LÀM VIỆC</label>
+                                    <input readonly th:value="${booking.book_address}" name="book_address"  type="text" class="form-control"   >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="city" class="form-label">TẠI TỈNH/ THÀNH PHỐ</label>
+                                    <input readonly th:value="${booking.city_name}" name="city_name" id="city" type="text" class="form-control"   >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="check_in" class="form-label">THỜI GIAN BẮT ĐẦU LÀM VIỆC</label>
+                                    <input readonly th:value="${booking.checkin}" name="checkin" id="check_in" type="text" class="form-control"   >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="check_out" class="form-label">THỜI GIAN KẾT THÚC LÀM VIỆC</label>
+                                    <input readonly th:value="${booking.checkout}" name="checkout" id="check_out" type="text" class="form-control"   >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="cancelTime" class="form-label">THỜI HẠN HỦY ĐƠN</label>
+                                    <input readonly th:value="${booking.cancel_time}" name="cancelTime" id="cancelTime" type="text" class="form-control"   >
+                                </div>
+                                <form th:if="${booking.status == 0}" th:action="@{'/update/booking/' + ${booking.id}}" method="POST">
+
+                                    <input type="hidden" th:value="${booking.jobDetail.labor.userAccount.email}" name="labor_email" id="labor_email"  class="form-control"   >
+                                    <input type="hidden" th:value="${booking.jobDetail.labor.full_name}" name="labor_name"
+                                     th:id="${booking.jobDetail.labor.full_name}" class="form-control" >
+                                    <input type="hidden" th:value="${booking.accept}" name="accept" id="accept"  class="form-control"   >
+                                    <input type="hidden" th:value="${booking.status}" name="status" id="status"  class="form-control"   >
+                                    <input type="hidden" th:value="${booking.book_address}"  name="book_address" id="book_address"  class="form-control"  >
+                                    <input type="hidden" th:value="${booking.city_name}" name="city_name" id="city_name" class="form-control"   >
+                                    <input type="hidden" th:value="${booking.total_price}" name="total_price" id="total_price" class="form-control"   >
+                                    <input type="hidden" th:value="${booking.message}" name="message" id="message" class="form-control"   >
+                                    <input type="hidden" th:value="${booking.checkin}" name="checkin" id="checkin" class="form-control"   >
+                                    <input type="hidden" th:value="${booking.checkout}" name="checkout" id="checkout" class="form-control"   >
+                                    <input type="hidden" th:value="${booking.cancel_time}" name="cancel_time" id="cancel_time" class="form-control"   >
+                                    <input type="hidden" th:value="${booking.jobDetail.id}" name="job_detail_id" id="job_detail_id" class="form-control"   >
+                                    <input type="hidden" th:value="${booking.customer.id}" name="customer_id" id="customer_id" class="form-control"   >
+
+                                    <div style="margin-top: 30px" class="main-button" >
+                                     <button type="submit" class="btn-save-job-detail">HỦY ĐƠN</button>
+                                    </div>
+
+                                </form>
+                                <div style="margin-top: 30px" class="main-button" th:if="${booking.status != 0}">
+                                    <a th:href="@{'/your-menu'}" class="btn-orange">ĐẶT LỊCH TUYỂN LẠI</a>
+                                </div>
+
+                                <br><br>
+                            </div>
+
+                            <div class="row">
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+</body>
+</html>

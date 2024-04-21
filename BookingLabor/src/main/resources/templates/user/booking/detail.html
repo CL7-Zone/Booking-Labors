@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html  lang="en"
+       xmlns:th="http://thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:sec="http://www.thymeleaf.org"
+       layout:decorate="~{layout}" th:with="currentPage='Booking Manager By labor'">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Manager By labor</title>
+
+
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .btn-save-job-detail{
+            width: 100%;
+            font-size: 20px;
+            padding: 15px;
+            text-align: center;
+        }
+        .main-button button {
+            font-size: 15px;
+            color: #fff;
+            background-color: #00bdfe;
+            border: 1px solid #00bdfe;
+            padding: 10px 30px;
+            display: inline-block;
+            border-radius: 10px;
+            font-weight: 500;
+            text-transform: capitalize;
+            letter-spacing: 0.5px;
+            transition: all .3s;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div layout:fragment="content">
+
+        <div class="contest-details">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="top-content">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <span th:if="${userRoles != null}">
+                                        <span class="open" th:text="${userRoles}"></span>
+                                    </span>
+                                    <span class="wish-list">
+                                        <i class="fa fa-user"></i>
+                                         <i th:text="${#authentication.name}"></i>
+                                    </span>
+                                </div>
+                                <div class="col-lg-4">
+                                    <ul>
+                                        <li>
+                                            <i class="fa fa-medal"></i>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="main-content">
+                            <div class="col-lg-12">
+                                <!--/*@thymesVar id="success" type="text"*/-->
+                                <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success}">
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                                    <strong th:text="${success}"></strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <!--/*@thymesVar id="failed" type="text"*/-->
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${failed}">
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Failed:"><use xlink:href="#check-circle-fill"/></svg>
+                                    <strong th:text="${failed}"></strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                            <ul>
+                                <h4><i class="fa fa-cart-plus text-info"></i> ĐƠN TUYỂN DÀNH CHO NGƯỜI LAO ĐỘNG</h4>
+                            </ul>
+                            <b>CHÚ Ý:</b>
+                            <div style="padding-bottom: 10px">
+                                <ul style="list-style: disc; padding: 0px 20px">
+                                    <br>
+                                    <li style="list-style: disc;">
+                                        <b class="text-danger">VUI LÒNG ĐỒNG Ý ĐƠN TUYỂN TRƯỚC THỜI GIAN BẮT ĐẦU NHẬN CÔNG VIỆC!</b>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div style="padding-bottom: 0px" th:each="jobDetail : ${jobDetails}">
+                                    <p >
+                                        <b class="text-danger">JOB DETAIL ID: </b>
+                                        <span th:text="${jobDetail.id}"></span>
+                                        <b class="text-danger">TÊN CÔNG VIỆC CỦA BẠN: </b>
+                                        <span th:text="${jobDetail.job.nameJob}"></span>
+                                    </p>
+                                    <div th:each="booking : ${jobDetail.bookings}">
+                                        <p>
+                                            <b class="text-info">Booking ID: </b>
+                                            <span style="padding-right: 10px" th:text="${booking.id}"></span>
+                                            <b class="text-info">MÃ NGƯỜI TUYỂN DỤNG: </b>
+                                            <span style="padding-right: 10px" th:text="${booking.customer.id}"></span>
+                                            <b class="text-info">TÊN NGƯỜI TUYỂN DỤNG: </b>
+                                            <span style="padding-right: 10px"  th:text="${booking.customer.full_name}"></span>
+                                            <span style="padding-right: 10px"  th:text="${booking.customer.userAccount.email}"></span>
+                                            <b class="text-info">SỐ ĐIỆN THOẠI NGƯỜI TUYỂN DỤNG: </b>
+                                            <span style="padding-right: 10px"  th:text="${booking.customer.phone_number}"></span>
+
+                                            <b class="text-info">THỜI GIAN BẮT ĐẦU NHẬN CÔNG VIỆC: </b>
+                                            <span style="padding-right: 10px"  th:text="${booking.checkin}"></span>
+                                            <b class="text-info">THỜI GIAN KẾT THÚC CÔNG VIỆC: </b>
+                                            <span style="padding-right: 10px"  th:text="${booking.checkout}"></span>
+                                            <div th:if="${invalidAcceptFunction.apply(booking.id) > 0}">
+                                                <div th:if="${booking.accept == 0}" >
+                                                    <form th:if="${booking.status == 0}"
+                                                          th:action="@{'/accept-booking/' + ${booking.id}}"
+                                                          method="POST">
+
+                                                        <input type="hidden" th:value="${booking.accept}" name="accept" id="accept"  class="form-control"   >
+                                                        <input type="hidden" th:value="${booking.status}" name="status" id="status"  class="form-control"   >
+                                                        <input type="hidden" th:value="${booking.book_address}"  name="book_address" id="book_address"  class="form-control"  >
+                                                        <input type="hidden" th:value="${booking.city_name}" name="city_name" id="city_name" class="form-control"   >
+                                                        <input type="hidden" th:value="${booking.total_price}" name="total_price" id="total_price" class="form-control"   >
+                                                        <input type="hidden" th:value="${booking.message}" name="message" id="message" class="form-control"   >
+                                                        <input type="hidden" th:value="${booking.checkin}" name="checkin" id="checkin" class="form-control"   >
+                                                        <input type="hidden" th:value="${booking.checkout}" name="checkout" id="checkout" class="form-control"   >
+                                                        <input type="hidden" th:value="${booking.cancel_time}" name="cancel_time" id="cancel_time" class="form-control"   >
+                                                        <input type="hidden" th:value="${booking.jobDetail.id}" name="job_detail_id" id="job_detail_id" class="form-control"   >
+                                                        <input type="hidden" th:value="${booking.customer.id}" name="customer_id" id="customer_id" class="form-control"   >
+                                                        <button class="btn-success" type="submit">ĐỒNG Ý NGAY</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <span th:if="${booking.status == 0}">
+                                                <span th:if="${booking.accept != 0}">
+                                                    <i class="text-success fa fa-circle"></i> ĐÃ ĐỒNG Ý
+                                                </span>
+                                            </span>
+                                            <span th:if="${booking.status != 0}">
+                                                <i class="text-danger fa fa-circle"></i> ĐÃ HỦY
+                                            </span>
+                                            <br>
+                                            <p class="text-danger" th:if="${invalidAcceptFunction.apply(booking.id) < 1}">
+                                                <b class="text-black">#Message: </b>
+                                                <span class="text-danger">
+                                                    <span  class="text-black" th:text="${invalidAcceptFunction.apply(booking.id)}"></span>
+                                                        BẠN KHÔNG ĐƯỢC PHÉP KHÔNG NHẬN CÔNG VIỆC ĐÚNG LỊCH HẸN!
+                                                </span>
+                                            </p>
+                                        </p>
+                                        <hr/>
+                                    </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="pt-4">
+
+                                    <h5 class="mb-4">BẠN ĐÃ ỨNG TUYỂN TIN TUYỂN DỤNG</h5>
+                                    <div th:each="apply : ${applies}">
+                                        <table class="mt-4">
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Tiêu đề tin bạn đã ứng tuyển</th>
+                                                <th>Tên</th>
+                                                <th>Ảnh</th>
+                                                <th>Trình độ</th>
+                                                <th>Kinh nghiệm</th>
+                                                <th>Giới thiệu</th>
+                                                <th>ACTION</th>
+                                            </tr>
+
+                                            <tr>
+                                                <td th:text="${apply.id}"></td>
+                                                <td th:text="${apply.post.title}"></td>
+                                                <td th:text="${labor.full_name}"></td>
+                                                <td >
+                                                    <img width="70%" th:src="${'/assets/images/' + apply.image_apply}" alt="">
+                                                </td>
+                                                <td th:text="${apply.education}"></td>
+                                                <td th:text="${apply.experience}"></td>
+                                                <td th:text="${apply.about}"></td>
+                                                <td>
+                                                    <a th:href="@{'/post/show/' + ${apply.post.id}}">XEM CHI TIẾT TIN BẠN ĐÃ ỨNG TUYỂN</a>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</body>
+</html>

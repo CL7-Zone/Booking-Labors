@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}" th:with="currentPage='Show Detail Labor'">
+<head>
+    <meta charset="UTF-8">
+    <title>Show Detail Labor</title>
+</head>
+<body>
+
+    <div layout:fragment="content">
+
+        <div class="contest-details">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="top-content">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <span class="open" th:if="${userRoles==null}">
+                                        <span th:text="${'[GUEST]'}"></span>
+                                    </span>
+                                    <span class="open" th:if="${userRoles!=null}">
+                                        <span class="open" th:text="${userRoles}"></span>
+                                    </span>
+                                    <span class="wish-list">
+                                        <i class="fa fa-user"></i>
+                                        <i th:text="${#authentication.name}"></i>
+                                    </span>
+                                </div>
+                                <div class="col-lg-4">
+                                    <ul>
+                                        <li><i class="fa fa-medal"></i></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="main-content">
+                            <div style="width: 100%;">
+                                <br>
+                                <div id="carouselExampleDark" class="carousel carousel-dark slide">
+                                    <div class="carousel-indicators">
+                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                    </div>
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active" data-bs-interval="10000">
+                                            <img  width="70%" th:src="${jobDetail.job.imageJob}" class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item" data-bs-interval="2000">
+                                            <img  width="70%" th:src="${jobDetail.job.imageJob}" class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img  width="70%" th:src="${jobDetail.job.imageJob}" class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+
+                                <div >
+                                    <p>
+                                        <b class="text-info">Họ và tên:</b>
+                                        <span th:text="${jobDetail.labor.full_name}"></span>
+                                    </p>
+
+<!--                                    <p>-->
+<!--                                        <b>Phone number:</b>-->
+<!--                                        <span th:text="${jobDetail.labor.phone_number}"></span>-->
+<!--                                    </p>-->
+                                    <p>
+                                        <b>Ngày sinh:</b>
+                                        <span th:text="${jobDetail.labor.birthday}"></span>
+                                    </p>
+
+                                </div>
+
+                                <h5  class="second-title">CÔNG VIỆC CHI TIẾT CỦA LAO ĐỘNG</h5>
+                                <br>
+                                <div th:if="${jobDetail!=null}" >
+                                    <em>
+                                        <b class="text-info">Danh mục </b>
+                                        <span th:text="${jobDetail.job.categoryJob.categoryName}"></span>
+                                    </em>
+                                    <p>
+                                        <b>Tên công việc:</b>
+                                        <span th:text="${jobDetail.job.nameJob}"></span>
+                                    </p>
+                                    <p>
+                                        <b>Địa chỉ làm việc chính thức:</b>
+                                        <span th:text="${jobDetail.official_work_address}"></span>
+                                    </p>
+                                    <p>
+                                        <b>Kinh nghiệm:</b>
+                                        <span th:text="${jobDetail.experience}"></span>
+                                    </p>
+                                    <p>
+                                        <b>Trình độ:</b>
+                                        <span th:text="${jobDetail.education}"></span>
+                                    </p>
+                                    <div>
+                                        <b>Các kỹ năng: </b>
+                                        <span th:each="commentSkill : ${jobDetail.commentSkills}" class="mr-3" th:text="${commentSkill.content}"></span>
+                                        <br><br>
+                                    </div>
+
+                                    <h4>
+                                        <b class="text">LƯƠNG BẠN CẦN TRẢ CHO ỨNG VIÊN KHI LÀM CÔNG VIỆC NÀY:</b>
+                                        <span class="text-warning"  th:text="${#numbers.formatDecimal(jobDetail.job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></span>
+                                    </h4>
+
+                                    <div sec:authorize="isAuthenticated()">
+                                        <div th:if="${#lists.contains(userRoles, 'ROLE_CUSTOMER')}" >
+                                            <div class="col-lg-12">
+                                                <form th:action="@{'/save/cart/job-detail/' + ${jobDetail.id}}" method="POST">
+                                                    <button type="submit" class="btn btn-primary">TUYỂN NGAY</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div sec:authorize="isAuthenticated()">
+                                        <div th:if="${#lists.contains(userRoles, 'ROLE_USER')}" >
+                                            <div class="col-lg-12 main-button">
+                                                <a th:href="@{/customer-create-info}">TẠO THÔNG TIN CÁ NHÂN CỦA BẠN ĐỂ TUYỂN DỤNG</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr>
+                                </div>
+
+                                <div class="main-button" sec:authorize="!isAuthenticated()" >
+                                    <a th:href="${'/login?bookingNow'}">TUYỂN NGAY</a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

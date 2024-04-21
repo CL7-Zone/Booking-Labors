@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}" th:with="currentPage='Posts'">
+<head>
+    <meta charset="UTF-8">
+    <title>Posts</title>
+
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .btn-save-job-detail{
+            width: 100%;
+            font-size: 20px;
+            padding: 15px;
+            text-align: center;
+        }
+        .main-button button {
+            font-size: 15px;
+            color: #fff;
+            background-color: #00bdfe;
+            border: 1px solid #00bdfe;
+            padding: 10px 30px;
+            display: inline-block;
+            border-radius: 10px;
+            font-weight: 500;
+            text-transform: capitalize;
+            letter-spacing: 0.5px;
+            transition: all .3s;
+        }
+    </style>
+</head>
+<body>
+    <div layout:fragment="content">
+
+        <div class="contest-details">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="top-content">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <span th:if="${userRoles!=null}">
+                                        <span class="open" th:text="${userRoles}"></span>
+                                    </span>
+                                    <span class="wish-list">
+                                        <i class="fa fa-user"></i>
+                                        <i th:text="${#authentication.name}"></i>
+                                    </span>
+                                </div>
+                                <div class="col-lg-4">
+                                    <ul>
+                                        <li><i class="fa fa-medal"></i>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="col-lg-12">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${param.unauthorized}">
+                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Failed:"><use xlink:href="#check-circle-fill"/></svg>
+                                <strong>403 Unauthorized!</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12">
+                            <!--/*@thymesVar id="success" type="text"*/-->
+                            <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success}">
+                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                                <strong th:text="${success}"></strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <!--/*@thymesVar id="failed" type="text"*/-->
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${failed}">
+                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Failed:"><use xlink:href="#check-circle-fill"/></svg>
+                                <strong th:text="${failed}"></strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
+
+
+                        <div class="main-content">
+                            <div class="mb-4">
+                                <h2>QUẢN LÝ TIN TUYỂN DỤNG CỦA BẠN</h2>
+                            </div>
+
+                            <div class="your-job">
+                                <div class="row" th:each="post : ${userPosts}">
+
+                                    <div id="carouselExampleIndicators" class="carousel slide mb-5">
+                                        <div class="carousel-indicators">
+                                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                        </div>
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <img th:src="${'/assets/images/' + post.image_workplace}" class="d-block w-100" alt="...">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img th:src="${'/assets/images/' + post.image_workplace}" class="d-block w-100" alt="...">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img th:src="${'/assets/images/' + post.image_workplace}" class="d-block w-100" alt="...">
+                                            </div>
+                                        </div>
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Previous</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Next</span>
+                                        </button>
+                                    </div>
+                                    <div class="mb-3">
+                                        <a th:href="@{'/post/show/' + ${post.id}}">
+                                            <h3>
+                                                <i class="text-danger fa fa-people-arrows"></i>
+                                                <span class="text-info" th:text="${post.title}"></span>
+                                            </h3>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-lg-2">
+                                        <div>
+                                            <h5>
+                                                <i class="text-primary fa fa-key"></i>
+                                                <span class="text-black" th:text="${post.id}"></span>
+                                            </h5>
+                                        </div>
+
+                                        <div>
+                                            <h5>
+                                                <i class="text-info fa fa-users"></i>
+                                                <span class="text-info" th:text="${post.you_are}"></span>
+                                            </h5>
+                                        </div>
+                                        <div>
+                                            <b>
+                                                <i class="text-warning fa fa-city"></i>
+                                                <span class="text-danger" th:text="${post.business_name}"></span>
+                                            </b>
+                                        </div>
+                                        <div>
+                                            <b>
+                                                <i class="text-success fa fa-briefcase"></i>
+                                                <span class="text-success" th:text="${post.job.nameJob}"></span>
+                                            </b>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2">
+                                        <div>
+                                            <i class="text-info fa fa-map-location"></i>
+                                            <span class="text-info" th:text="${'ĐỊA CHỈ: '+post.official_address}"></span>
+                                        </div>
+
+                                        <div>
+                                            <i class="text-info fa fa-signal"></i>
+                                            <span class="text-info" th:text="${'SỐ LƯỢNG TUYỂN: '+post.quantity}"></span>
+                                        </div>
+                                        <div>
+                                            <i class="text-info fa fa-clock"></i>
+                                            <span class="text-info" th:text="${'HÌNH THỨC TRẢ LƯƠNG THEO: '+post.pay_form}"></span>
+                                        </div>
+                                        <div>
+                                            <i class="text-info fa fa-phone"></i>
+                                            <span class="text-info" th:text="${post.phone_number}"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2">
+                                        <div>
+                                            <i class="text-success fa fa-money-bill-alt"></i>
+                                            <span class="text-success" th:text="${'LƯƠNG TỐI ĐA: '+#numbers.formatDecimal(post.max_payroll, 0, 'COMMA', 0, 'POINT') + ' VNĐ/' + post.pay_form}"></span>
+                                        </div>
+                                        <div>
+                                            <i class="text-danger fa fa-money-bill-alt"></i>
+                                            <span class="text-danger" th:text="${'LƯƠNG TỐI THIỂU: '+#numbers.formatDecimal(post.min_payroll, 0, 'COMMA', 0, 'POINT') + ' VNĐ/' + post.pay_form}"></span>
+                                        </div>
+                                        <div>
+                                            <i class="text-warning fa fa-city"></i>
+                                            <span class="text-info" th:text="${post.city.city_name}"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2" th:if="${post.re_image != 0}">
+                                        <div>
+                                            <i class="text-danger fa fa-info-circle"></i>
+                                            <span class="text-danger" th:text="${'TUỔI TỐI ĐA: '+post.max_age}"></span>
+                                        </div>
+                                        <div>
+                                            <i class="text-danger fa fa-info-circle"></i>
+                                            <span class="text-danger" th:text="${'TUỔI TỐI THIỂU: '+post.min_age}"></span>
+                                        </div>
+                                        <div>
+                                            <i class="text-danger fa fa-info-circle"></i>
+                                            <span class="text-danger" th:text="${'TRÌNH ĐỘ: '+post.education}"></span>
+                                        </div>
+                                        <div>
+                                            <i class="text-danger fa fa-info-circle"></i>
+                                            <span class="text-danger" th:text="${'KINH NGHIỆM: '+post.experience}"></span>
+                                        </div>
+
+                                        <div>
+                                            <i class="text-success fa fa-circle"></i>
+                                            <span class="text-success" th:text="${'YÊU CẦU ẢNH: '+post.re_image}"></span>
+                                        </div>
+
+                                    </div>
+
+                                    <div th:if="${post.re_image == 1}" class="pt-2">
+                                        <i class="text-success fa fa-circle"></i>
+                                        <span>YÊU CẦU ỨNG VIÊN CUNG CẤP ẢNH CÁ NHÂN!</span>
+                                    </div>
+
+                                    <div class="pt-3" >
+                                        <i class="text-danger fa fa-info-circle"></i>
+                                        <span class="text-danger" th:text="${post.requirement}"></span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <i class="text-black fa fa-info-circle pt-3"></i>
+                                        <span class="text-black" th:text="${post.description}"></span>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <span th:each="apply : ${post.applies}">
+                                            <span th:if="${apply.userAccount.id != null}">
+                                                 <i class="text-success fa fa-info-circle pt-3"></i>
+                                                 <span>SỐ SLOT CÒN DƯ: </span>
+                                                 <span class="text-black"
+                                                       th:text="${post.quantity - countApply.apply(apply.userAccount.id,post.id)}">
+                                                </span>
+                                            </span>
+                                        </span>
+
+
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <form method="POST" th:action="@{'/delete/post/' + ${post.id}}">
+                                            <button class="btn-danger" type="submit">XÓA BÀI</button>
+                                        </form>
+                                    </div>
+
+                                    <div class="pt-2">
+                                        <div class="mb-4">
+                                            <h3 >
+                                                NGƯỜI ỨNG TUYỂN
+                                            </h3>
+                                        </div>
+
+                                        <table th:if="${listApplyByPostFunc.apply(post.id) != null}">
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Người ứng tuyển</th>
+                                                <th>Ảnh người ứng tuyển</th>
+                                                <th>Số Điện Thoại Người ứng tuyển</th>
+                                                <th>Email Người ứng tuyển</th>
+                                                <th>Trình độ Người ứng tuyển</th>
+                                                <th>Kinh nghiệm Người ứng tuyển</th>
+                                                <th>Giới thiệu</th>
+                                            </tr>
+                                            <div th:each="apply : ${listApplyByPostFunc.apply(post.id)}" >
+                                                <tr th:each="labor : ${apply.userAccount.labors}">
+                                                    <td th:text="${apply.id}"></td>
+                                                    <td th:text="${labor.full_name}"></td>
+                                                    <td >
+                                                        <img width="70%" th:src="${'/assets/images/' + apply.image_apply}" alt="">
+                                                    </td>
+                                                    <td th:text="${labor.phone_number}"></td>
+                                                    <td th:text="${apply.userAccount.email}"></td>
+                                                    <td th:text="${apply.education}"></td>
+                                                    <td th:text="${apply.experience}"></td>
+                                                    <td th:text="${apply.about}"></td>
+                                                </tr>
+                                            </div>
+
+
+                                        </table>
+                                    </div>
+
+                                    <hr class="mt-5">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

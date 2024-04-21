@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}" th:with="currentPage='Your Booking Cart'">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Booking Cart</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .btn-save-job-detail{
+            width: 100%;
+            font-size: 20px;
+            padding: 15px;
+            text-align: center;
+        }
+        .main-button button {
+            font-size: 15px;
+            color: #fff;
+            background-color: #00bdfe;
+            border: 1px solid #00bdfe;
+            padding: 10px 30px;
+            display: inline-block;
+            border-radius: 10px;
+            font-weight: 500;
+            text-transform: capitalize;
+            letter-spacing: 0.5px;
+            transition: all .3s;
+        }
+    </style>
+</head>
+<body>
+    <div layout:fragment="content">
+
+        <div class="contest-details">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="top-content">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <span th:if="${userRoles!=null}">
+                                        <span class="open" th:text="${userRoles}"></span>
+                                    </span>
+                                    <span class="wish-list">
+                                        <i class="fa fa-user"></i>
+                                        <i th:text="${#authentication.name}"></i>
+                                    </span>
+                                </div>
+                                <div class="col-lg-4">
+                                    <ul>
+                                        <li>
+                                            <i class="fa fa-medal"></i>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="main-content">
+                            <div class="col-lg-12">
+                                <!--/*@thymesVar id="failed" type="text"*/-->
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${failed}">
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Failed:"><use xlink:href="#check-circle-fill"/></svg>
+                                    <strong th:text="${failed}">Booking failed!!!</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <!--/*@thymesVar id="success" type="text"*/-->
+                                <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success}">
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                                    <strong th:text="${success}">Booking successfully</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <!--/*@thymesVar id="invalid" type="text"*/-->
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${invalid}">
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Invalid:"><use xlink:href="#check-circle-fill"/></svg>
+                                    <strong th:text="${invalid}">Booking failed!!!</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12" th:if="${deleteSuccess}" >
+                                <div class="alert alert-success alert-dismissible fade show" role="alert" >
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                                    <!--/*@thymesVar id="deleteSuccess" type="text"*/-->
+                                    <strong th:text="${deleteSuccess}"></strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12" th:if="${deleteFailed}">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" >
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                                    <!--/*@thymesVar id="deleteFailed" type="text"*/-->
+                                    <strong th:text="${deleteFailed}"></strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12" th:if="${overLimit}">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" >
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                                    <!--/*@thymesVar id="overLimit" type="text"*/-->
+                                    <strong th:text="${overLimit}"></strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+
+                            <ul>
+                                <h4><i class="fa fa-cart-plus text-info"></i> CHI TIẾT ỨNG VIÊN BẠN VỪA CHỌN</h4>
+                            </ul>
+                            <h3 class="pb-4">
+                                TỔNG LƯƠNG BẠN CẦN TRẢ CHO ỨNG VIÊN:
+                                <b class="text-info"  th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></b>
+                            </h3>
+                            <div  style="padding-bottom: 10px; ">
+                                <h5>Attention:</h5>
+                            </div>
+                            <div th:if="${totalPrice < 1.0}" style="padding-bottom: 20px; ">
+                                <ul style="list-style: disc; padding: 0px 20px" >
+                                    <li style="list-style: disc;">
+                                        <h6 class="text-danger" >
+                                            <a class="text-danger" th:href="${'/your-menu'}">
+                                                VUI LÒNG CHỌN LAO ĐỘNG TRƯỚC KHI TUYỂN!
+                                            </a>
+                                        </h6>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div style="padding-bottom: 20px; ">
+                                <ul style="list-style: disc; padding: 0px 20px" >
+                                    <li style="list-style: disc; padding-bottom: 10px">
+                                        <h6 class="text-danger" >
+                                            BẠN KHÔNG ĐUỢC PHÉP CHỌN CÔNG VIỆC CỦA LAO ĐỘNG GIỐNG NHAU!
+                                        </h6>
+                                    </li>
+                                </ul>
+                            </div>
+                            <form th:action="@{${totalPrice < 1.0} ? '/your-menu' : '/save/cart/booking'}"
+                                  th:method="${totalPrice < 1.0} ? 'GET' : 'POST'">
+                                <div style="padding-bottom: 30px">
+
+                                    <ul style="list-style: disc; padding: 0px 20px">
+                                        <input type="hidden" th:value="${customer_id}" name="customer_id" id="customer_id">
+                                        <input type="hidden" readonly th:value="${totalPrice}" name="total_price" id="total_price"  class="form-control">
+
+                                        <li style="list-style: disc;">
+                                            <div class="mb-2">
+                                                <label for="book_address" class="form-label">ĐỊA CHỈ LÀM VIỆC</label>
+                                                <input type="text"  name="book_address" id="book_address"  class="form-control">
+                                            </div>
+                                        </li>
+<!--                                        <li style="list-style: disc;">-->
+<!--                                            <div class="mb-2">-->
+<!--                                                <label for="city_name" class="form-label">In city</label>-->
+<!--                                                <input readonly type="text" th:value="${cityName}" name="city_name" id="city_name"  class="form-control">-->
+<!--                                            </div>-->
+<!--                                        </li>-->
+                                        <li style="list-style: disc;">
+                                            <div class="mb-2">
+                                                <label for="city_name" class="form-label">TẠI TỈNH THÀNH/ THÀNH PHỐ</label>
+                                                <select id="city_name" name="city_name" class="form-select">
+                                                    <option th:value="${cityName}" th:text="${cityName}"></option>
+                                                    <option th:each="city : ${cities}" th:value="${city.city_name}"
+                                                            th:text="${city.city_name}"></option>
+                                                </select>
+                                            </div>
+
+                                        </li>
+                                        <li style="list-style: disc;">
+                                            <div class="mb-2">
+                                                <label for="checkin" class="form-label">THỜI GIAN NHẬN VIỆC</label>
+                                                <input type="date"   name="checkin" id="checkin" min="" class="form-control">
+                                            </div>
+                                        </li>
+                                        <li style="list-style: disc;">
+                                            <div class="mb-2">
+                                                <label for="checkout" class="form-label">THỜI GIAN HẾT LÀM</label>
+                                                <input type="date"  name="checkout" id="checkout" min="" class="form-control">
+                                            </div>
+                                        </li>
+                                        <li style="list-style: disc;">
+                                            <div class="mb-2">
+                                                <label for="message" class="form-label">YÊU CẦU DÀNH CHO ỨNG VIÊN</label>
+                                                <textarea type="text"  name="message" id="message"  class="form-control"></textarea>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <script>
+                                        (function(){
+
+                                            let today = new Date();
+                                            let minDate = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+                                            const checkinInput = document.getElementById('checkin');
+                                            const checkoutInput = document.getElementById('checkout');
+
+                                            checkinInput.addEventListener('change', function() {
+                                                const checkinDate = new Date(checkinInput.value);
+                                                checkinDate.setDate(checkinDate.getDate() + 1);
+                                                const minCheckoutDate = checkinDate.toISOString().split('T')[0];
+                                                checkoutInput.min = minCheckoutDate;
+                                                if (checkoutInput.value < checkinInput.value) {
+                                                    checkoutInput.value = minCheckoutDate;
+                                                }
+                                            });
+                                            document.getElementById('checkin').min = minDate;
+                                            document.getElementById('checkout').min = minDate;
+                                        })();
+                                    </script>
+
+                                </div>
+                                <table th:if="${bookingSessions!=null}">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>TÊN LAO ĐỘNG</th>
+                                        <th>TÊN CÔNG VIỆC</th>
+                                        <th>LƯƠNG</th>
+                                        <th>TÊN DANH MỤC</th>
+                                        <th>ĐỊA CHỈ LÀM VIỆC CHÍNH THỨC</th>
+                                        <th>TÊN THÀNH PHỐ</th>
+                                        <th>Ảnh</th>
+                                        <th colspan="1">ACTION</th>
+                                    </tr>
+                                    <tr th:each="item, I : ${bookingSessions}">
+                                        <td>
+                                            <span th:text="${item.id}"></span>
+                                            <input type="hidden" th:value="${item.id}" name="job_detail_id" id="job_detail_id">
+                                        </td>
+                                        <td>
+                                            <span th:text="${item.labor_name}"></span>
+                                        </td>
+                                        <td>
+                                            <span th:text="${item.nameJob}"></span>
+                                        </td>
+                                        <td>
+                                            <span  th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></span>
+                                        </td>
+                                        <td>
+                                            <span th:text="${item.categoryName}"></span>
+                                        </td>
+                                        <td>
+                                            <span th:text="${item.official_work_address}"></span>
+                                        </td>
+                                        <td>
+                                            <span th:text="${item.city_name}"></span>
+                                        </td>
+                                        <td>
+                                            <img width="100%" th:src="${item.imageJob}" alt="">
+                                        </td>
+                                        <td>
+                                            <a th:href="@{'/delete/booking-cart/'+ ${I.index}}" class="btn-danger">
+                                                XÓA
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <div class="main-button">
+                                    <button th:class="${'btn-save-job-detail'}"
+                                            th:style="${totalPrice > 1.0} ? '' : ''"
+                                            type="submit">
+                                        <span th:text="${totalPrice < 1.0} ? 'VUI LÒNG CHỌN LAO ĐỘNG BẠN MUỐN TUYỂN!' : 'TUYỂN'"></span>
+                                    </button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+</html>

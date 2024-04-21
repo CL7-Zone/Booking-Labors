@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}" th:with="currentPage='Labor create info'">
+<head>
+    <meta charset="UTF-8">
+    <title>Labor create info</title>
+</head>
+<body>
+
+    <div layout:fragment="content">
+
+        <section class="contact-us">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-heading text-center">
+                            <h4>TẠO THÔNG<em> TIN LAO ĐỘNG</em></h4>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="info-item">
+                            <i class="fa fa-phone"></i>
+                            <h4>Phone Numbers</h4>
+                            <span><a href="#">010-020-0340</a><br><a href="#">090-080-0760</a></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="info-item">
+                            <i class="fa fa-envelope"></i>
+                            <h4>Email Addresses</h4>
+                            <span><a href="#" th:text="${email}"></a><br><a href="#"></a></span>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="info-item">
+                            <i class="fa fa-map-marked"></i>
+                            <h4>Office Location</h4>
+                            <span><a href="#">155 Michigan Ave, Chicago,<br>IL 60601, United States</a></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <form id="contact" th:action="@{${simple_user_labor == null ? '/labor/info/save' : ''}}"
+                              th:method="${simple_user_labor == null ? 'POST' : 'GET'}" >
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="full_name">HỌ VÀ TÊN</label>
+                                    <fieldset>
+                                        <input type="text"
+                                               th:value="${simple_user_labor != null and #strings.isEmpty(simple_user_labor.full_name) ? (simple_user_customer != null ? simple_user_customer.full_name : '') : (simple_user_labor != null ? simple_user_labor.full_name : '')}"
+                                               name="full_name" id="full_name" placeholder="Your full name..." autocomplete="on" required="">
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label for="address">ĐỊA CHỈ</label>
+                                    <fieldset>
+                                        <input type="text"
+                                               th:value="${simple_user_labor != null and #strings.isEmpty(simple_user_labor.address) ? (simple_user_customer != null ? simple_user_customer.address : '') : (simple_user_labor != null ? simple_user_labor.address : '')}"
+                                               name="address" id="address" placeholder="Your address..." autocomplete="on" required="">
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label for="phone_number">SỐ ĐIỆN THOẠI</label>
+                                    <fieldset>
+                                        <input type="text"
+                                               th:value="${simple_user_labor != null and #strings.isEmpty(simple_user_labor.phone_number) ? (simple_user_customer != null ? simple_user_customer.phone_number : '') : (simple_user_labor != null ? simple_user_labor.phone_number : '')}"
+                                               name="phone_number" id="phone_number" placeholder="Your phone number..." required="">
+                                    </fieldset>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <select name="status" id="status" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                        <option value="1">ĐANG RẢNH</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <select class="form-select" id="year" name="year">
+                                        <option value="">CHỌN NĂM SINH</option>
+                                    </select>
+                                </div>
+                                <br><br>
+                                <div class="col-lg-12">
+                                    <select  class="form-select" id="month" name="month">
+                                        <option value="">CHỌN THÁNG SINH</option>
+                                    </select>
+                                </div>
+                                <br><br>
+                                <div class="col-lg-12">
+                                    <select class="form-select" id="day" name="day">
+                                        <option value="">CHỌN NGÀY SINH</option>
+                                    </select>
+                                </div>
+                                <br><br>
+
+                                <div class="col-lg-12" >
+                                    <select name="city_id" id="city_id" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                        <option th:text="${simple_user_labor != null ? simple_user_labor.city.city_name : 'Select city'}"
+                                                th:value="${simple_user_labor != null ? simple_user_labor.city.id : ''}">
+                                        </option>
+                                        <option th:each="city : ${cities}"
+                                                th:value="${city.id}"
+                                                th:text="${city.city_name}"></option>
+                                    </select>
+                                </div>
+
+
+                                <div class="col-lg-12">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${param.success}">
+                                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Failed:"><use xlink:href="#check-circle-fill"/></svg>
+                                        <strong>Create your personal information successfully!</strong>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${param.failed}">
+                                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Failed:"><use xlink:href="#check-circle-fill"/></svg>
+                                        <strong>You can not create your personal information a second time!</strong>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12" th:if="simple_user_labor!=null" >
+                                        <button type="submit" class="orange-button">POST</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>

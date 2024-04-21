@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org"
+      layout:decorate="~{layout}" th:with="currentPage='Your job cart'">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Job Cart</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .btn-save-job-detail{
+            width: 100%;
+            font-size: 20px;
+            padding: 15px;
+            text-align: center;
+        }
+        .main-button button {
+            font-size: 15px;
+            color: #fff;
+            background-color: #00bdfe;
+            border: 1px solid #00bdfe;
+            padding: 10px 30px;
+            display: inline-block;
+            border-radius: 10px;
+            font-weight: 500;
+            text-transform: capitalize;
+            letter-spacing: 0.5px;
+            transition: all .3s;
+        }
+    </style>
+</head>
+<body>
+
+    <div layout:fragment="content">
+
+        <div class="contest-details">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="top-content">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <span th:if="${userRoles!=null}">
+                                        <span class="open" th:text="${userRoles}"></span>
+                                    </span>
+                                    <span class="wish-list">
+                                        <i class="fa fa-user"></i>
+                                        <i th:text="${#authentication.name}"></i>
+                                    </span>
+                                </div>
+                                <div class="col-lg-4">
+                                    <ul>
+                                        <li>
+                                            <i class="fa fa-medal"></i>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="main-content">
+                            <div class="col-lg-12">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${param.failed}">
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Failed:"><use xlink:href="#check-circle-fill"/></svg>
+                                    <strong>Saved failed!!!</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${param.success}">
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                                    <strong>Saved successfully</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12" th:if="${deleteSuccess}" >
+                                <div class="alert alert-success alert-dismissible fade show" role="alert" >
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                                    <!--/*@thymesVar id="deleteSuccess" type="text"*/-->
+                                    <strong th:text="${deleteSuccess}"></strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12" th:if="${deleteFailed}">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" >
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                                    <!--/*@thymesVar id="deleteFailed" type="text"*/-->
+                                    <strong th:text="${deleteFailed}"></strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12" th:if="${overLimit}">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" >
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                                    <!--/*@thymesVar id="overLimit" type="text"*/-->
+                                    <strong th:text="${overLimit}"></strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+
+                            <ul>
+                                <h4><i class="fa fa-cart-plus text-info"></i> CHI TIẾT CÔNG VIỆC BẠN CHỌN</h4>
+                            </ul>
+                            <b>ATTENTION:</b>
+                            <div style="padding-bottom: 40px">
+                                <ul style="list-style: disc; padding: 0px 20px">
+                                    <li style="list-style: disc;">
+                                        <b class="text-danger">CHỈ ĐƯỢC CHỌN TỐI ĐA 5 CÔNG VIỆC</b>
+                                    </li>
+                                    <li style="list-style: disc;">
+
+                                    </li>
+                                    <li style="list-style: disc;">
+
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <table th:if="${jobDetails!=null}">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>TÊN CÔNG VIỆC</th>
+                                    <th>LƯƠNG</th>
+                                    <th>MÔ TẢ</th>
+                                    <th>ẢNH</th>
+                                    <th colspan="1">ACTION</th>
+                                </tr>
+                                <tr th:each="item, I : ${jobDetails}">
+                                    <td>
+                                        <span th:text="${item.id}"></span>
+                                    </td>
+                                    <td>
+                                        <span th:text="${item.nameJob}"></span>
+                                    </td>
+                                    <td>
+                                        <span th:text="${money}"></span>
+                                    </td>
+                                    <td>
+                                        <span th:text="${item.description}"></span>
+                                    </td>
+                                    <td>
+                                        <img width="100%" th:src="${item.imageJob}" alt="">
+                                    </td>
+                                    <td>
+                                        <form th:action="@{'/delete/job-cart/' + ${I.index}}" method="POST">
+                                            <button class="btn-danger" type="submit" >
+                                                XÓA
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div class="row">
+                                <div class="main-button" th:if="${jobDetails!=null}">
+                                    <form th:action="@{/save/your-job}" method="POST">
+
+                                        <div class="mb-3">
+                                            <fieldset>
+                                                <label for="official_work_address" class="form-label">ĐỊA CHỈ LÀM VIỆC CHÍNH THỨC</label>
+                                                <input class="form-control" type="text" name="official_work_address" id="official_work_address" placeholder="NHẬP VÀO ĐỊA CHỈ LÀM VIỆC CHÍNH THỨC..."></input>
+                                            </fieldset>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="education" class="form-label">TRÌNH ĐỘ</label>
+                                            <select name="education" id="education" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                                <option selected disabled>CHỌN TRÌNH ĐỘ</option>
+                                                <option value="cấp 1">Cấp 1</option>
+                                                <option value="cấp 2">Cấp 2</option>
+                                                <option value="cấp 3">Cấp 3</option>
+                                                <option value="trung cấp">Trung cấp</option>
+                                                <option value="cao đẳng">Cao đẳng</option>
+                                                <option value="đại học">Đại học</option>
+                                                <option value="khác">Khác</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="experience" class="form-label">KINH NGHIỆM</label>
+                                            <select name="experience" id="experience" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                                <option selected disabled>CHỌN KINH NGHIỆM</option>
+                                                <option value="<1 year">< 1 year</option>
+                                                <option value="1-2 year">1-2 year</option>
+                                                <option value="3-5 year">3-5 year</option>
+                                                <option value="6-10 year">6-10 year</option>
+                                                <option value="> 10 year">> 10 year</option>
+                                            </select>
+                                        </div>
+
+                                        <button class="btn-save-job-detail" type="submit" >
+                                           LƯU VÀO HỒ SƠ
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

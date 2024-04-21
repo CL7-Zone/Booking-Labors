@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org"
+      layout:decorate="~{layout}" th:with="currentPage='Show Job'">
+<head>
+    <meta charset="UTF-8">
+    <title>Show job</title>
+</head>
+<body>
+
+    <div layout:fragment="content">
+
+        <div class="contest-details">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="top-content">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                     <span th:if="${userRoles!=null}">
+                                        <span class="open" th:text="${userRoles}"></span>
+                                    </span>
+                                    <span class="wish-list">
+                                        <i class="fa fa-user"></i>
+                                        <i th:text="${#authentication.name}"></i>
+                                    </span>
+                                </div>
+                                <div class="col-lg-4">
+                                    <ul>
+                                        <li><i class="fa fa-medal"></i>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="main-content">
+                            <h4>CHI TIẾT CÔNG VIỆC</h4>
+                            <h6>TÊN CÔNG VIỆC:
+                                <span th:text="${job.nameJob}"></span>
+                            </h6>
+                            <p>
+                                <b>MÔ TẢ CÔNG VIỆC: </b>
+                                <span th:text="${job.description}"></span>
+                            </p>
+                            <h5>
+                                GIÁ: <span  th:text="${#numbers.formatDecimal(job.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></span>
+                            </h5>
+                            <div class="row">
+
+                            </div>
+                            <div class="main-button" sec:authorize="!isAuthenticated()">
+                                <a th:href="@{/login?please}">CHỌN NGAY</a>
+                            </div>
+                            <div class="main-button" th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}" sec:authorize="isAuthenticated()">
+                                <form th:action="@{'/save/cart/job/' + ${job.id}}" method="POST">
+                                      <span th:if="${labor_id != null}">
+                                        <input type="hidden" th:value="${labor_id}" name="labor_id" id="labor_id">
+                                      </span>
+                                    <input type="hidden" th:value="${job.id}" name="id" th:id="'id_' + ${job.id}">
+                                    <button th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}" class="btn btn-primary" type="submit" name="selectedJobId">
+                                        CHỌN NGAY
+                                    </button>
+                                </form>
+                            </div>
+                            <div sec:authorize="isAuthenticated()">
+                                <div th:if="${#lists.contains(userRoles, 'ROLE_USER')}" >
+                                    <div class="col-lg-12 main-button">
+                                        <a th:href="@{/labor-create-info}">TẠO THÔNG TIN CÁ NHÂN CỦA BẠN ĐỂ CHỌN CÔNG VIỆC</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
