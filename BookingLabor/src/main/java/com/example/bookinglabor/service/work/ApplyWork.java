@@ -95,6 +95,7 @@ public class ApplyWork implements ApplyService {
     @Override
     public void deleteById(Long aLong) {
 
+        applyRepo.deleteById(aLong);
     }
 
     @Override

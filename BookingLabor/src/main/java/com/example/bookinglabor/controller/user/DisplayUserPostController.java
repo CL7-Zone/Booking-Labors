@@ -51,6 +51,8 @@ public class DisplayUserPostController {
     private ApplyService applyService;
     private SendMailService sendMailService;
     private VonageSendSmsService vonageSendSmsService;
+
+
     interface CountAppliesByUserAndPostFunc extends BiFunction<Long, Long, Integer> {
 
     }
@@ -107,6 +109,49 @@ public class DisplayUserPostController {
         model.addAttribute("countApply",applyService.countAppliesByPostId(id));
 
         return "user/post/show";
+    }
+
+    @PostMapping(value = {"/delete/apply/{id}"})
+    String delete(@PathVariable Long id){
+
+        Long userId = userService.findByEmailAndProvider(SecurityUtil.getSessionUser(), EnumComponent.SIMPLE).getId();
+        try{
+            List<Post> posts = postService.findPostByUserAccountId(userId);
+            for (Post post : posts){
+                if(applyService.countAppliesByPostId(post.getId()) < 1){
+                    System.out.println("Không được phép!!!");
+                    return  "redirect:/post-manager";
+                }
+            }
+            applyService.deleteById(id);
+            System.out.println("delete successfully");
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return  "redirect:/post-manager";
+    }
+
+    @PostMapping("/delete/post/{id}")
+    String delete(@PathVariable Long id,
+                  RedirectAttributes flashMessage){
+
+        Long userId = userService.findByEmailAndProvider(SecurityUtil.getSessionUser(), EnumComponent.SIMPLE).getId();
+
+        try{
+            if(postService.countPostsByUserAccountIdAndId(userId, id) < 1){
+                System.out.println("Không được phép!!!");
+                return  "redirect:/post-manager";
+            }
+            if(applyService.countAppliesByPostId(id) > 0){
+                flashMessage.addFlashAttribute("failed", "Bạn không thể xóa tin tuyển dụng này!");
+                return "redirect:/post-manager";
+            }
+            postService.deleteById(id);
+            flashMessage.addFlashAttribute("success", "Xóa thành công");
+        }catch (Exception exception){
+            flashMessage.addFlashAttribute("success", "Xóa thất bại!!!");
+        }
+        return "redirect:/post-manager";
     }
 
     @PostMapping(value = {"/apply/post/{id}"})
@@ -182,7 +227,6 @@ public class DisplayUserPostController {
     @GetMapping(value = {"/post/create"})
     private String create(Model model){
 
-        String email = SecurityUtil.getSessionUser();
         List<City> cities = cityService.findAllCities();
         List<Job> jobs = jobService.findAllJobs();
         List<CategoryJob> categoryJobs = categoryJobService.findAllCategoryJobs();
@@ -227,18 +271,6 @@ public class DisplayUserPostController {
             throw exception;
 
         }
-    }
-
-    @PostMapping("/delete/post/{id}")
-    String delete(@PathVariable Long id, RedirectAttributes flashMessage){
-
-        if(applyService.countAppliesByPostId(id) > 0){
-            flashMessage.addFlashAttribute("failed", "Bạn không thể xóa tin tuyển dụng này!");
-            return "redirect:/post-manager";
-        }
-        postService.deleteById(id);
-        flashMessage.addFlashAttribute("success", "Xóa thành công");
-        return "redirect:/post-manager";
     }
 
 

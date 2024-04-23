@@ -25,5 +25,6 @@ public interface PostService {
 
     void saveData(Post post, Long city_id, Long category_id, Long job_id);
 
+    int countPostsByUserAccountIdAndId(Long userId, Long id);
 
 }

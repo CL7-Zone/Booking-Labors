@@ -145,21 +145,7 @@
                                             </button>
                                         </form>
                                     </td>
-                                    <td>
-                                        <form th:action="@{'/update/job-detail/' + ${jobDetail.id}}" method="POST" th:object="${jobDetail}">
-                                            <input type="hidden" th:value="${jobDetail.official_work_address}" name="official_work_address" th:id="'job_id_' + ${jobDetail.job.id}">
-                                            <input type="hidden" th:value="${jobDetail.experience}" name="experience" th:id="'job_id_' + ${jobDetail.job.id}">
-                                            <input type="hidden" th:value="${jobDetail.education}" name="education" th:id="'job_id_' + ${jobDetail.job.id}">
 
-                                            <input type="hidden" th:value="${jobDetail.job.id}" name="job_id" th:id="'job_id_' + ${jobDetail.job.id}">
-                                            <input type="hidden" th:value="${labor_id}" name="labor_id" id="labor_id">
-                                            <div class="d-flex justify-content-center pt-2">
-                                                <button class="btn-warning" type="submit" >
-                                                    CẬP NHẬT
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </td>
                                 </tr>
                             </table>
 

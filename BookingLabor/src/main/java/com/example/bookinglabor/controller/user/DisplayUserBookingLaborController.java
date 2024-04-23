@@ -171,6 +171,10 @@ public class DisplayUserBookingLaborController implements HttpSessionListener {
 
         System.out.println("COUNT: "+bookingService.invalidCancelBooking(current_cancel_time, id));
 
+        if (bookingService.countBookingsByCustomer_IdAndId(customer_id, id) < 1) {
+            System.out.println("Không được phép!");
+            return "redirect:/your-booking";
+        }
         if (bookingService.invalidCancelBooking(current_cancel_time, id) > 0) {
             res.addFlashAttribute("notAllowed","Quá thời hạn hủy, bạn không được phép hủy!");
             return "redirect:/your-booking";

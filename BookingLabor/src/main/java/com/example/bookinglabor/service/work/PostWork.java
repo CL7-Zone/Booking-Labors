@@ -97,6 +97,11 @@ public class PostWork implements PostService {
 
     }
 
+    @Override
+    public int countPostsByUserAccountIdAndId(Long userId, Long id) {
+        return postRepo.countPostsByUserAccountIdAndId(userId, id);
+    }
+
 
 }
 

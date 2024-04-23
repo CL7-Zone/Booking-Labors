@@ -46,4 +46,10 @@ public interface BookingRepo extends JpaRepository<Booking,Long> {
                   "WHERE checkin <= :accept_time AND id = :id",
             nativeQuery = true)
     int invalidAcceptBooking(@Param("accept_time") LocalDateTime accept_time, @Param("id") Long id);
+
+    int countBookingsByCustomer_IdAndId(Long customerId, Long id);
+
+
+    int countBookingsByJobDetailIdAndId(Long job_detail_id, Long id);
+
 }

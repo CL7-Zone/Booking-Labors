@@ -105,7 +105,11 @@ public class DisplayUserBookingManagerController {
         LocalDateTime currentAcceptTime = LocalDateTime.now();
         System.out.println(customerEmail);
 
-        if(bookingService.invalidAcceptBooking(currentAcceptTime, id) < 1){
+        if(bookingService.countBookingsByJobDetailIdAndId(job_detail_id, id) < 1){
+            System.out.println("Không được phép!!!");
+            return "redirect:/booking-manager-by-labor";
+        }
+        if(bookingService.invalidAcceptBooking(currentAcceptTime, id) > 0){
             res.addFlashAttribute("failed","QUÁ HẠN ĐỒNG Ý!");
             return "redirect:/booking-manager-by-labor";
         }

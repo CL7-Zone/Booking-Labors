@@ -1,5 +1,6 @@
 package com.example.bookinglabor.controller.user;
 
+import com.example.bookinglabor.controller.component.EnumComponent;
 import com.example.bookinglabor.model.Job;
 import com.example.bookinglabor.model.JobDetail;
 import com.example.bookinglabor.model.Labor;
@@ -97,14 +98,18 @@ public class DisplayUserJobDetailController {
     @PostMapping("/delete/job-detail/{id}")
     private String delete(@PathVariable long id, RedirectAttributes flashMessage){
 
+        long user_id = userService.findByEmailAndProvider(SecurityUtil.getSessionUser(), EnumComponent.SIMPLE).getId();
+        long labor_id = laborService.findByUserId(user_id).getId();
         try{
             System.out.println("Delete job detail: "+id);
-
+            if(jobDetailService.countJobDetailsByIdAndLaborId(id, labor_id) < 1){
+                System.out.println("Không được phép!!!");
+                return "redirect:/your-job";
+            }
             if(jobDetailService.deleteById(id)){
                 flashMessage.addFlashAttribute("success", "XÓA THÀNH CÔNG");
                 return "redirect:/your-job";
             }
-
             flashMessage.addFlashAttribute("failed", "BẠN KHÔNG ĐƯỢC PHÉP XÓA CÔNG VIỆC NÀY VÌ NÓ ĐANG NẰM TRONG DANH SÁCH ỨNG TUYỂN!!!");
             return "redirect:/your-job";
         }catch (Exception exception){

@@ -18,7 +18,7 @@ public class UpdateApiController {
     UserService userService;
 
     @PostMapping("/admin/api/update/role-user")
-    public List<UserAccount> storeRoleUser(@RequestParam("name") String name,
+    public List<UserAccount> updateRoleUser(@RequestParam("name") String name,
                                            @RequestParam("email") String email){
         try{
             userService.updateUserRole(roleService.findByName(name), email);

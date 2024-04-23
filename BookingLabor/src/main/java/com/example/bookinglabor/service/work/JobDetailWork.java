@@ -104,6 +104,11 @@ public class JobDetailWork implements JobDetailService {
     }
 
     @Override
+    public int countJobDetailsByIdAndLaborId(Long id, Long laborId) {
+        return jobDetailRepo.countJobDetailsByIdAndLaborId(id, laborId);
+    }
+
+    @Override
     public int saveDataToSessionStore(List<JobDetailObject> jobDetailObjects,
                                           HttpServletRequest request,
                                           HttpSession session, Job job, Long id) {

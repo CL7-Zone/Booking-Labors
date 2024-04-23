@@ -40,5 +40,9 @@ public interface BookingService {
 
     int countByJobDetailId(Long job_detail_id);
 
+    int countBookingsByCustomer_IdAndId(Long customerId, Long id);
+
+    int countBookingsByJobDetailIdAndId(Long job_detail_id, Long id);
+
 
 }

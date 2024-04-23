@@ -31,6 +31,8 @@ public interface JobDetailService {
 
     int countJobDetailByLaborId(long labor_id);
 
+    int countJobDetailsByIdAndLaborId(Long id, Long laborId);
+
 
     int saveDataToSessionStore(List<JobDetailObject> jobDetailObjects, HttpServletRequest request, HttpSession session, Job job, Long id);
 

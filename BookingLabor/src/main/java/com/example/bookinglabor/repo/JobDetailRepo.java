@@ -24,6 +24,9 @@ public interface JobDetailRepo extends JpaRepository<JobDetail,Long> {
             nativeQuery = true)
     int  countJobDetailsByLaborId(@Param("labor_id") long labor_id);
 
+
+    int countJobDetailsByIdAndLaborId(Long id, Long laborId);
+
 //    @Query(value = "SELECT labors.full_name, jobs.name_job, jobs.price, cities.city_name " +
 //                    "FROM job_details , jobs , category_jobs , labors , cities " +
 //                    "WHERE job_details.job_id = jobs.id " +

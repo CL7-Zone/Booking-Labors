@@ -127,8 +127,9 @@ public class SecurityConfig{
         "/post/create", "/post-manager")
         .hasAnyRole("USER", "LABOR", "CUSTOMER", "ADMIN")// Cho phép người dùng có role là USER truy cập vào các route trên
 
-        .antMatchers(HttpMethod.POST, "/labor/info/save", "/customer/info/save","/save/post",
-        "/user/search", "/apply/post/{id}", "/delete/post/{id}", "/send/report")
+        .antMatchers(HttpMethod.POST, "/labor/info/save", "/customer/info/save",
+        "/save/post", "/user/search", "/apply/post/{id}", "/delete/post/{id}",
+        "/send/report", "/delete/apply/{id}")
         .hasAnyRole("USER", "LABOR", "CUSTOMER", "ADMIN")
 
         .antMatchers(HttpMethod.GET, "/your-info-labor",  "/your-cart", "/your-job"

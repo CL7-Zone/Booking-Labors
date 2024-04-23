@@ -224,4 +224,14 @@ public class BookingWork implements BookingService {
         return bookingRepo.countByJobDetailId(job_detail_id);
     }
 
+    @Override
+    public int countBookingsByCustomer_IdAndId(Long customerId, Long id) {
+        return bookingRepo.countBookingsByCustomer_IdAndId(customerId, id);
+    }
+
+    @Override
+    public int countBookingsByJobDetailIdAndId(Long job_detail_id, Long id) {
+        return bookingRepo.countBookingsByJobDetailIdAndId(job_detail_id, id);
+    }
+
 }
