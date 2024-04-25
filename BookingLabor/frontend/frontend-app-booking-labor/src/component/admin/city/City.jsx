@@ -20,7 +20,6 @@ const City = () => {
         dispatch(getCity());
         setIsFetch(false);
     }
-
     async function handleSubmit (event, cityId) {
         event.preventDefault();
 

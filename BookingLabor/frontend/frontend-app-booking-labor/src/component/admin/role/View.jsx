@@ -22,7 +22,7 @@ const View = () => {
 
     useEffect(() => {
         dispatch(getUserProfile());
-    }, [dispatch]);
+    }, []);
 
     return (
         <div>

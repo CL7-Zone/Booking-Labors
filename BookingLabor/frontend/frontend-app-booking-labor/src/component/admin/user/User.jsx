@@ -18,15 +18,15 @@ const User = () => {
 
     useEffect(() => {
         dispatch(getUser());
-    }, [dispatch]);
+    }, []);
 
     useEffect(() => {
         dispatch(getRole());
-    }, [dispatch]);
+    }, []);
 
     useEffect(() => {
-        console.log("user", users);
-    }, [users]);
+        console.log("users", users);
+    }, []);
 
     const handleRoleChange = (e) => {
         setSelectedRole(e.target.value);

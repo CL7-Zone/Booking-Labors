@@ -26,7 +26,7 @@ const Home = () => {
 
     useEffect(() => {
         dispatch(getUserProfile());
-    }, [dispatch]);
+    }, []);
 
     return (
         <div>

@@ -12,11 +12,11 @@ const Job = () => {
 
     useEffect(() => {
         dispatch(getJob());
-    }, [dispatch]);
+    }, []);
 
     useEffect(() => {
         console.log("jobs: ",jobs);
-    }, [jobs]);
+    }, []);
 
     async function handleSubmit (event, jobId) {
         event.preventDefault();

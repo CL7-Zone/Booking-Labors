@@ -115,14 +115,23 @@ public class DisplayUserPostController {
     String delete(@PathVariable Long id){
 
         Long userId = userService.findByEmailAndProvider(SecurityUtil.getSessionUser(), EnumComponent.SIMPLE).getId();
+        String applyEmail = applyService.findById(id).get().getUserAccount().getEmail();
+        String laborName = applyService.findById(id).get().getUserAccount().getLabors().get(0).getFull_name();
+
         try{
             List<Post> posts = postService.findPostByUserAccountId(userId);
             for (Post post : posts){
-                if(applyService.countAppliesByPostId(post.getId()) < 1){
-                    System.out.println("Không được phép!!!");
-                    return  "redirect:/post-manager";
+                for(Apply apply : applyService.findAppliesByPostId(post.getId())){
+                    if(!Objects.equals(apply.getId(), id)){
+                        System.out.println("Không được phép!");
+                        return  "redirect:/post-manager";
+                    }
                 }
             }
+            sendMailService.setMailSender(applyEmail, "Đơn tuyển dụng số: " + id,
+        "Xin chào "+ laborName+",\n\nNgười tuyển dụng đã từ chối đơn ứng tuyển của bạn!," +
+            "\n\nNếu có bất kỳ thắc mắc nào vui lòng liên hệ với chúng tôi." +
+            "\n\nBest regards,\nBookingLabor Website");
             applyService.deleteById(id);
             System.out.println("delete successfully");
         }catch (Exception exception){

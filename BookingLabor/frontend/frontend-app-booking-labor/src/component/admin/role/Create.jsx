@@ -13,8 +13,6 @@ const Create = () => {
     const [file, setFile] = useState();
     const msg = useSelector(state => state.String.message);
     const msgSuccess = useSelector(state => state.String.messageSuccess);
-
-
     function handleChange(event) {
         setFile(event.target.files[0])
     }

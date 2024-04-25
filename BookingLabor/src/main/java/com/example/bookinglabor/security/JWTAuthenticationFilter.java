@@ -44,9 +44,9 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
 
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities());
+                userDetails,
+                null,
+                userDetails.getAuthorities());
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 System.out.println("authenticationToken: "+authenticationToken);
@@ -54,7 +54,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
                 if (SecurityContextHolder.getContext().getAuthentication() != null) {
-                    System.out.println("User authenticated successfully!");
+                    System.out.println("User authenticated successfully");
                 } else {
                     System.out.println("User authentication failed!");
                 }
@@ -70,6 +70,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         }
         catch (BadCredentialsException ex) {
             sendErrorResponse(response, "Incorrect username or password!");
+        }catch (Exception error){
+            Map<String, String> map = new HashMap<>();
+            map.put("message", "Unauthorized");
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, map.get("message"));
         }
 
     }
