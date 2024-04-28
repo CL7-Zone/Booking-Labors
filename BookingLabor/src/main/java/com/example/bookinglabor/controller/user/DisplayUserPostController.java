@@ -256,7 +256,8 @@ public class DisplayUserPostController {
                 @RequestParam("category_id") Long category_id,
                 @RequestParam("job_id") Long job_id,
                 @RequestParam("image") MultipartFile file,
-                RedirectAttributes flashMessage) throws IOException {
+                RedirectAttributes flashMessage
+    ) throws IOException {
         try{
 
             String fileName = file.getOriginalFilename();
@@ -276,8 +277,7 @@ public class DisplayUserPostController {
 
             System.out.println("Error: "+exception);
             flashMessage.addFlashAttribute("failed", "Tạo thất bại!!!");
-//            return "redirect:/post/create";
-            throw exception;
+            return "redirect:/post/create";
 
         }
     }

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}" th:with="currentPage='Create post'">
 <head>
@@ -100,6 +99,37 @@
                                         <label for="official_address" class="form-label">ĐỊA CHỈ CHÍNH THỨC</label>
                                         <input type="text" class="form-control" name="official_address" id="official_address" >
                                     </div>
+                                    <div class="mb-3">
+                                        <label for="interview_time" class="form-label">THỜI GIAN PHỎNG VẤN / NHẬN VIỆC</label>
+                                        <input type="date" class="form-control" name="interview_time" id="interview_time" >
+                                    </div>
+
+                                    <script>
+
+                                        // Lấy thẻ input date
+                                        const input = document.getElementById('interview_time');
+
+                                        // Lấy ngày hiện tại
+                                        const today = new Date();
+
+                                        // Chuyển đổi ngày thành chuỗi đúng định dạng "yyyy-MM-dd"
+                                        const year = today.getFullYear();
+                                        let month = today.getMonth() + 1;
+                                        month = month < 10 ? '0' + month : month; // Thêm số 0 phía trước nếu tháng chỉ có 1 chữ số
+                                        let day = today.getDate();
+                                        day = day < 10 ? '0' + day : day; // Thêm số 0 phía trước nếu ngày chỉ có 1 chữ số
+                                        const formattedDate = year + '-' + month + '-' + day;
+
+                                        // Đặt giá trị cho input
+                                        input.value = formattedDate;
+
+                                        (function(){
+
+                                            let today = new Date();
+                                            document.getElementById('interview_time').min = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+                                        })();
+                                    </script>
+
                                     <div class="mb-3">
                                         <label for="city_id" class="form-label">TẠI TỈNH/ THÀNH PHỐ</label>
                                         <select name="city_id" id="city_id" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">

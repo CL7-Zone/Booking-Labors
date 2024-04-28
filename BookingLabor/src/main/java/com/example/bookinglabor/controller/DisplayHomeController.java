@@ -45,7 +45,17 @@ public class DisplayHomeController {
     private CountService countService3;
 
     @Autowired//inject
-    public DisplayHomeController(CategoryJobService categoryJobService, LaborService laborService, JobService jobService, JobDetailService jobDetailService, JobDetailRepo jobDetailRepo, LaborRepo laborRepo, CountService countService, CountService countService2, CountService countService3, PostService postService) {
+    public DisplayHomeController(CategoryJobService categoryJobService,
+                                 LaborService laborService,
+                                 JobService jobService,
+                                 JobDetailService jobDetailService,
+                                 JobDetailRepo jobDetailRepo,
+                                 LaborRepo laborRepo,
+                                 PostService postService
+                                 , CountService countService,
+                                 CountService countService2,
+                                 CountService countService3
+    ) {
         this.categoryJobService = categoryJobService;
         this.laborService = laborService;
         this.jobService = jobService;
@@ -73,6 +83,11 @@ public class DisplayHomeController {
         DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
         Function<Long, Long> countJobsByCategoryJobFunction = categoryJobService::countJobsByCategoryJob;
         List<Post> posts = postService.findAllPosts();
+
+
+        System.out.println("Bean 1: "+countService.LoadCount());
+        System.out.println("Bean 2: "+countService2.LoadCount());
+        System.out.println("Bean 3: "+countService3.LoadCount());
 
         model.addAttribute("posts",posts);
         model.addAttribute("countJobsByCategoryJob", countJobsByCategoryJobFunction);

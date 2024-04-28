@@ -131,11 +131,11 @@ public class DisplayUserBookingLaborController implements HttpSessionListener {
 
             return "redirect:/your-booking-cart";
         }catch (Exception exception){
-            notify = "TUYỂN THẤT BẠI!!!";
+            notify = "TUYỂN THẤT BẠI!";
             System.out.println("Book failed!!!\n Error: " + exception.getMessage());
             res.addFlashAttribute("failed", notify);
-//            throw exception;
-            return "redirect:/your-booking-cart";
+            throw exception;
+//            return "redirect:/your-booking-cart";
         }
 
     }
@@ -170,6 +170,8 @@ public class DisplayUserBookingLaborController implements HttpSessionListener {
         System.out.println("Current cancel time: " + current_cancel_time);
 
         System.out.println("COUNT: "+bookingService.invalidCancelBooking(current_cancel_time, id));
+
+        System.out.println("Book id: "+id);
 
         if (bookingService.countBookingsByCustomer_IdAndId(customer_id, id) < 1) {
             System.out.println("Không được phép!");

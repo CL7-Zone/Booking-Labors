@@ -205,6 +205,10 @@
                                             <i class="text-warning fa fa-city"></i>
                                             <span class="text-info" th:text="${post.city.city_name}"></span>
                                         </div>
+                                        <div>
+                                            <i class="text-success fa fa-clock"></i>
+                                            <span class="text-dark" th:text="${'THỜI GIAN PHỎNG VẤN/NHẬN VIỆC: '+post.interview_time}"></span>
+                                        </div>
                                     </div>
 
                                     <div class="col-lg-2" th:if="${post.re_image != 0}">

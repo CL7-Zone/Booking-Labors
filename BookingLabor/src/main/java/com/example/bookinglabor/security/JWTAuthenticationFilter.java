@@ -72,7 +72,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             sendErrorResponse(response, "Incorrect username or password!");
         }catch (Exception error){
             Map<String, String> map = new HashMap<>();
-            map.put("message", "Unauthorized");
+            map.put("message", "Unauthorized!");
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, map.get("message"));
         }
 

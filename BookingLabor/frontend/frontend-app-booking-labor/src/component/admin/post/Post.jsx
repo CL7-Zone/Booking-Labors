@@ -44,27 +44,24 @@ const Post = () => {
                             <tbody>
                                 {users.map(user =>
                                         user.posts.map(post=> (
-                                                user.applies.map(apply=> (
-                                                        <tr key={post.id}>
-                                                            <td><input className="form-check-input" type="checkbox"/></td>
-                                                            <td>{post.id}</td>
-                                                            <td>{user.email}</td>
-                                                            <td>{post.business_name}</td>
-                                                            <td>{post.you_are}</td>
-                                                            <td>{post.title}</td>
-                                                            <td>{post.phone_number}</td>
-                                                            <td>{post.quantity}</td>
-                                                            <td>{`${post.min_payroll} - ${post.max_payroll}`}</td>
-                                                            <td>{`Từ ${post.min_age} - ${post.max_age}`}</td>
-                                                            <td>{`Theo ${post.pay_form}`}</td>
-                                                            <td>{post.official_address}</td>
-                                                            <td><a className="btn btn-sm btn-primary" href="">Detail</a></td>
-                                                        </tr>
-                                                    )
-                                                )
+                                                <tr key={post.id}>
+                                                    <td><input className="form-check-input" type="checkbox"/></td>
+                                                    <td>{post.id}</td>
+                                                    <td>{user.email}</td>
+                                                    <td>{post.business_name}</td>
+                                                    <td>{post.you_are}</td>
+                                                    <td>{post.title}</td>
+                                                    <td>{post.phone_number}</td>
+                                                    <td>{post.quantity}</td>
+                                                    <td>{`${post.min_payroll} - ${post.max_payroll}`}</td>
+                                                    <td>{`Từ ${post.min_age} - ${post.max_age}`}</td>
+                                                    <td>{`Theo ${post.pay_form}`}</td>
+                                                    <td>{post.official_address}</td>
+                                                    <td><a className="btn btn-sm btn-primary" href="">Detail</a></td>
+                                                </tr>
                                             )
                                         )
-                                    )
+                                )
                                 }
                             </tbody>
                         </table>

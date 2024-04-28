@@ -145,6 +145,7 @@
                                             <i class="text-warning fa fa-city"></i>
                                             <span class="text-info" th:text="${post.city.city_name}"></span>
                                         </div>
+
                                     </div>
 
                                     <div class="pt-4"  >
@@ -173,9 +174,15 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <i class="text-black fa fa-info-circle pt-3"></i>
+                                            <i class="text-black fa fa-info-circle pt-3"></i>
                                         <span class="text-black" th:text="${post.description}"></span>
                                     </div>
+
+                                    <div class="mt-3">
+                                        <i class="text-success fa fa-clock"></i>
+                                        <span class="text-dark" th:text="${'THỜI GIAN PHỎNG VẤN/NHẬN VIỆC: '+post.interview_time}"></span>
+                                    </div>
+
                                     <div>
                                         <i class="text-success fa fa-info-circle pt-3"></i>
                                         <span>SỐ SLOT CÒN DƯ: </span>

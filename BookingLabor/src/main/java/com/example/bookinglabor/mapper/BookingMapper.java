@@ -8,6 +8,13 @@ public class BookingMapper {
 
     public static BookingDto mapToBookingDto(Booking booking){
 
+        if (booking == null || booking.getJobDetail() == null) {
+
+            System.out.println("booking dto null!!!");
+
+            return null;
+        }
+
         return BookingDto.builder()
                 .id(booking.getId())
                 .accept(booking.getAccept())

@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -29,6 +30,7 @@ public class Post {
     private String business_name;
     private String phone_number;
     private String official_address;
+    private String interview_time;
     private String image_workplace;
     private String title;
     private int quantity;
