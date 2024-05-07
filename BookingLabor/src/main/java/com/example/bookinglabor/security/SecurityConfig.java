@@ -52,7 +52,7 @@ import java.util.stream.Collectors;
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
 @RequiredArgsConstructor
-public class SecurityConfig{
+public class SecurityConfig {
 
 
     private final JwtAuthEntryPoint authEntryPoint;
@@ -65,8 +65,11 @@ public class SecurityConfig{
     private CustomAccessDeniedHandler customAccessDeniedHandler;
     private  CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
+    private AccountFilter accountFilter;
+
+
     @Autowired
-    public SecurityConfig(JwtAuthEntryPoint authEntryPoint, CustomUserDetailsService userDetailsService, UserService userService, ClientRegistrationRepository clientRegistrationRepository, CustomerOauth2UserService oauth2UserService, Oauth2LoginSuccessHandler oauth2LoginSuccessHandler, CustomAccessDeniedHandler customAccessDeniedHandler, CustomAuthenticationEntryPoint customAuthenticationEntryPoint) {
+    public SecurityConfig(JwtAuthEntryPoint authEntryPoint, CustomUserDetailsService userDetailsService, UserService userService, ClientRegistrationRepository clientRegistrationRepository, CustomerOauth2UserService oauth2UserService, Oauth2LoginSuccessHandler oauth2LoginSuccessHandler, CustomAccessDeniedHandler customAccessDeniedHandler, CustomAuthenticationEntryPoint customAuthenticationEntryPoint, AccountFilter accountFilter) {
         this.authEntryPoint = authEntryPoint;
         this.userDetailsService = userDetailsService;
         this.userService = userService;
@@ -75,6 +78,7 @@ public class SecurityConfig{
         this.oauth2LoginSuccessHandler = oauth2LoginSuccessHandler;
         this.customAccessDeniedHandler = customAccessDeniedHandler;
         this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
+        this.accountFilter = accountFilter;
     }
     @Bean
     public static PasswordEncoder passwordEncoder(){
@@ -94,6 +98,7 @@ public class SecurityConfig{
 
         return new JWTAuthenticationFilter();
     }
+
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
@@ -170,11 +175,16 @@ public class SecurityConfig{
         .permitAll())
         .exceptionHandling()
         .authenticationEntryPoint(customAuthenticationEntryPoint)//Unauthorized khi chưa login
-        .accessDeniedHandler(customAccessDeniedHandler);//Unauthorized khi login
+        .accessDeniedHandler(customAccessDeniedHandler);//Unauthorized khi k có quyền
+
+        http.addFilterBefore(accountFilter,// hàm accountFilter sẽ đc thực thi trước UsernamePasswordAuthenticationFilter
+        UsernamePasswordAuthenticationFilter.class);
 
         http.authenticationProvider(authenticationProvider());// lưu user login vào UserDetail
         http.addFilterBefore(jwtAuthenticationFilter(),//Xác thực khi đăng nhập bằng API
-        UsernamePasswordAuthenticationFilter.class);//Kiểm tra username và password
+        UsernamePasswordAuthenticationFilter.class);//Xác thực username và password
+
+
 
         return http.build();
     }

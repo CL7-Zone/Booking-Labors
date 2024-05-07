@@ -32,6 +32,10 @@ public class UserAccount {
     @Column(name = "provider")
     private EnumComponent provider;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "active")
+    private EnumComponent active;
+
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp

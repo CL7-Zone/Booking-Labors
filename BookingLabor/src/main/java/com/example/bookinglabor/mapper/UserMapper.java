@@ -16,6 +16,7 @@ public class UserMapper {
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .provider(user.getProvider())
+                .active(user.getActive())
                 .roles(user.getRoles().stream()
                 .map(RoleMapper::mapToRole)
                 .collect(Collectors.toList()))

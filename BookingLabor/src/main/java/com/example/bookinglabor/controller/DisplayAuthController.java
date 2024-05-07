@@ -160,6 +160,7 @@ public class DisplayAuthController {
         if(existingUserEmail != null){
             return "redirect:/login?registerFailed=true";
         }
+
         if(res.hasErrors()){
             model.addAttribute("user", user);
             return "redirect:/login?registerFailed=true";

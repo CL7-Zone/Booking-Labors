@@ -116,6 +116,9 @@ public class AuthApiController {
         new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = JWTGeneratorToken.generateToken(authentication);
+
+        System.out.println("Token: "+token);
+
         Object principal = authentication.getPrincipal();
         Long userId = userService.findByEmailAndProvider(authentication.getName(), EnumComponent.SIMPLE).getId();
         @SuppressWarnings("unchecked")

@@ -35,8 +35,8 @@ public class CustomUserDetailsService  implements UserDetailsService, CustomUser
                     user.getPassword(),
                     RoleMapper.mapRolesToAuthorities(user.getRoles())
             );
-
-            System.out.println("CustomUser detail: "+userDetail);
+            System.out.println("USER LOGIN DETAIL: "+userDetail);
+            System.out.println("ACTIVE OR LOCKED: "+user.getActive());
 
             return userDetail;
 
