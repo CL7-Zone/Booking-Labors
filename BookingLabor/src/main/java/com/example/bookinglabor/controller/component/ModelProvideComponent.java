@@ -43,7 +43,9 @@ public class ModelProvideComponent {
         List<Header> jobTitle = headerService.findHeadersByType("job");
         List<Header> customer = headerService.findHeadersByType("customer");
         List<Header> hashtag = headerService.findHeadersByType("hashtag");
+        List<Header> admin_tag = headerService.findHeadersByType("admin-tag");
 
+        model.addAttribute("admin_tag", admin_tag);
         model.addAttribute("hashtag", hashtag);
         model.addAttribute("cities", cities);
         model.addAttribute("jobs", jobs);

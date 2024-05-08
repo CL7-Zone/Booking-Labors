@@ -54,6 +54,7 @@ public class UserWork implements UserService {
         user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setProvider(EnumComponent.SIMPLE);
+        user.setActive(EnumComponent.isACTIVE);
         Role role = roleRepo.findByName("USER");
         user.setRoles(Collections.singletonList(role));
         userRepository.save(user);
@@ -206,6 +207,13 @@ public class UserWork implements UserService {
     }
 
     @Override
+    public boolean checkActiveUser() {
+        UserAccount user = userRepository.findByEmailAndProvider(SecurityUtil.getSessionUser(), EnumComponent.SIMPLE);
+        System.out.println(user.getActive());
+        return user.getActive() == EnumComponent.LOCKED;
+    }
+
+    @Override
     public Collection<? extends GrantedAuthority> getUpdatedAuthorities(Authentication authentication) {
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -266,6 +274,17 @@ public class UserWork implements UserService {
         }
 
     }
+
+    @Override
+    public void updateActiveUser(String active_name, String email) {
+
+        UserAccount user = userRepository.findByEmailAndProvider(email, EnumComponent.SIMPLE);
+        if(user != null){
+            user.setActive(EnumComponent.valueOf(active_name));
+            userRepository.save(user);
+        }
+    }
+
 
 
 

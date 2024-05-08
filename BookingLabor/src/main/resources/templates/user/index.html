@@ -82,7 +82,7 @@
                         </div>
 
                         <div class="main-content">
-                            <div style="padding-bottom: 40px" th:if="${#lists.contains(userRoles, 'ROLE_USER')}">
+                            <div style="padding-bottom: 40px" sec:authorize="hasRole('ROLE_USER')">
                                 <h4 style="margin-bottom: 10px">CHÚ Ý:</h4>
                                 <script th:inline="javascript">
                                     alert("Hãy tạo thông tin để tạo việc làm và tuyển lao động!");

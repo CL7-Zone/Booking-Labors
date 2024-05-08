@@ -15,4 +15,5 @@ public class UserDto {
     @NotEmpty(message = "Password should not be empty!")
     private String password;
     private EnumComponent provider;
+    private EnumComponent active;
 }

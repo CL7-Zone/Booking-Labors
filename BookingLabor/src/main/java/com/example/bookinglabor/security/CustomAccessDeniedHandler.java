@@ -29,9 +29,6 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
 
 //          response.sendRedirect(request.getContextPath() + "/your-menu?unauthorized");
-
-
-
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
         ObjectMapper objectMapper = new ObjectMapper();

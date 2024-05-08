@@ -1,13 +1,7 @@
 package com.example.bookinglabor.controller.api;
 
-import com.example.bookinglabor.model.City;
-import com.example.bookinglabor.model.Job;
-import com.example.bookinglabor.model.Role;
-import com.example.bookinglabor.model.UserAccount;
-import com.example.bookinglabor.service.CityService;
-import com.example.bookinglabor.service.JobService;
-import com.example.bookinglabor.service.RoleService;
-import com.example.bookinglabor.service.UserService;
+import com.example.bookinglabor.model.*;
+import com.example.bookinglabor.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +19,7 @@ public class PostApiController {
     CityService cityService;
     RoleService roleService;
     UserService userService;
+    HeaderService headerService;
 
     @PostMapping("/admin/api/job/save")
     public List<Job> storeJob(@RequestParam("file") MultipartFile file, RedirectAttributes flashMessage){
@@ -95,6 +90,23 @@ public class PostApiController {
             System.out.println("save successfully");
 
             return userService.getAllUsersApi();
+        }catch (Exception error){
+
+            System.out.println(error);
+            return null;
+        }
+    }
+
+
+    @PostMapping("/admin/api/header/save")
+    public List<Header> storeHeader(@RequestParam("content") String content,
+                                    @RequestParam("name") String name,
+                                    @RequestParam("type") String type){
+        try{
+            System.out.println("save successfully");
+            headerService.saveData(content, name, type);
+
+            return headerService.findAllHeaders();
         }catch (Exception error){
 
             System.out.println(error);

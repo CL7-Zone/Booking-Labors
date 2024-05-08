@@ -57,13 +57,13 @@
                                     <li> <a th:href="@{/jobs}">CÁC CÔNG VIỆC</a></li>
                                     <li><a th:href="@{/your-info-labor}">HỒ SƠ THÔNG TIN CÁ NHÂN</a></li>
                                     <li><a th:href="@{/labor-create-info}">TẠO HỒ SƠ</a></li>
-                                    <li th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}">
+                                    <li sec:authorize="hasRole('ROLE_LABOR')">
                                         <a th:href="@{/your-cart}">CHI TIẾT CÔNG VIÊC</a>
                                     </li>
-                                    <li th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}">
+                                    <li  sec:authorize="hasRole('ROLE_LABOR')">
                                         <a th:href="@{/your-job}">HỒ SƠ CÔNG VIỆC</a>
                                     </li>
-                                    <li th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}">
+                                    <li  sec:authorize="hasRole('ROLE_LABOR')">
                                         <a th:href="@{/booking-manager-by-labor}">QUẢN LÝ ĐƠN TUYỂN DỤNG</a>
                                     </li>
                                 </ul>
@@ -74,10 +74,10 @@
                                 <ul class="sub-menu">
                                     <li><a th:href="@{/your-info-customer}">HỒ SƠ THÔNG TIN CÁ NHÂN</a></li>
                                     <li ><a th:href="@{/customer-create-info}">TẠO HỒ SƠ</a></li>
-                                    <li th:if="${#lists.contains(userRoles, 'ROLE_CUSTOMER')}">
+                                    <li  sec:authorize="hasRole('ROLE_CUSTOMER')" >
                                         <a th:href="@{/your-booking-cart}">CHI TIẾT TUYỂN DỤNG</a>
                                     </li>
-                                    <li th:if="${#lists.contains(userRoles, 'ROLE_CUSTOMER')}">
+                                    <li sec:authorize="hasRole('ROLE_CUSTOMER')">
                                         <a th:href="@{/your-booking}">QUẢN LÝ ĐƠN TUYỂN DỤNG</a>
                                     </li>
                                 </ul>
@@ -218,6 +218,10 @@
                                 </span>
                                 <span  style="padding-right: 15px" th:each="hash : ${hashtag}">
                                     <a class="text-info" th:href="${hash.content}" th:text="${#strings.toUpperCase(hash.name)}"></a>
+                                </span>
+                                <br><br>
+                                <span sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_STAFF_CUSTOMER')"  style="padding-right: 15px" th:each="tag : ${admin_tag}">
+                                    <a class="text-info" th:href="${tag.content}" th:text="${#strings.toUpperCase(tag.name)}"></a>
                                 </span>
 
                             </div>

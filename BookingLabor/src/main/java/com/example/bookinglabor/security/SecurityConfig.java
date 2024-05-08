@@ -35,6 +35,7 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -130,7 +131,7 @@ public class SecurityConfig {
         .antMatchers(HttpMethod.GET,"/your-menu/**", "/labor-create-info",
         "/contact/report", "/customer-create-info", "/jobs",
         "/post/create", "/post-manager")
-        .hasAnyRole("USER", "LABOR", "CUSTOMER", "ADMIN")// Cho phép người dùng có role là USER truy cập vào các route trên
+        .hasAnyRole("USER", "LABOR", "CUSTOMER", "ADMIN", "STAFF_CUSTOMER")// Cho phép người dùng có role là USER truy cập vào các route trên
 
         .antMatchers(HttpMethod.POST, "/labor/info/save", "/customer/info/save",
         "/save/post", "/user/search", "/apply/post/{id}", "/delete/post/{id}",
@@ -150,8 +151,8 @@ public class SecurityConfig {
         .antMatchers(HttpMethod.POST, "/save/cart/job-detail/**", "/save/cart/booking",
         "/save/booking", "/update/booking/**").hasAnyRole("CUSTOMER")
 
-        .antMatchers(HttpMethod.GET , "/admin/**")
-        .hasAnyRole("ADMIN")
+        .antMatchers(HttpMethod.GET , "/admin/**", "/swagger-ui/**")
+        .hasAnyRole("ADMIN", "STAFF_CUSTOMER")
 
         .antMatchers(HttpMethod.POST , "/admin/**")
         .hasAnyRole("ADMIN")
@@ -174,17 +175,29 @@ public class SecurityConfig {
         .failureUrl("/login?error=true")//sai mật khẩu
         .permitAll())
         .exceptionHandling()
-        .authenticationEntryPoint(customAuthenticationEntryPoint)//Unauthorized khi chưa login
-        .accessDeniedHandler(customAccessDeniedHandler);//Unauthorized khi k có quyền
+        .authenticationEntryPoint(new AuthenticationEntryPoint() {
+            @Override
+            public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+                response.sendRedirect(request.getContextPath() + "/login?unauthorized");
+            }
+        })//Unauthorized khi chưa login
+        .accessDeniedHandler(new AccessDeniedHandler() {
+            @Override
+            public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
+                response.sendRedirect(request.getContextPath() + "/your-menu?unauthorized");
+            }
+        });//Unauthorized khi k có quyền;
 
-        http.addFilterBefore(accountFilter,// hàm accountFilter sẽ đc thực thi trước UsernamePasswordAuthenticationFilter
+        // hàm accountFilter sẽ đc thực thi trước UsernamePasswordAuthenticationFilter
+        http.addFilterBefore(accountFilter,
         UsernamePasswordAuthenticationFilter.class);
 
         http.authenticationProvider(authenticationProvider());// lưu user login vào UserDetail
         http.addFilterBefore(jwtAuthenticationFilter(),//Xác thực khi đăng nhập bằng API
-        UsernamePasswordAuthenticationFilter.class);//Xác thực username và password
-
-
+        UsernamePasswordAuthenticationFilter.class)//Xác thực username và password
+        .exceptionHandling().authenticationEntryPoint(customAuthenticationEntryPoint)
+        .accessDeniedHandler(customAccessDeniedHandler)
+        ;
 
         return http.build();
     }

@@ -130,7 +130,7 @@
                                     </h4>
 
                                     <div sec:authorize="isAuthenticated()">
-                                        <div th:if="${#lists.contains(userRoles, 'ROLE_CUSTOMER')}" >
+                                        <div sec:authorize="hasRole('ROLE_CUSTOMER')" >
                                             <div class="col-lg-12">
                                                 <form th:action="@{'/save/cart/job-detail/' + ${jobDetail.id}}" method="POST">
                                                     <button type="submit" class="btn btn-primary">TUYỂN NGAY</button>
@@ -138,8 +138,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div sec:authorize="isAuthenticated()">
-                                        <div th:if="${#lists.contains(userRoles, 'ROLE_USER')}" >
+                                    <div  sec:authorize="isAuthenticated()">
+                                        <div sec:authorize="hasRole('ROLE_USER')" >
                                             <div class="col-lg-12 main-button">
                                                 <a th:href="@{/customer-create-info}">TẠO THÔNG TIN CÁ NHÂN CỦA BẠN ĐỂ TUYỂN DỤNG</a>
                                             </div>

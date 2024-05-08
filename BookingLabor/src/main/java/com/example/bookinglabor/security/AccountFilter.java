@@ -33,14 +33,8 @@ public class AccountFilter extends OncePerRequestFilter {
 
         if (authentication != null && authentication.isAuthenticated()) {
 
-            UserAccount user = userService.findByEmailAndProvider(
-            SecurityUtil.getSessionUser(), EnumComponent.SIMPLE);
-
-            System.out.println(user.getActive());
-
-            if(user.getActive() == EnumComponent.LOCKED){
+            if(userService.checkActiveUser()){
                 if (!response.isCommitted()) {
-
                     new SecurityContextLogoutHandler().logout(request, response, authentication);
                     response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                     response.setContentType("application/json");

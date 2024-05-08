@@ -32,4 +32,21 @@ public class UpdateApiController {
         }
     }
 
+
+    @PostMapping("/admin/api/update/active-user")
+    public List<UserAccount> updateActiveUser(@RequestParam("active_name") String active_name,
+                                            @RequestParam("email") String email){
+        try{
+
+            userService.updateActiveUser(active_name, email);
+            System.out.println("update successfully");
+
+            return userService.getAllUsersApi();
+        }catch (Exception error){
+
+            System.out.println(error);
+            return null;
+        }
+    }
+
 }

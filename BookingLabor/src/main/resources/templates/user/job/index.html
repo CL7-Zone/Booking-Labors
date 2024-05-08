@@ -2,6 +2,7 @@
 <html lang="en"
       xmlns:th="http://thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org"
       layout:decorate="~{layout}" th:with="currentPage='Job'">
 <head>
     <meta charset="UTF-8">
@@ -90,7 +91,7 @@
                                                 <input type="hidden" readonly th:value="${labor_id}" name="labor_id" id="labor_id">
                                               </span>
                                             <input type="hidden" readonly th:value="${job.id}" name="id" th:id="'id_' + ${job.id}">
-                                            <button th:if="${#lists.contains(userRoles, 'ROLE_LABOR')}" class="btn btn-primary" type="submit" name="selectedJobId">CHỌN NGAY</button>
+                                            <button  sec:authorize="hasRole('ROLE_LABOR')"  class="btn btn-primary" type="submit" name="selectedJobId">CHỌN NGAY</button>
                                         </form>
                                     </td>
                                 </tr>

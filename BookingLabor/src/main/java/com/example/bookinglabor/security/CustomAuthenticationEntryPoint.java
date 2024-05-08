@@ -23,9 +23,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("error", "Unauthorized");
         objectMapper.writeValue(response.getWriter(), responseBody);
-
         System.out.println("Login status: "+response.getStatus());
-
     }
 }
 

@@ -11,6 +11,8 @@ public interface HeaderService {
 
     List<Header> findHeadersByType(String type);
 
+    void saveData(String content, String name, String type);
+
     void saveAllDataFromExcel(MultipartFile file);
 
 

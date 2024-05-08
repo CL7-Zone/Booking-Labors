@@ -91,6 +91,7 @@ const User = () => {
                                 <th scope="col">ID</th>
                                 <th scope="col">EMAIL</th>
                                 <th scope="col">PROVIDER</th>
+                                <th scope="col">ACTIVE</th>
                                 <th scope="col">ROLES</th>
                                 <th colSpan="3">ACTION</th>
                             </tr>
@@ -102,50 +103,52 @@ const User = () => {
                                         <td>{user.id}</td>
                                         <td>{user.email}</td>
                                         <td>{user.provider}</td>
+                                        <td>{user.active}</td>
                                         <td>
                                             {user.roles.map(role => (
-                                                <form className="pt-3" onSubmit={handleDeleteUserRole} key={`${user.id}-${role.id}`}>
-                                                    <input
-                                                       className="form-control"
-                                                       type="text"
-                                                       name="email"
-                                                       defaultValue={user.email}
-                                                       readOnly={true}
-                                                    />
-                                                    <div className="pb-3 pt-3">
+                                                    <form className="pt-3" onSubmit={handleDeleteUserRole}
+                                                          key={`${user.id}-${role.id}`}>
                                                         <input
-                                                           type="radio"
-                                                           name="name"
-                                                           value={role.name}
-                                                           aria-label="Default radio example"
-                                                           id={role.id}
-                                                           checked={role_name === role.name}
-                                                           onChange={() => setSelectedRole(role.name)}
+                                                            className="form-control"
+                                                            type="text"
+                                                            name="email"
+                                                            defaultValue={user.email}
+                                                            readOnly={true}
                                                         />
-                                                        <label htmlFor={role.id}>{role.name}</label>
-                                                    </div>
+                                                        <div className="pb-3 pt-3">
+                                                            <input
+                                                                type="radio"
+                                                                name="name"
+                                                                value={role.name}
+                                                                aria-label="Default radio example"
+                                                                id={role.id}
+                                                                checked={role_name === role.name}
+                                                                onChange={() => setSelectedRole(role.name)}
+                                                            />
+                                                            <label htmlFor={role.id}>{role.name}</label>
+                                                        </div>
 
 
-                                                    <button type="submit" className="btn btn-danger">XÓA QUYỀN</button>
-                                                </form>
+                                                        <button type="submit" className="btn btn-danger">XÓA QUYỀN</button>
+                                                    </form>
                                                 )
                                             )}
                                         </td>
                                         <td>
                                             <form id={user.id} onSubmit={handleAddRole}>
                                                 <input
-                                                   type="text"
-                                                   name="email"
-                                                   className="form-control"
-                                                   defaultValue={user.email}
-                                                   readOnly={true}
+                                                    type="text"
+                                                    name="email"
+                                                    className="form-control"
+                                                    defaultValue={user.email}
+                                                    readOnly={true}
                                                 />
                                                 <select className="form-select"
                                                         name="name"
                                                         aria-label="Default select example"
                                                         onChange={handleRoleChange}>
                                                     {roles.map((role, index) =>
-                                                        <option key={`${role.id}`}  value={role.name}>
+                                                        <option key={`${role.id}`} value={role.name}>
                                                             {role.name}
                                                         </option>
                                                     )}

@@ -60,4 +60,8 @@ public interface UserService {
     boolean checkAuthToken(List<AuthObject> authObject,String inputToken);
 
     long generateNumber();
+
+    boolean checkActiveUser();
+
+    void updateActiveUser(String active_name, String email);
 }

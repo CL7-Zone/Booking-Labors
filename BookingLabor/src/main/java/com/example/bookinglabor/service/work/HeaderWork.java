@@ -2,11 +2,10 @@ package com.example.bookinglabor.service.work;
 
 
 import com.example.bookinglabor.mapper.HeaderMapper;
-import com.example.bookinglabor.model.CategoryJob;
 import com.example.bookinglabor.model.Header;
+import com.example.bookinglabor.model.UserAccount;
 import com.example.bookinglabor.repo.HeaderRepo;
 import com.example.bookinglabor.service.HeaderService;
-import com.example.bookinglabor.service.work.excel.UploadCategoryJob;
 import com.example.bookinglabor.service.work.excel.UploadHeader;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,6 +40,19 @@ public class HeaderWork implements HeaderService {
         return headers.stream()
                 .map(HeaderMapper::mapToHeader)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void saveData(String content, String name, String type) {
+
+        Header header =  new Header();
+        header.setContent(content);
+        header.setName(name);
+        header.setType(type);
+        UserAccount userAccount = new UserAccount();
+        userAccount.setId(29L);
+        header.setUserAccount(userAccount);
+        headerRepo.save(header);
     }
 
     @Override
