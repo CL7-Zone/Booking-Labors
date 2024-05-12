@@ -1,4 +1,4 @@
-package com.example.bookinglabor.security;
+package com.example.bookinglabor.security.middleware;
 
 import com.example.bookinglabor.controller.component.EnumComponent;
 import com.example.bookinglabor.model.UserAccount;

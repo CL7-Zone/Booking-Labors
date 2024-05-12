@@ -1,34 +1,24 @@
 package com.example.bookinglabor.security;
 
 
-import com.example.bookinglabor.model.Role;
-import com.example.bookinglabor.model.UserAccount;
+import com.example.bookinglabor.security.middleware.AccountFilter;
+import com.example.bookinglabor.security.middleware.JWTAuthenticationFilter;
 import com.example.bookinglabor.security.oauth2.Oauth2LoginSuccessHandler;
 import com.example.bookinglabor.service.UserService;
 import com.example.bookinglabor.service.oAuth2.CustomerOauth2UserService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
@@ -36,18 +26,12 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequest
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Configuration
 @EnableWebSecurity
@@ -178,6 +162,7 @@ public class SecurityConfig {
         .authenticationEntryPoint(new AuthenticationEntryPoint() {
             @Override
             public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+//                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.sendRedirect(request.getContextPath() + "/login?unauthorized");
             }
         })//Unauthorized khi chưa login
@@ -186,7 +171,7 @@ public class SecurityConfig {
             public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
                 response.sendRedirect(request.getContextPath() + "/your-menu?unauthorized");
             }
-        });//Unauthorized khi k có quyền;
+        });//Unauthorized khi k có quyền
 
         // hàm accountFilter sẽ đc thực thi trước UsernamePasswordAuthenticationFilter
         http.addFilterBefore(accountFilter,
@@ -195,8 +180,8 @@ public class SecurityConfig {
         http.authenticationProvider(authenticationProvider());// lưu user login vào UserDetail
         http.addFilterBefore(jwtAuthenticationFilter(),//Xác thực khi đăng nhập bằng API
         UsernamePasswordAuthenticationFilter.class)//Xác thực username và password
-        .exceptionHandling().authenticationEntryPoint(customAuthenticationEntryPoint)
-        .accessDeniedHandler(customAccessDeniedHandler)
+//        .exceptionHandling().authenticationEntryPoint(customAuthenticationEntryPoint)
+//        .accessDeniedHandler(customAccessDeniedHandler)
         ;
 
         return http.build();
