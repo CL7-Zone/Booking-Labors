@@ -99,6 +99,7 @@ public class SecurityConfig {
 
         http.csrf().disable() // Vô hiệu hóa CSRF protection để cho phép đăng nhập qua form POST mà không cần token CSRF
         .authorizeRequests() // Bắt đầu cấu hình cho việc xác thực yêu cầu
+        // Cho phép mọi người truy cập các đường dẫn này mà không cần xác thực
         .antMatchers(HttpMethod.GET,"/","/error","/login",
         "/labors/**", "/category-job/**","/jobs/show/**","/blog",
         "/assets/**", "/vendor/**", "/send-mail","/contact",
@@ -108,10 +109,10 @@ public class SecurityConfig {
 
         .antMatchers(HttpMethod.POST, "/register/save","/verify/account",
         "/auth/save", "/auth/account","/guest/**", "/api/login",
-        "/logout", "/update/password", "/send/token")
+        "/logout", "/update/password", "/send/token", "/upload")
         .permitAll()
 
-        // Cho phép mọi người truy cập các đường dẫn này mà không cần xác thực
+
         .antMatchers(HttpMethod.GET,"/your-menu/**", "/labor-create-info",
         "/contact/report", "/customer-create-info", "/jobs",
         "/post/create", "/post-manager")
@@ -119,7 +120,7 @@ public class SecurityConfig {
 
         .antMatchers(HttpMethod.POST, "/labor/info/save", "/customer/info/save",
         "/save/post", "/user/search", "/apply/post/{id}", "/delete/post/{id}",
-        "/send/report", "/delete/apply/{id}")
+        "/send/report", "/delete/apply/{id}", "/download/{fileId}")
         .hasAnyRole("USER", "LABOR", "CUSTOMER", "ADMIN")
 
         .antMatchers(HttpMethod.GET, "/your-info-labor",  "/your-cart", "/your-job"

@@ -16,14 +16,14 @@
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
                         <a th:href="@{/}" class="logo">
-                            <img th:src="@{/assets/images/bookingLaborLogo.png}" alt="bookingLaborLogo">
+                            <img th:src="@{/assets/images/timviec_logo.png}" alt="timviec_logo">
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
                             <li  sec:authorize="!isAuthenticated()" ><a th:href="@{/}" class="active">TRANG CHỦ</a></li>
 
-                            <li class="has-sub" >
+                            <li class="has-sub"  sec:authorize="!isAuthenticated()">
                                 <a href="javascript:void(0)">DANH MỤC</a>
                                 <ul class="sub-menu" style="width: 300px">
                                     <li th:each="categoryJob : ${categoryJobs}">
@@ -33,13 +33,13 @@
                             </li>
 
 
-                            <li class="has-sub" >
+                            <li class="has-sub" sec:authorize="isAuthenticated()" >
                                 <a href="javascript:void(0)">
                                     TIN
                                 </a>
-                                <ul class="sub-menu">
+                                <ul  class="sub-menu">
                                     <li> <a th:href="@{/post/create}">TẠO TIN TUYỂN DỤNG</a></li>
-                                    <li sec:authorize="isAuthenticated()"> <a th:href="@{/post-manager}">QUẢN LÝ TIN TUYỂN DỤNG</a></li>
+                                    <li > <a th:href="@{/post-manager}">QUẢN LÝ TIN TUYỂN DỤNG</a></li>
                                 </ul>
                             </li>
 
@@ -185,7 +185,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 offset-lg-2 header-text">
-                    <img height="100%" width="30%" th:src="@{/assets/images/book1.png}" alt="">
+                    <img height="100%" width="30%" th:src="@{/assets/images/timviec.png}" alt="">
                 </div>
             </div>
         </div>
@@ -212,16 +212,30 @@
                                 </fieldset>
                             </div>
                             <br/><br/><br><br>
+
+                            <div class="col-lg-12 pt-2">
+                                <span>TỪ KHÓA TÌM KIẾM </span>
+                                <span  style="padding-right: 15px" th:each="keyword : ${search_keywords}">
+                                    <a class="text-info" th:href="@{'/guest/search/jobByLabor?nameJob='+${keyword.content}}" th:text="${#strings.toUpperCase('#'+keyword.content)}"></a>
+                                </span>
+                            </div>
+                            <br/>
+
                             <div class="col-lg-12 pt-2">
                                  <span  style="padding-right: 15px">
                                     <a class="filter-btn" id="search-option" th:text="${#strings.toUpperCase('LỌC')}"></a>
                                 </span>
-                                <span  style="padding-right: 15px" th:each="hash : ${hashtag}">
-                                    <a class="text-info" th:href="${hash.content}" th:text="${#strings.toUpperCase(hash.name)}"></a>
+                                <span  style="padding-right: 15px" th:each="tag : ${hashtag}">
+                                    <a class="text-info" th:href="${tag.content}" th:text="${#strings.toUpperCase(tag.name)}"></a>
                                 </span>
                                 <br><br>
                                 <span sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_STAFF_CUSTOMER')"  style="padding-right: 15px" th:each="tag : ${admin_tag}">
                                     <a class="text-info" th:href="${tag.content}" th:text="${#strings.toUpperCase(tag.name)}"></a>
+                                </span>
+                                <br><br>
+                                <span>DANH MỤC </span>
+                                <span  style="padding-right: 15px" th:each="category : ${categoryJobs}">
+                                    <a class="text-info" th:href="@{'/category-job/' + ${category.id}}" th:text="${'#'+category.categoryName}"></a>
                                 </span>
 
                             </div>

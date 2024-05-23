@@ -79,11 +79,8 @@ public class DisplayHomeController {
         List<JobDetail> jobDetails = jobDetailService.findAllJobDetails();
         Page<JobDetail> jobDetailPage = jobDetailRepo.findAll(PageRequest.of(pageNumber, size));
         Page<Labor> laborPage = laborRepo.findAll(PageRequest.of(pageNumber, size));
-        Long countJob = categoryJobService.countJob();
-        DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
         Function<Long, Long> countJobsByCategoryJobFunction = categoryJobService::countJobsByCategoryJob;
         List<Post> posts = postService.findAllPosts();
-
 
         System.out.println("Bean 1: "+countService.LoadCount());
         System.out.println("Bean 2: "+countService2.LoadCount());
@@ -132,9 +129,7 @@ public class DisplayHomeController {
             Page<JobDetail> jobDetailPage = jobDetailService.findJobDetailsByNameJob(nameJob, PageRequest.of(pageNumber, size));
             Page<Labor> laborPage = laborRepo.findAll(PageRequest.of(pageNumber, size));
             Function<Long, Long> countJobsByCategoryJobFunction = categoryJobService::countJobsByCategoryJob;
-            List<Post> posts = postService.findAllPosts();
 
-            model.addAttribute("posts",posts);
             model.addAttribute("jobDetailList", jobDetailPage.getContent());
             model.addAttribute("pages", new int[jobDetailPage.getTotalPages()]);
             model.addAttribute("currentPage", pageNumber);
@@ -147,25 +142,14 @@ public class DisplayHomeController {
 
 
     @GetMapping("/guest/search-job")
-    private String searchJob(@RequestParam("name_job") String nameJob, Model model,
-                          @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
-                          @RequestParam(value = "size", required = false, defaultValue = "6") int size){
+    private String searchJob(@RequestParam("name_job") String nameJob, Model model){
 
         if(nameJob != null){
 
-            Page<JobDetail> jobDetailPage = jobDetailRepo.findAll(PageRequest.of(pageNumber, size));
-            Page<Labor> laborPage = laborRepo.findAll(PageRequest.of(pageNumber, size));
             Function<Long, Long> countJobsByCategoryJobFunction = categoryJobService::countJobsByCategoryJob;
             List<Job> jobs = jobService.findJobsByNameJobContaining(nameJob);
-            List<Post> posts = postService.findAllPosts();
 
-            model.addAttribute("posts",posts);
             model.addAttribute("jobs", jobs);
-            model.addAttribute("jobDetailList", jobDetailPage.getContent());
-            model.addAttribute("pages", new int[jobDetailPage.getTotalPages()]);
-            model.addAttribute("currentPage", pageNumber);
-            model.addAttribute("laborList", laborPage.getContent());
-            model.addAttribute("pageLabors", new int[laborPage.getTotalPages()]);
             model.addAttribute("countJobsByCategoryJob", countJobsByCategoryJobFunction);
         }
         return "home/index";
@@ -180,9 +164,7 @@ public class DisplayHomeController {
         Page<JobDetail> jobDetailPage = jobDetailService.findAllByOrderByJobPriceAsc(PageRequest.of(pageNumber, size));
         Page<Labor> laborPage = laborRepo.findAll(PageRequest.of(pageNumber, size));
         Function<Long, Long> countJobsByCategoryJobFunction = categoryJobService::countJobsByCategoryJob;
-        List<Post> posts = postService.findAllPosts();
 
-        model.addAttribute("posts",posts);
         model.addAttribute("jobDetailList", jobDetailPage.getContent());
         model.addAttribute("pages", new int[jobDetailPage.getTotalPages()]);
         model.addAttribute("currentPage", pageNumber);
@@ -200,16 +182,11 @@ public class DisplayHomeController {
                                @RequestParam(value = "size", required = false, defaultValue = "6") int size){
 
         Page<JobDetail> jobDetailPage = jobDetailService.findAllByOrderByJobPriceDesc(PageRequest.of(pageNumber, size));
-        Page<Labor> laborPage = laborRepo.findAll(PageRequest.of(pageNumber, size));
         Function<Long, Long> countJobsByCategoryJobFunction = categoryJobService::countJobsByCategoryJob;
-        List<Post> posts = postService.findAllPosts();
 
-        model.addAttribute("posts",posts);
         model.addAttribute("jobDetailList", jobDetailPage.getContent());
         model.addAttribute("pages", new int[jobDetailPage.getTotalPages()]);
         model.addAttribute("currentPage", pageNumber);
-        model.addAttribute("laborList", laborPage.getContent());
-        model.addAttribute("pageLabors", new int[laborPage.getTotalPages()]);
         model.addAttribute("countJobsByCategoryJob", countJobsByCategoryJobFunction);
 
         return "home/index";

@@ -1,8 +1,8 @@
 package com.example.bookinglabor.controller.user;
 
 import com.example.bookinglabor.controller.component.EnumComponent;
-import com.example.bookinglabor.mapper.ApplyMapper;
 import com.example.bookinglabor.model.*;
+import com.example.bookinglabor.model.FileUpload;
 import com.example.bookinglabor.repo.JobDetailRepo;
 import com.example.bookinglabor.repo.LaborRepo;
 import com.example.bookinglabor.repo.PostRepo;
@@ -10,7 +10,6 @@ import com.example.bookinglabor.repo.UserRepo;
 import com.example.bookinglabor.security.SecurityUtil;
 import com.example.bookinglabor.service.*;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -31,7 +30,8 @@ import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import org.springframework.core.io.ResourceLoader;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 @Controller
 @AllArgsConstructor
 public class DisplayUserPostController {
@@ -51,7 +51,7 @@ public class DisplayUserPostController {
     private ApplyService applyService;
     private SendMailService sendMailService;
     private VonageSendSmsService vonageSendSmsService;
-
+    private FileUploadService fileUploadService;
 
     interface CountAppliesByUserAndPostFunc extends BiFunction<Long, Long, Integer> {
 
@@ -60,28 +60,29 @@ public class DisplayUserPostController {
     @GetMapping(value = {"/post-manager"})
     private String index(Model model){
 
-        Long user_id = userService.findByEmailAndProvider(SecurityUtil.getSessionUser(), EnumComponent.SIMPLE).getId();
-        List<Post> userPosts = postService.findPostByUserAccountId(user_id);
-        //Lambda function vế trước là tham số đầu vào
-        // vế sau là tham số đầu ra
+        try{
+            Long user_id = userService.findByEmailAndProvider(SecurityUtil.getSessionUser(), EnumComponent.SIMPLE).getId();
+            List<Post> userPosts = postService.findPostByUserAccountId(user_id);
+            //Lambda function vế trước là tham số đầu vào
+            // vế sau là tham số đầu ra
+            Function <Long, List<Apply>> listApplyByPostFunc = (postId)
+            -> applyService.findAppliesByPostId(postId);
+            CountAppliesByUserAndPostFunc countAppliesByUserAndPostFunc = (userId, postId)
+            -> applyService.countAppliesByUserAccountIdAndPostId(userId, postId);
 
-        for (Post post : userPosts){
-            for(Apply apply : post.getApplies()){
-                System.out.println(apply.getUserAccount().getId());
-            }
+            System.out.println("Function: "+listApplyByPostFunc);
+            System.out.println("post size: "+userPosts.size());
+
+            model.addAttribute("userPosts", userPosts);
+            model.addAttribute("listApplyByPostFunc", listApplyByPostFunc);
+            model.addAttribute("countApply", countAppliesByUserAndPostFunc);
+
+            return "user/post/index";
+        }catch (Exception exception){
+
+            System.out.println(exception.getMessage());
+            throw  exception;
         }
-        Function <Long, List<Apply>> listApplyByPostFunc = (postId)
-         -> applyService.findAppliesByPostId(postId);
-        CountAppliesByUserAndPostFunc countAppliesByUserAndPostFunc = (userId, postId)
-        -> applyService.countAppliesByUserAccountIdAndPostId(userId, postId);
-
-        System.out.println("Function: "+listApplyByPostFunc);
-        System.out.println("post size: "+userPosts.size());
-
-        model.addAttribute("userPosts", userPosts);
-        model.addAttribute("listApplyByPostFunc", listApplyByPostFunc);
-        model.addAttribute("countApply", countAppliesByUserAndPostFunc);
-        return "user/post/index";
     }
 
 
@@ -115,29 +116,40 @@ public class DisplayUserPostController {
     String delete(@PathVariable Long id){
 
         Long userId = userService.findByEmailAndProvider(SecurityUtil.getSessionUser(), EnumComponent.SIMPLE).getId();
-        String applyEmail = applyService.findById(id).get().getUserAccount().getEmail();
-        String laborName = applyService.findById(id).get().getUserAccount().getLabors().get(0).getFull_name();
+        Optional<Apply> applyOptional = applyService.findById(id);
 
-        try{
-            List<Post> posts = postService.findPostByUserAccountId(userId);
-            for (Post post : posts){
-                for(Apply apply : applyService.findAppliesByPostId(post.getId())){
-                    if(!Objects.equals(apply.getId(), id)){
-                        System.out.println("Không được phép!");
-                        return  "redirect:/post-manager";
-                    }
+        if (applyOptional.isPresent()) {
+            Apply apply = applyOptional.get();
+            Post post = apply.getPost();
+            List<Post> postOwners = postService.findPostByUserAccountId(userId);
+            boolean isOwner = postOwners.stream().anyMatch(p -> p.getId().equals(post.getId()));
+
+            if (isOwner) {
+
+                String applyEmail = apply.getUserAccount().getEmail();
+                String laborName = apply.getUserAccount().getLabors().get(0).getFull_name();
+                try {
+                    sendMailService.setMailSender(applyEmail, "Đơn tuyển dụng số: " + id,
+                "Xin chào " + laborName + ",\n\nNgười tuyển dụng đã từ chối đơn ứng tuyển của bạn!," +
+                    "\n\nXem chi tiết tin tuyển dụng đã bị từ chối: "
+                    + "http://localhost:8080/post/show/"+ apply.getPost().getId() +
+                    "\n\nNếu có bất kỳ thắc mắc nào vui lòng liên hệ với chúng tôi." +
+                    "\n\nBest regards,\nBookingLabor Website");
+                    fileUploadService.deleteByApplyId(id);
+                    applyService.deleteById(id);
+                    System.out.println("delete successfully");
+                } catch (Exception exception) {
+                    System.out.println(exception);
                 }
+            } else {
+                System.out.println("Không được phép xóa: " + id);
+                return  "redirect:/post-manager?notAllow";
             }
-            sendMailService.setMailSender(applyEmail, "Đơn tuyển dụng số: " + id,
-        "Xin chào "+ laborName+",\n\nNgười tuyển dụng đã từ chối đơn ứng tuyển của bạn!," +
-            "\n\nNếu có bất kỳ thắc mắc nào vui lòng liên hệ với chúng tôi." +
-            "\n\nBest regards,\nBookingLabor Website");
-            applyService.deleteById(id);
-            System.out.println("delete successfully");
-        }catch (Exception exception){
-            System.out.println(exception);
+        } else {
+            System.out.println("Không tìm thấy: " + id);
+            return  "redirect:/post-manager?notFound";
         }
-        return  "redirect:/post-manager";
+        return  "redirect:/post-manager?successfully";
     }
 
     @PostMapping("/delete/post/{id}")
@@ -145,17 +157,16 @@ public class DisplayUserPostController {
                   RedirectAttributes flashMessage){
 
         Long userId = userService.findByEmailAndProvider(SecurityUtil.getSessionUser(), EnumComponent.SIMPLE).getId();
-
         try{
             if(postService.countPostsByUserAccountIdAndId(userId, id) < 1){
-                System.out.println("Không được phép!!!");
-                return  "redirect:/post-manager";
+                return  "redirect:/post-manager?notAllow";
             }
             if(applyService.countAppliesByPostId(id) > 0){
                 flashMessage.addFlashAttribute("failed", "Bạn không thể xóa tin tuyển dụng này!");
                 return "redirect:/post-manager";
             }
             postService.deleteById(id);
+
             flashMessage.addFlashAttribute("success", "Xóa thành công");
         }catch (Exception exception){
             flashMessage.addFlashAttribute("success", "Xóa thất bại!!!");
@@ -167,6 +178,7 @@ public class DisplayUserPostController {
     String apply(@PathVariable Long id,
                  @ModelAttribute("apply") Apply apply,
                  @RequestParam("image") MultipartFile file,
+                 @RequestParam("file_apply") MultipartFile file_apply,
                  RedirectAttributes flashMessage) throws IOException {
 
         Long uID = userService.findByEmailAndProvider(SecurityUtil.getSessionUser(), EnumComponent.SIMPLE).getId();
@@ -190,14 +202,24 @@ public class DisplayUserPostController {
             assert fileName != null;
             FileCopyUtils.copy(file.getBytes(), new File(String.valueOf(staticPath),fileName));
             apply.setImage_apply(fileName);
+        }else{
+            flashMessage.addFlashAttribute("failed", "VUI LÒNG ĐÍNH KÈM ẢNH!");
+            return "redirect:/post/show/" + id;
         }
         try{
             System.out.println(apply);
             Optional<UserAccount> userAccount = userRepo.findById(uID);
+
             apply.setUserAccount(userAccount.get());
             apply.setPost(post.get());
-            applyService.save(apply);
+            Apply savedApply = applyService.save(apply);
 
+            if(!file_apply.isEmpty()){
+                FileUpload attchment = fileUploadService.saveFile(file_apply, savedApply);
+                String downloadUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/download/").path(attchment.getId()).toUriString();
+                System.out.println("Link download: " + downloadUrl);
+            }
             vonageSendSmsService.sendSms(post.get().getPhone_number(),
     "APPLY FOR " + post.get().getTitle()+
             "\n\nDear "+ post.get().getBusiness_name() + "." +
@@ -221,6 +243,8 @@ public class DisplayUserPostController {
             return "redirect:/post/show/" + id;
 
         }catch (Exception exception){
+
+            System.out.println(exception + "");
             flashMessage.addFlashAttribute("failed", "ỨNG TUYỂN THẤT BẠI!");
             return "redirect:/post/show/" + id;
         }

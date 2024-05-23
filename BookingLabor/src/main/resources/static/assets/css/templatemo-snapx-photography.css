@@ -85,6 +85,7 @@ figure, header, nav, section, article, aside, footer, figcaption {
   border: 1px solid #ccc;
   margin-bottom: 10px;
   padding: 10px;
+  height: 450px;
 }
 
 .job-info {
@@ -391,6 +392,7 @@ Header Style
 
 .header-area .main-nav .logo img {
   max-width: 190px;
+  padding-top: 7px;
 }
 
 .background-header .main-nav .logo {

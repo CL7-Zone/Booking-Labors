@@ -6,6 +6,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -26,12 +28,16 @@ public class Apply {
     String about;
     String image_apply;
 
+
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = true)
     private Post post;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = true)
     private UserAccount userAccount;
+
+    @OneToMany(mappedBy = "apply", cascade = CascadeType.REMOVE)
+    private List<FileUpload> fileUploads = new ArrayList<>();
 
     @CreationTimestamp
     private LocalDateTime createdOn;

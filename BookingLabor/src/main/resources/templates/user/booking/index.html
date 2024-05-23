@@ -109,7 +109,7 @@
 
                                     <li style="list-style: disc; padding-bottom: 10px">
                                         <h6 class="text-danger" th:if="${bookings!=null}" >
-                                            Bạn phải hủy việc đặt lao động trước 24 giờ!
+                                            Bạn phải hủy đơn tuyển lao động trước 24 giờ!
                                         </h6>
                                     </li>
                                     <li style="list-style: disc; padding-bottom: 10px">
@@ -121,7 +121,7 @@
                             </div>
                             <div  th:each="booking : ${bookings}" >
                                 <div class="mb-3">
-                                    <label for="id" class="form-label">Booking ID</label>
+                                    <label for="id" class="form-label">MÃ ĐƠN</label>
                                     <input readonly th:value="${booking.id}"  name="id" id="id" type="text" class="form-control"  >
                                 </div>
                                 <div class="mb-3">
@@ -129,11 +129,11 @@
                                     <input readonly th:value="${booking.customer.full_name}" name="customer_name" id="customer_name" type="text" class="form-control"   >
                                 </div>
                                 <div class="mb-3" th:if="${booking.status == 0}">
-                                    <label for="accept_show" class="form-label">ĐỒNG Ý HOẶC TỪ CHỐI TỪ NGƯỜI LAO ĐỘNG</label>
+                                    <label for="accept_show" class="form-label">XÁC NHẬN ĐỒNG Ý HOẶC TỪ CHỐI TỪ NGƯỜI LAO ĐỘNG</label>
                                     <input readonly th:value="${booking.accept == 0 ? 'Not accepted' : 'Accepted'}" name="accept_show" id="accept_show" type="text" class="form-control"   >
                                 </div>
                                 <div class="mb-3">
-                                    <label for="status_show" class="form-label">TRANG THÁI HỦY ĐƠN</label>
+                                    <label for="status_show" class="form-label">TRẠNG THÁI HỦY ĐƠN</label>
                                     <input readonly th:value="${booking.status == 0 ? 'Not cancelled' : 'Cancelled'}" name="status_show" id="status_show" type="text" class="form-control">
                                 </div>
                                 <div class="mb-3">

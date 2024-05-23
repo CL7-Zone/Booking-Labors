@@ -67,15 +67,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         } catch (MalformedJwtException | UnsupportedJwtException ex) {
             sendErrorResponse(response, "Invalid token!");
         }
-        catch (AccessDeniedException ex) {
-            sendErrorResponse(response, "Unauthorized!");
-        }
         catch (BadCredentialsException ex) {
             sendErrorResponse(response, "Incorrect username or password!");
-        }catch (Exception error){
-            Map<String, String> map = new HashMap<>();
-            map.put("message", "Unauthorized!");
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, map.get("message"));
+        } catch (Exception error){
+            sendErrorResponse(response, String.valueOf(error));
         }
 
     }

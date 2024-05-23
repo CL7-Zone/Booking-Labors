@@ -28,6 +28,7 @@ public class ApplyMapper {
                 .image_apply(apply.getImage_apply())
                 .post(apply.getPost())
                 .userAccount(apply.getUserAccount())
+                .fileUploads(apply.getFileUploads())
                 .build();
     }
 }

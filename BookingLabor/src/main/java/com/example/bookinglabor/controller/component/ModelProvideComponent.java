@@ -44,7 +44,9 @@ public class ModelProvideComponent {
         List<Header> customer = headerService.findHeadersByType("customer");
         List<Header> hashtag = headerService.findHeadersByType("hashtag");
         List<Header> admin_tag = headerService.findHeadersByType("admin-tag");
+        List<Header> search_keywords = headerService.findHeadersByType("search-keyword");
 
+        model.addAttribute("search_keywords", search_keywords);
         model.addAttribute("admin_tag", admin_tag);
         model.addAttribute("hashtag", hashtag);
         model.addAttribute("cities", cities);

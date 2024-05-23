@@ -287,7 +287,8 @@
                                                 <th>Trình độ Người ứng tuyển</th>
                                                 <th>Kinh nghiệm Người ứng tuyển</th>
                                                 <th>Giới thiệu</th>
-                                                <th colspan="2"></th>
+                                                <th>CV</th>
+                                                <th colspan="2">ACTION</th>
                                             </tr>
                                             <div th:each="apply : ${listApplyByPostFunc.apply(post.id)}" >
                                                 <tr th:each="labor : ${apply.userAccount.labors}">
@@ -302,10 +303,17 @@
                                                     <td th:text="${apply.experience}"></td>
                                                     <td th:text="${apply.about}"></td>
                                                     <td>
+                                                        <div th:each="fileUpload : ${apply.fileUploads}">
+                                                            <a th:href="@{'/download/' + ${fileUpload.id}}">
+                                                               <i class="fa fa-file-pdf"></i> Tải CV ngay
+                                                            </a>
+                                                            <br>
+                                                        </div>
+                                                    </td>
+                                                    <td>
                                                         <form method="POST" th:action="@{'/delete/apply/' + ${apply.id}}">
                                                             <button class="btn-danger">XÓA ỨNG VIÊN</button>
                                                         </form>
-
                                                     </td>
                                                 </tr>
                                             </div>
