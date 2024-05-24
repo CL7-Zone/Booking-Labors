@@ -124,7 +124,7 @@ public class DisplayUserBookingLaborController implements HttpSessionListener {
                 res.addFlashAttribute("invalid!", notify);
                 return "redirect:/your-booking-cart";
             }
-            notify = "Book successfully";
+            notify = "TUYỂN THÀNH CÔNG";
             session.removeAttribute("bookingObjects");
             System.out.println("TUYỂN THÀNH CÔNG");
             res.addFlashAttribute("success",notify);
@@ -174,11 +174,11 @@ public class DisplayUserBookingLaborController implements HttpSessionListener {
         System.out.println("Book id: "+id);
 
         if (bookingService.countBookingsByCustomer_IdAndId(customer_id, id) < 1) {
-            System.out.println("Không được phép!");
+            res.addFlashAttribute("notAllowed","BẠN KHÔNG THỂ HỦY!");
             return "redirect:/your-booking";
         }
         if (bookingService.invalidCancelBooking(current_cancel_time, id) > 0) {
-            res.addFlashAttribute("notAllowed","Quá thời hạn hủy, bạn không được phép hủy!");
+            res.addFlashAttribute("notAllowed","BẠN ĐÃ QUÁ THỜI HẠN HỦY!");
             return "redirect:/your-booking";
         }
         try{

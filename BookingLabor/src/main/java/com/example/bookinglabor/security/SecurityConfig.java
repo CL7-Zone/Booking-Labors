@@ -109,7 +109,7 @@ public class SecurityConfig {
 
         .antMatchers(HttpMethod.POST, "/register/save","/verify/account",
         "/auth/save", "/auth/account","/guest/**", "/api/login",
-        "/logout", "/update/password", "/send/token", "/upload")
+        "/logout", "/update/password", "/send/token")
         .permitAll()
 
 
@@ -120,7 +120,7 @@ public class SecurityConfig {
 
         .antMatchers(HttpMethod.POST, "/labor/info/save", "/customer/info/save",
         "/save/post", "/user/search", "/apply/post/{id}", "/delete/post/{id}",
-        "/send/report", "/delete/apply/{id}", "/download/{fileId}")
+        "/send/report", "/delete/apply/{id}", "/download/{fileId}/{apply_id}")
         .hasAnyRole("USER", "LABOR", "CUSTOMER", "ADMIN")
 
         .antMatchers(HttpMethod.GET, "/your-info-labor",  "/your-cart", "/your-job"
@@ -139,7 +139,7 @@ public class SecurityConfig {
         .antMatchers(HttpMethod.GET , "/admin/**", "/swagger-ui/**")
         .hasAnyRole("ADMIN", "STAFF_CUSTOMER")
 
-        .antMatchers(HttpMethod.POST , "/admin/**")
+        .antMatchers(HttpMethod.POST , "/admin/**", "/upload")
         .hasAnyRole("ADMIN")
 
         .antMatchers()

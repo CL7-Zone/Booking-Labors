@@ -229,10 +229,11 @@
                                     <a class="text-info" th:href="${tag.content}" th:text="${#strings.toUpperCase(tag.name)}"></a>
                                 </span>
                                 <br><br>
-                                <span sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_STAFF_CUSTOMER')"  style="padding-right: 15px" th:each="tag : ${admin_tag}">
+                                <span  sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_STAFF_CUSTOMER')" style="padding-right: 15px" th:each="tag : ${admin_tag}">
                                     <a class="text-info" th:href="${tag.content}" th:text="${#strings.toUpperCase(tag.name)}"></a>
                                 </span>
-                                <br><br>
+                                <br>
+                                <br>
                                 <span>DANH MỤC </span>
                                 <span  style="padding-right: 15px" th:each="category : ${categoryJobs}">
                                     <a class="text-info" th:href="@{'/category-job/' + ${category.id}}" th:text="${'#'+category.categoryName}"></a>
