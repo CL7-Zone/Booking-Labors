@@ -20,7 +20,6 @@ import java.nio.file.Paths;
 @Service
 public class OcrWork implements OcrService {
 
-
     private final Tesseract tesseract;
 
     @Autowired
@@ -37,6 +36,8 @@ public class OcrWork implements OcrService {
             multipartFile.transferTo(convFile);
             BufferedImage image = ImageIO.read(convFile);
             BufferedImage brightenedImage = preprocessImage(image);
+
+            // Lưu ảnh đã tiền xử lý để kiểm tra
             File preprocessedFile = new File(System
             .getProperty("java.io.tmpdir") + "/preprocessed_" + multipartFile.getOriginalFilename());
             ImageIO.write(brightenedImage, "png", preprocessedFile);
@@ -50,12 +51,14 @@ public class OcrWork implements OcrService {
         }
     }
 
+    // Tiền xử lý ảnh
     @Override
     public BufferedImage preprocessImage(BufferedImage image) {
         BufferedImage brightenedImage = brightenImage(image);
         return convertToGrayscale(brightenedImage);
     }
 
+    // Làm sáng ảnh
     @Override
     public BufferedImage brightenImage(BufferedImage image) {
         BufferedImage brightenedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
@@ -65,6 +68,7 @@ public class OcrWork implements OcrService {
         return brightenedImage;
     }
 
+    // Đảo ảnh sang ảnh đen trắng
     @Override
     public BufferedImage convertToGrayscale(BufferedImage image) {
         BufferedImage grayscaleImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
