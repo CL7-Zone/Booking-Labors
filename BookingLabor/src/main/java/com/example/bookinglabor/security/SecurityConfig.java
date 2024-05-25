@@ -104,7 +104,8 @@ public class SecurityConfig {
         "/labors/**", "/category-job/**","/jobs/show/**","/blog",
         "/assets/**", "/vendor/**", "/send-mail","/contact",
         "/verify", "/post/show/{id}", "/guest/**", "/send-sms",
-        "/auth", "/header-api", "/logout", "/forgot-password")
+        "/auth", "/header-api", "/logout", "/forgot-password",
+        "/addImage")
         .permitAll()
 
         .antMatchers(HttpMethod.POST, "/register/save","/verify/account",

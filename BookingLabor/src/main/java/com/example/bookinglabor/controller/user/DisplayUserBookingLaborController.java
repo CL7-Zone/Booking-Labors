@@ -200,12 +200,12 @@ public class DisplayUserBookingLaborController implements HttpSessionListener {
             sendMailService.setMailSender(email, "Hủy Hóa đơn số: " + id,
        "Xin chào "+ customerName+",\n\nBạn đã hủy đơn thành công," +
             "\n\nNếu có bất kỳ thắc mắc nào vui lòng liên hệ với chúng tôi." +
-            "\n\nBest regards,\nBookingLabor Website");
+            "\n\nBest regards,\nTIMVIEC.COM Website");
             sendMailService.setMailSender(labor_email, "Hủy Hóa đơn số: " + id,
         "Xin chào "+ labor_name+ "," +
             "\n\n" + customerName + " đã hủy hóa đơn này!" +
             "\n\nNếu có bất kỳ thắc mắc nào vui lòng liên hệ với chúng tôi." +
-            "\n\nBest regards,\nBookingLabor Website");
+            "\n\nBest regards,\nTIMVIEC.COM Website");
 
             res.addFlashAttribute("success","Cancel successfully");
             return "redirect:/your-booking";

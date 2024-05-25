@@ -228,7 +228,8 @@ public class DisplayUserPostController {
             "\n\n" + apply.getAbout()+
             "\n\n Best regards," +
             "\n\n"+ userAccount.get().getLabors().get(0).getFull_name()+
-            "\n\nBY BOOKINGLABOR WEBSITE\n\nBookingLabor.com.vn");
+            "\n\nXem chi tiết tại: \n\nhttp://localhost:8080/post-manager" +
+            "\n\nBY TIMVIEC.COM WEBSITE\n\nTIMVIEC.COM");
 
             sendMailService.setMailSender(post.get().getUserAccount().getEmail(),
       "APPLY FOR " + post.get().getTitle(),
@@ -238,7 +239,7 @@ public class DisplayUserPostController {
             "\n\n" + apply.getAbout()+
             "\n\n Best regards," +
             "\n\n"+ userAccount.get().getLabors().get(0).getFull_name()+
-            "\n\nBY BOOKINGLABOR WEBSITE\n\nBookingLabor.com.vn");
+            "\n\nBY TIMVIEC.COM WEBSITE\n\nTIMVIEC.COM");
             flashMessage.addFlashAttribute("success", "ỨNG TUYỂN THÀNH CÔNG");
             return "redirect:/post/show/" + id;
 

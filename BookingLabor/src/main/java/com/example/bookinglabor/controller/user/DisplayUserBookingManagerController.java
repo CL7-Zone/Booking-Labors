@@ -130,11 +130,11 @@ public class DisplayUserBookingManagerController {
             bookingService.updateById(booking, job_detail_id, customer_id);
             sendMailService.setMailSender(customerEmail, "Đồng ý Hóa đơn số: " + id,
         "Xin chào "+ customerName+",\n\nHóa đơn đặt của bạn đã được " +
-                laborName +" đồng ý" +
-                "\n\nSố điện thoại người lao động: " + laborPhone +
-                "\n\nHãy nhớ gặp mặt lao động đúng lịch hẹn nhé!" +
-                "\n\nNếu có bất kỳ thắc mắc nào vui lòng liên hệ với chúng tôi." +
-                "\n\nBest regards,\nBookingLabor Website");
+            laborName +" đồng ý" +
+            "\n\nSố điện thoại người lao động: " + laborPhone +
+            "\n\nHãy nhớ gặp mặt lao động đúng lịch hẹn nhé!" +
+            "\n\nNếu có bất kỳ thắc mắc nào vui lòng liên hệ với chúng tôi." +
+            "\n\nBest regards,\nTIMVIEC.COM Website");
 
             res.addFlashAttribute("success","ĐỒNG Ý THÀNH CÔNG");
             return "redirect:/booking-manager-by-labor";

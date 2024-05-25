@@ -11,7 +11,6 @@ import com.example.bookinglabor.service.ApplyService;
 import com.example.bookinglabor.service.FileUploadService;
 import com.example.bookinglabor.service.PostService;
 import com.example.bookinglabor.service.UserService;
-import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +32,17 @@ import org.springframework.core.io.Resource;
 
 
 @RestController
-public class FileUploadController {
+public class FileUploadApiController {
 
     private final FileUploadService fileUploadService;
     private final UserService userService;
     private final PostService postService;
     private final ApplyService applyService;
-    private static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileUploadApiController.class);
 
 
     @Autowired
-    public FileUploadController(FileUploadService fileUploadService, UserService userService, PostService postService, ApplyService applyService) {
+    public FileUploadApiController(FileUploadService fileUploadService, UserService userService, PostService postService, ApplyService applyService) {
         this.fileUploadService = fileUploadService;
         this.userService = userService;
         this.postService = postService;
